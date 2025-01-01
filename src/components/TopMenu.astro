@@ -1,0 +1,42 @@
+---
+const pathname = new URL(Astro.url).pathname;
+const currentPath = pathname.slice(1);
+
+const sections = [
+  { href: "", label: "Notes" },
+  { href: "projects", label: "Projects" },
+  { href: "cv", label: "CV" },
+];
+
+interface Props {
+  hidden?: boolean;
+}
+---
+
+<header
+  class="fixed inset-x-0 top-0 h-16 bg-black/50 backdrop-blur-sm border-b border-white/10 z-50"
+>
+  <div class="h-full px-6 flex items-center justify-between">
+    <nav>
+      <ul class="flex items-center gap-6">
+        {
+          sections.map((section) => (
+            <li id={section.label}>
+              <a
+                href={`/${section.href}`}
+                class={`text-sm font-medium ${
+                  section.href === currentPath ||
+                  (section.href === "" && currentPath.match(/^notes/))
+                    ? "text-white border-b-2 border-emerald-500"
+                    : "text-gray-200 hover:text-white"
+                }`}
+              >
+                {section.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

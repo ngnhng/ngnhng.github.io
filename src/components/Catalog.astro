@@ -1,0 +1,101 @@
+---
+import { ArticleCard } from "./ui/article-card";
+import { Image } from "astro:assets";
+import bg from "../assets/background.svg";
+import { getCollection } from "astro:content";
+
+interface Props {
+  query: Query;
+}
+
+export interface Query {
+  categories: string | string[];
+  sortBy: "date" | "title";
+}
+
+const { query } = Astro.props;
+
+const blogPosts = await getCollection("notes");
+
+const posts = blogPosts.filter((post) => {
+  if (query.categories === "*") return true;
+  return query.categories.includes(post.data.category);
+});
+
+const sortedPosts = posts.sort((a, b) => {
+  if (query.sortBy === "date") {
+    return (
+      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+    );
+  }
+  return a.data.title.localeCompare(b.data.title);
+});
+---
+
+<div class="space-y-12">
+  {
+    sortedPosts && sortedPosts.at(0) && (
+      <ArticleCard
+        category={sortedPosts.at(0)?.data.category}
+        title={sortedPosts.at(0)?.data.title}
+        date={sortedPosts.at(0)?.data.pubDate.toDateString()}
+        large
+      >
+        <Image src={bg} alt="Astro" />
+      </ArticleCard>
+    )
+  }
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {
+      sortedPosts.slice(1).map((post) => (
+        <ArticleCard
+          category={post.data.category}
+          title={post.data.title}
+          date={post.data.pubDate.toDateString()}
+        >
+          <Image src={bg} alt="Astro" />
+        </ArticleCard>
+      ))
+    }
+    <ArticleCard
+      category="COMMUNITY"
+      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
+      author="Carlota Soto"
+      date="DEC 26, 2024"
+    >
+      <Image src={bg} alt="Astro" />
+    </ArticleCard>
+    <ArticleCard
+      category="COMMUNITY"
+      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
+      author="Carlota Soto"
+      date="DEC 26, 2024"
+    >
+      <Image src={bg} alt="Astro" />
+    </ArticleCard>
+    <ArticleCard
+      category="COMMUNITY"
+      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
+      author="Carlota Soto"
+      date="DEC 26, 2024"
+    >
+      <Image src={bg} alt="Astro" />
+    </ArticleCard>
+    <ArticleCard
+      category="COMMUNITY"
+      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
+      author="Carlota Soto"
+      date="DEC 26, 2024"
+    >
+      <Image src={bg} alt="Astro" />
+    </ArticleCard>
+    <ArticleCard
+      category="COMMUNITY"
+      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
+      author="Carlota Soto"
+      date="DEC 26, 2024"
+    >
+      <Image src={bg} alt="Astro" />
+    </ArticleCard>
+  </div>
+</div>

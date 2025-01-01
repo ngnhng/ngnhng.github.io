@@ -1,0 +1,15 @@
+---
+import "@/styles/globals.css";
+
+import Layout from "../layouts/Layout.astro";
+import Catalog from "@/components/Catalog.astro";
+---
+
+<Layout>
+  <Catalog
+    query={{
+      categories: "*",
+      sortBy: "date",
+    }}
+  />
+</Layout>

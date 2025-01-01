@@ -1,0 +1,147 @@
+---
+import { Link } from "./ui/link";
+
+interface Props {
+  hidden?: boolean;
+}
+
+const { hidden } = Astro.props;
+const currentPath = new URL(Astro.url).pathname.slice(1);
+const isNotes = currentPath === "" || currentPath.match(/^notes/);
+const isProjects = currentPath.match(/^projects/);
+const isCv = currentPath.match(/^cv/);
+---
+
+<>
+  <aside
+    class={`hidden lg:block w-64 h-screen fixed left-0 top-0 bg-black p-6 ${hidden || isCv ? "hidden" : ""}`}
+  >
+    <div class="space-y-10">
+      <nav class="space-y-6 mt-16">
+        {
+          isNotes && (
+            <div class="space-y-2">
+              <a href="#" class="block text-gray-200 hover:text-white">
+                {" "}
+                DATABASE{" "}
+              </a>
+              <a href="#" class="block text-gray-200 hover:text-white">
+                {" "}
+                JAVA{" "}
+              </a>
+              <a href="#" class="block text-gray-200 hover:text-white">
+                {" "}
+                GO{" "}
+              </a>
+              <a href="#" class="block text-gray-200 hover:text-white">
+                {" "}
+                WORKFLOWS{" "}
+              </a>
+              <a href="#" class="block text-gray-200 hover:text-white">
+                {" "}
+                INTERVIEW PREPS{" "}
+              </a>
+            </div>
+          )
+        }
+        {
+          isProjects && (
+            <div class="space-y-2">
+              <a href="#" class="block text-gray-200 hover:text-white">
+                {" "}
+                PROJECT A{" "}
+              </a>
+              <a href="#" class="block text-gray-200 hover:text-white">
+                {" "}
+                PROJECT B{" "}
+              </a>
+              <a href="#" class="block text-gray-200 hover:text-white">
+                {" "}
+                PROJECT C{" "}
+              </a>
+            </div>
+          )
+        }
+      </nav>
+      <div class="relative">
+        <input
+          type="search"
+          placeholder="Search"
+          class="w-full bg-zinc-900 rounded-md px-3 py-2 text-sm text-gray-200 placeholder:text-gray-400"
+        />
+      </div>
+    </div>
+  </aside>
+
+  {/* Mobile Navigation */}
+  <div
+    class="lg:hidden fixed top-16 left-0 right-0 z-40 bg-black/50 backdrop-blur-sm border-b border-white/10"
+  >
+    <div class="w-full px-6 pb-4 pt-4">
+      <div class="space-y-4">
+        {/* Search Input */}
+        <div>
+          <input
+            type="search"
+            placeholder="Search"
+            class="w-full bg-zinc-900 rounded-md text-sm text-gray-200 placeholder:text-gray-400 p-2"
+          />
+        </div>
+
+        {/* Horizontal Scrollable Menu */}
+        <nav>
+          <div class="flex space-x-4 overflow-x-scroll scrollbar-hide">
+            <Link
+              href="#"
+              className="text-gray-200 hover:text-white whitespace-nowrap"
+            >
+              POSTGRES
+            </Link>
+            <Link
+              href="#"
+              className="text-gray-200 hover:text-white whitespace-nowrap"
+            >
+              COMMUNITY
+            </Link>
+            <Link
+              href="#"
+              className="text-gray-200 hover:text-white whitespace-nowrap"
+            >
+              ENGINEERING
+            </Link>
+            <Link
+              href="#"
+              className="text-gray-200 hover:text-white whitespace-nowrap"
+            >
+              AI
+            </Link>
+            <Link
+              href="#"
+              className="text-gray-200 hover:text-white whitespace-nowrap"
+            >
+              COMPANY
+            </Link>
+            <Link
+              href="#"
+              className="text-gray-200 hover:text-white whitespace-nowrap"
+            >
+              WORKFLOWS
+            </Link>
+            <Link
+              href="#"
+              className="text-gray-200 hover:text-white whitespace-nowrap"
+            >
+              CASE STUDIES
+            </Link>
+            <Link
+              href="#"
+              className="text-gray-200 hover:text-white whitespace-nowrap"
+            >
+              ALL POSTS
+            </Link>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</>
