@@ -39,6 +39,7 @@ const sortedPosts = posts.sort((a, b) => {
         category={sortedPosts.at(0)?.data.category}
         title={sortedPosts.at(0)?.data.title}
         date={sortedPosts.at(0)?.data.pubDate.toDateString()}
+        href={`/notes/${sortedPosts.at(0)?.data.slug}`}
         large
       >
         <Image src={bg} alt="Astro" />
@@ -52,50 +53,11 @@ const sortedPosts = posts.sort((a, b) => {
           category={post.data.category}
           title={post.data.title}
           date={post.data.pubDate.toDateString()}
+          href={`/notes/${post.data.slug}`}
         >
           <Image src={bg} alt="Astro" />
         </ArticleCard>
       ))
     }
-    <ArticleCard
-      category="COMMUNITY"
-      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
-      author="Carlota Soto"
-      date="DEC 26, 2024"
-    >
-      <Image src={bg} alt="Astro" />
-    </ArticleCard>
-    <ArticleCard
-      category="COMMUNITY"
-      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
-      author="Carlota Soto"
-      date="DEC 26, 2024"
-    >
-      <Image src={bg} alt="Astro" />
-    </ArticleCard>
-    <ArticleCard
-      category="COMMUNITY"
-      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
-      author="Carlota Soto"
-      date="DEC 26, 2024"
-    >
-      <Image src={bg} alt="Astro" />
-    </ArticleCard>
-    <ArticleCard
-      category="COMMUNITY"
-      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
-      author="Carlota Soto"
-      date="DEC 26, 2024"
-    >
-      <Image src={bg} alt="Astro" />
-    </ArticleCard>
-    <ArticleCard
-      category="COMMUNITY"
-      title="Using Hyperdrive with Neon and Cloudflare Workers: FAQ"
-      author="Carlota Soto"
-      date="DEC 26, 2024"
-    >
-      <Image src={bg} alt="Astro" />
-    </ArticleCard>
   </div>
 </div>

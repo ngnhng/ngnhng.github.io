@@ -6,6 +6,7 @@ interface ArticleCardProps {
   author?: string;
   date?: string;
   large?: boolean;
+  href: string;
   children?: any;
 }
 
@@ -15,13 +16,11 @@ export function ArticleCard({
   author,
   date,
   large,
+  href,
   children,
 }: ArticleCardProps) {
   return (
-    <Link
-      href="/notes/test"
-      className={`block group ${large ? "col-span-2" : ""}`}
-    >
+    <Link href={href} className={`block group ${large ? "col-span-2" : ""}`}>
       <article className={`relative h-full ${large ? "md:flex" : ""}`}>
         <div
           className={`relative overflow-hidden rounded-lg ${
