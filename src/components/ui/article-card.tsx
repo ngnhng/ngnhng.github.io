@@ -6,7 +6,7 @@ interface ArticleCardProps {
   author?: string;
   date?: string;
   large?: boolean;
-  href: string;
+  href?: string;
   children?: any;
 }
 
@@ -19,7 +19,7 @@ export function ArticleCard({
   href,
   children,
 }: ArticleCardProps) {
-  return (
+  return href ? (
     <Link href={href} className={`block group ${large ? "col-span-2" : ""}`}>
       <article className={`relative h-full ${large ? "md:flex" : ""}`}>
         <div
@@ -34,7 +34,7 @@ export function ArticleCard({
         </div>
         <div className={`${large ? "md:w-1/2 md:p-6 mt-4" : "mt-4"}`}>
           <div className="text-sm font-medium text-emerald-500 mb-2">
-            {category}
+            {category?.toLocaleUpperCase()}
           </div>
           <h2
             className={`font-semibold mb-2 wrap ${
@@ -51,5 +51,9 @@ export function ArticleCard({
         </div>
       </article>
     </Link>
+  ) : (
+    <article className={`relative h-full ${large ? "md:flex" : ""}`}>
+      Not available
+    </article>
   );
 }

@@ -4,13 +4,13 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
 interface Props {
-  imagePath: string;
-  altText: string;
-  name: string;
-  category: string;
-  date: string;
-  href: string;
-  large: boolean;
+  imagePath?: string;
+  altText?: string;
+  name?: string;
+  category?: string;
+  date?: string;
+  href?: string;
+  large?: boolean;
 }
 
 const { imagePath, altText, name, category, date, href, large } = Astro.props;
@@ -19,7 +19,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
   `/src/assets/*.{jpeg,jpg,png,gif,webp}`
 );
 
-if (!images[imagePath])
+if (!imagePath || !images[imagePath])
   throw new Error(
     `"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif,webp}"`
   );
@@ -32,5 +32,5 @@ if (!images[imagePath])
   href={href}
   large={large}
 >
-  <Image src={images[imagePath]()} alt={altText} />
+  <Image src={images[imagePath]()} alt={altText ?? ""} />
 </ArticleCard>

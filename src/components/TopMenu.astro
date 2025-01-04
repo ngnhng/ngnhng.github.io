@@ -24,12 +24,7 @@ interface Props {
             <li id={section.label}>
               <a
                 href={`/${section.href}`}
-                class={`text-sm font-medium ${
-                  section.href === currentPath ||
-                  (section.href === "" && currentPath.match(/^notes/))
-                    ? "text-white border-b-2 border-emerald-500"
-                    : "text-gray-200 hover:text-white"
-                }`}
+                class={`text-sm font-medium text-gray-200 hover:text-emerald-500`}
               >
                 {section.label}
               </a>

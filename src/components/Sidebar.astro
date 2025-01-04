@@ -7,9 +7,20 @@ interface Props {
 
 const { hidden } = Astro.props;
 const currentPath = new URL(Astro.url).pathname.slice(1);
-const isNotes = currentPath === "" || currentPath.match(/^notes/);
+const isNotes =
+  currentPath === "" ||
+  currentPath.match(/^notes/) ||
+  currentPath.match(/^category/);
 const isProjects = currentPath.match(/^projects/);
 const isCv = currentPath.match(/^cv/);
+
+export const categoryLinks = [
+  { href: "category/database", text: "DATABASE" },
+  { href: "category/java", text: "JAVA" },
+  { href: "category/go", text: "GO" },
+  { href: "category/workflows", text: "WORKFLOWS" },
+  { href: "category/interview", text: "INTERVIEW PREPS" },
+];
 ---
 
 <>
@@ -21,26 +32,14 @@ const isCv = currentPath.match(/^cv/);
         {
           isNotes && (
             <div class="space-y-2">
-              <a href="#" class="block text-gray-200 hover:text-white">
-                {" "}
-                DATABASE{" "}
-              </a>
-              <a href="#" class="block text-gray-200 hover:text-white">
-                {" "}
-                JAVA{" "}
-              </a>
-              <a href="#" class="block text-gray-200 hover:text-white">
-                {" "}
-                GO{" "}
-              </a>
-              <a href="#" class="block text-gray-200 hover:text-white">
-                {" "}
-                WORKFLOWS{" "}
-              </a>
-              <a href="#" class="block text-gray-200 hover:text-white">
-                {" "}
-                INTERVIEW PREPS{" "}
-              </a>
+              {categoryLinks.map((link) => (
+                <Link
+                  href={link.href}
+                  className="block text-gray-200 hover:text-white"
+                >
+                  {link.text}
+                </Link>
+              ))}
             </div>
           )
         }

@@ -1,0 +1,49 @@
+---
+import Card from "@/components/Card.astro";
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { categoryLinks } from "@/components/Sidebar.astro";
+
+export async function getStaticPaths() {
+  const categories = categoryLinks.map((link) => link.text.toLowerCase());
+  return categories.map((category) => ({
+    params: { category },
+  }));
+}
+
+const { category } = Astro.props;
+
+const blogPosts = await getCollection("notes");
+
+const posts = blogPosts.filter((post) => {
+  if (category === "*") return true;
+  return blogPosts.map((post) => post.data.category === category);
+});
+
+const sortedPosts = posts.sort((a, b) => {
+  return (
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+  );
+});
+---
+
+<Layout>
+  <div>
+    <h1 class="md:!text-5xl md:!leading-[1.2]">{category}</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {
+        sortedPosts.map((post) => (
+          <Card
+            imagePath={post.data.image}
+            altText={post.data.imageAlt}
+            name={post.data.title}
+            category={post.data.category}
+            date={post.data.pubDate.toDateString()}
+            href={`/notes/${post.data.slug}`}
+            large={false}
+          />
+        ))
+      }
+    </div>
+  </div>
+</Layout>
