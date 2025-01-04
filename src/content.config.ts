@@ -10,9 +10,7 @@ const notes = defineCollection({
       pubDate: z.coerce.date(),
       category: z.string(),
       imageAlt: z.string().optional(),
-      image: image().refine((img) => img.width >= 500, {
-        message: "Cover image must be at least 500 pixels wide!",
-      }),
+      image: z.string().nonempty(),
       slug: z.string(),
     }),
 });

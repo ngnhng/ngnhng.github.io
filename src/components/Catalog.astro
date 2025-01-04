@@ -1,8 +1,9 @@
 ---
 import { ArticleCard } from "./ui/article-card";
 import { Image } from "astro:assets";
-import bg from "../assets/background.svg";
 import { getCollection } from "astro:content";
+import type { ImageMetadata } from "astro";
+import Card from "./Card.astro";
 
 interface Props {
   query: Query;
@@ -30,23 +31,39 @@ const sortedPosts = posts.sort((a, b) => {
   }
   return a.data.title.localeCompare(b.data.title);
 });
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/*.{jpeg,jpg,png,gif,webp}"
+);
 ---
 
 <div class="space-y-12">
   {
     sortedPosts && sortedPosts.at(0) && (
-      <ArticleCard
-        category={sortedPosts.at(0)?.data.category}
-        title={sortedPosts.at(0)?.data.title}
-        date={sortedPosts.at(0)?.data.pubDate.toDateString()}
+      // <ArticleCard
+      //   category={sortedPosts.at(0)?.data.category}
+      //   title={sortedPosts.at(0)?.data.title}
+      //   date={sortedPosts.at(0)?.data.pubDate.toDateString()}
+      //   href={`/notes/${sortedPosts.at(0)?.data.slug}`}
+      //   large
+      // >
+      //   <Image
+      //     src={images[sortedPosts.at(0)?.data?.image ?? ""]()}
+      //     alt={sortedPosts.at(0)?.data.imageAlt ?? ""}
+      //   />
+      // </ArticleCard>
+      <Card
+        imagePath={sortedPosts.at(0)?.data.image ?? ""}
+        altText={sortedPosts.at(0)?.data.imageAlt ?? ""}
+        name={sortedPosts.at(0)?.data.title ?? ""}
+        category={sortedPosts.at(0)?.data.category ?? ""}
+        date={sortedPosts.at(0)?.data.pubDate.toDateString() ?? ""}
         href={`/notes/${sortedPosts.at(0)?.data.slug}`}
         large
-      >
-        <Image src={bg} alt="Astro" />
-      </ArticleCard>
+      />
     )
   }
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     {
       sortedPosts.slice(1).map((post) => (
         <ArticleCard
@@ -55,9 +72,12 @@ const sortedPosts = posts.sort((a, b) => {
           date={post.data.pubDate.toDateString()}
           href={`/notes/${post.data.slug}`}
         >
-          <Image src={bg} alt="Astro" />
+          <Image
+            src={images[post.data.image ?? ""]()}
+            alt={post.data.imageAlt ?? ""}
+          />
         </ArticleCard>
       ))
     }
-  </div>
+  </div> -->
 </div>
