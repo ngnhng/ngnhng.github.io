@@ -5,19 +5,24 @@ import { getCollection } from "astro:content";
 import { categoryLinks } from "@/components/Sidebar.astro";
 
 export async function getStaticPaths() {
-  const categories = categoryLinks.map((link) => link.text.toLowerCase());
+  const categories = categoryLinks.map((link) =>
+    link.text.toLowerCase().replace(" ", "-")
+  );
   return categories.map((category) => ({
     params: { category },
   }));
 }
-
-const { category } = Astro.props;
+const { category } = Astro.params;
+if (
+  !category ||
+  !categoryLinks.find((link) => link.text.toLowerCase() === category)
+)
+  Astro.redirect("/404");
 
 const blogPosts = await getCollection("notes");
-
 const posts = blogPosts.filter((post) => {
   if (category === "*") return true;
-  return blogPosts.map((post) => post.data.category === category);
+  return category === post.data.category.toLowerCase().replace(" ", "-");
 });
 
 const sortedPosts = posts.sort((a, b) => {
@@ -28,8 +33,9 @@ const sortedPosts = posts.sort((a, b) => {
 ---
 
 <Layout>
-  <div>
-    <h1 class="md:!text-5xl md:!leading-[1.2]">{category}</h1>
+  <div class="space-y-12">
+    <h1 class="md:!text-5xl md:!leading-[1.2] text-uppercase">{category}</h1>
+    {sortedPosts.length === 0 && <p>No posts found for this category</p>}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {
         sortedPosts.map((post) => (

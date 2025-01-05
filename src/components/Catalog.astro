@@ -29,27 +29,11 @@ const sortedPosts = posts.sort((a, b) => {
   }
   return a.data.title.localeCompare(b.data.title);
 });
-
-const images = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/assets/*.{jpeg,jpg,png,gif,webp}"
-);
 ---
 
 <div class="space-y-12">
   {
     sortedPosts && sortedPosts.at(0) && (
-      // <ArticleCard
-      //   category={sortedPosts.at(0)?.data.category}
-      //   title={sortedPosts.at(0)?.data.title}
-      //   date={sortedPosts.at(0)?.data.pubDate.toDateString()}
-      //   href={`/notes/${sortedPosts.at(0)?.data.slug}`}
-      //   large
-      // >
-      //   <Image
-      //     src={images[sortedPosts.at(0)?.data?.image ?? ""]()}
-      //     alt={sortedPosts.at(0)?.data.imageAlt ?? ""}
-      //   />
-      // </ArticleCard>
       <Card
         imagePath={sortedPosts.at(0)?.data.image ?? ""}
         altText={sortedPosts.at(0)?.data.imageAlt ?? ""}
