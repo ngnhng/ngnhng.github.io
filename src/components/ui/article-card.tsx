@@ -8,6 +8,7 @@ interface ArticleCardProps {
   large?: boolean;
   href?: string;
   children?: any;
+  tags?: string[];
 }
 
 export function ArticleCard({
@@ -18,6 +19,7 @@ export function ArticleCard({
   large,
   href,
   children,
+  tags,
 }: ArticleCardProps) {
   return href ? (
     <Link href={href} className={`block group ${large ? "col-span-2" : ""}`}>
@@ -47,6 +49,16 @@ export function ArticleCard({
             <span>{author}</span>
             <span className="mx-2">·</span>
             <span>{date}</span>
+          </div>
+          <div className="flex flex-wrap mt-2">
+            {tags?.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs font-medium text-gray-500 bg-gray-200 rounded-full px-2 py-1 mr-2 mb-2"
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
       </article>
