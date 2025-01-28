@@ -11,9 +11,10 @@ interface Props {
   date?: string;
   href?: string;
   large?: boolean;
+  tags?: string[];
 }
 
-const { imagePath, altText, name, category, date, href, large } = Astro.props;
+const { imagePath, altText, name, category, date, href, large, tags } = Astro.props;
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
   `/src/assets/*.{jpeg,jpg,png,gif,webp}`
@@ -31,6 +32,7 @@ if (!imagePath || !images[imagePath])
   date={date}
   href={href}
   large={large}
+  tags={tags}
 >
   <Image src={images[imagePath]()} alt={altText ?? ""} />
 </ArticleCard>

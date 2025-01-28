@@ -42,6 +42,7 @@ const sortedPosts = posts.sort((a, b) => {
         date={sortedPosts.at(0)?.data.pubDate.toDateString() ?? ""}
         href={`/notes/${sortedPosts.at(0)?.data.slug}`}
         large
+        tags={sortedPosts.at(0)?.data.tags ?? []}
       />
     )
   }
