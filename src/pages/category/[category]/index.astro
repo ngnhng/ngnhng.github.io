@@ -1,44 +1,32 @@
 ---
 import Card from "@/components/Card.astro";
 import Layout from "@/layouts/Layout.astro";
-import { getCollection } from "astro:content";
-import { categoryLinks } from "@/components/Sidebar.astro";
 
 export async function getStaticPaths() {
-  const categories = categoryLinks.map((link) =>
-    link.text.toLowerCase().replace(" ", "-")
+  const allNotes = Object.values(
+    import.meta.glob("../../notes/*.md", { eager: true })
   );
-  return categories.map((category) => ({
-    params: { category },
-  }));
+
+  return [
+    { params: { category: "go" }, props: { notes: allNotes } },
+    { params: { category: "java" }, props: { notes: allNotes } },
+    { params: { category: "workflow" }, props: { notes: allNotes } },
+    { params: { category: "database" }, props: { notes: allNotes } },
+    { params: { category: "interview" }, props: { notes: allNotes } },
+  ];
 }
 const { category } = Astro.params;
-if (
-  !category ||
-  !categoryLinks.find((link) => link.text.toLowerCase() === category)
-)
-  Astro.redirect("/404");
-
-const blogPosts = await getCollection("notes");
-const posts = blogPosts.filter((post) => {
-  if (category === "*") return true;
-  return category === post.data.category.toLowerCase().replace(" ", "-");
-});
-
-const sortedPosts = posts.sort((a, b) => {
-  return (
-    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
-  );
-});
+const { notes } = Astro.props;
+const filteredNotes = notes.filter((note: any) => note.data.tags.includes(category));
 ---
 
 <Layout>
   <div class="space-y-12">
-    <h1 class="md:!text-5xl md:!leading-[1.2] text-uppercase">{category}</h1>
-    {sortedPosts.length === 0 && <p>No posts found for this category</p>}
+    <h1 class="md:!text-5xl md:!leading-[1.2] text-uppercase">#{category}</h1>
+    {filteredNotes.length === 0 && <p>No posts found for this category</p>}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {
-        sortedPosts.map((post) => (
+        filteredNotes.map((post: any) => (
           <Card
             imagePath={post.data.image}
             altText={post.data.imageAlt}
