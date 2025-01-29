@@ -1,8 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import NoteLayout from "@/layouts/NoteLayout.astro";
 import { getCollection, render } from "astro:content";
-import "@fontsource/ledger";
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection("notes");
@@ -17,14 +15,5 @@ const { Content } = await render(post);
 ---
 
 <Layout>
-  <!-- <NoteLayout
-    title={post.data.title}
-    pubDate={post.data.pubDate.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-    })}
-    tags={post.data.tags}
-  > -->
   <Content />
-  <!-- </NoteLayout> -->
 </Layout>
