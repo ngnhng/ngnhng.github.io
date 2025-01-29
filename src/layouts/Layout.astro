@@ -1,14 +1,10 @@
 ---
 import "@/styles/globals.css";
-
-import Sidebar from "@/components/Sidebar.astro";
 import TopMenu from "@/components/TopMenu.astro";
 
 interface Props {
   showSidebar?: boolean;
 }
-
-const { showSidebar } = Astro.props;
 ---
 
 <!doctype html>
@@ -24,7 +20,7 @@ const { showSidebar } = Astro.props;
     <div id="container" class="min-h-screen flex flex-col pb-16">
       <TopMenu />
 
-      <main class="lg:ml-64 pt-16 p-6">
+      <main class="pt-16 p-6">
         <div
           class="max-w-7xl mx-auto space-y-12 p-5 pt-20 mt-20 md:pt-32 md:mt-2"
         >
