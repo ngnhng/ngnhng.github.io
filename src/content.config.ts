@@ -8,7 +8,6 @@ const notes = defineCollection({
       title: z.string(),
       description: z.string(),
       pubDate: z.coerce.date(),
-      category: z.string(),
       imageAlt: z.string().optional(),
       image: z.string().nonempty(),
       slug: z.string(),
