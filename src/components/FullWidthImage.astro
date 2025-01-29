@@ -1,0 +1,11 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  ratio: number;
+}
+
+const { src, alt, ratio } = Astro.props;
+---
+
+<img src={src} alt={alt} style={`max-width: none; width: ${ratio * 100}vw;`} />

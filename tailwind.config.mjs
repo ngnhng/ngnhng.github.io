@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
 	darkMode: ['class'],
-	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}', './src/styles/globals.css'],
 	theme: {
 		extend: {
 			typography: ({ theme }) => ({
@@ -91,6 +91,5 @@ export default {
 			},
 		}
 	},
-	plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography'),
-	],
+	plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography')],
 }

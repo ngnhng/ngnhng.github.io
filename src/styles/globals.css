@@ -73,3 +73,13 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
+.image-full-width {
+  max-width: none;
+  width: 100vw;
+}
+
+.text-wrap {
+  white-space: normal;
+  word-wrap: break-word;
+}
