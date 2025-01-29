@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import NoteLayout from "@/layouts/NoteLayout.astro";
 import { getCollection, render } from "astro:content";
+import "@fontsource/ledger";
 
 export async function getStaticPaths() {
   const blogPosts = await getCollection("notes");
