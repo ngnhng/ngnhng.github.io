@@ -1,0 +1,30 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  ratio: number;
+  footer?: string;
+}
+
+const { src, alt, ratio, footer } = Astro.props;
+---
+
+<div class="full-width-image-container">
+  <img
+    src={src}
+    alt={alt}
+    style={`max-width: none; width: ${ratio * 100}vw;`}
+  />
+  {footer && <div class="image-footer">{footer}</div>}
+</div>
+
+<style>
+  .full-width-image-container {
+    text-align: center;
+  }
+  .image-footer {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+</style>
