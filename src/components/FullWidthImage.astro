@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 interface Props {
   src: string;
   alt: string;
@@ -6,12 +8,21 @@ interface Props {
   footer?: string;
 }
 
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  `/src/assets/*.{jpeg,jpg,png,gif,webp}`
+);
+
 const { src, alt, ratio, footer } = Astro.props;
+
+if (!images[src])
+  throw new Error(
+    `"${src}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif,webp}"`
+  );
 ---
 
 <div class="full-width-image-container">
-  <img
-    src={src}
+  <Image
+    src={images[src]()}
     alt={alt}
     style={`max-width: none; width: ${ratio * 100}vw;`}
   />
