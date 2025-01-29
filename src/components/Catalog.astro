@@ -15,12 +15,12 @@ const { query } = Astro.props;
 
 const blogPosts = await getCollection("notes");
 
-const posts = blogPosts.filter((post) => {
+const posts = blogPosts.filter((post: any) => {
   if (query.tags.length === 0) return true;
   return query.tags.some((tag) => post.data?.tags?.includes(tag));
 });
 
-const sortedPosts = posts.sort((a, b) => {
+const sortedPosts = posts.sort((a: any, b: any) => {
   if (query.sortBy === "date") {
     return (
       new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
@@ -44,21 +44,4 @@ const sortedPosts = posts.sort((a, b) => {
       />
     )
   }
-  <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {
-      sortedPosts.slice(1).map((post) => (
-        <ArticleCard
-          category={post.data.category}
-          title={post.data.title}
-          date={post.data.pubDate.toDateString()}
-          href={`/notes/${post.data.slug}`}
-        >
-          <Image
-            src={images[post.data.image ?? ""]()}
-            alt={post.data.imageAlt ?? ""}
-          />
-        </ArticleCard>
-      ))
-    }
-  </div> -->
 </div>
