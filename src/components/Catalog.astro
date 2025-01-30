@@ -30,18 +30,34 @@ const sortedPosts = posts.sort((a: any, b: any) => {
 });
 ---
 
-<div class="space-y-12">
+<div class="space-y-12 p-2">
   {
     sortedPosts && sortedPosts.at(0) && (
       <Card
+        large
         imagePath={sortedPosts.at(0)?.data.image ?? ""}
         altText={sortedPosts.at(0)?.data.imageAlt ?? ""}
         name={sortedPosts.at(0)?.data.title ?? ""}
         date={sortedPosts.at(0)?.data.pubDate.toDateString() ?? ""}
         href={`/notes/${sortedPosts.at(0)?.data.slug}`}
-        large
         tags={sortedPosts.at(0)?.data.tags ?? []}
       />
     )
   }
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {
+      sortedPosts
+        .slice(1)
+        .map((post) => (
+          <Card
+            imagePath={post.data.image ?? ""}
+            altText={post.data.imageAlt ?? ""}
+            name={post.data.title}
+            date={post.data.pubDate.toDateString()}
+            href={`/notes/${post.data.slug}`}
+            tags={post.data.tags ?? []}
+          />
+        ))
+    }
+  </div>
 </div>
