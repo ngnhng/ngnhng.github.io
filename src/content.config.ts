@@ -12,6 +12,7 @@ const notes = defineCollection({
       image: z.string().nonempty(),
       slug: z.string(),
       tags: z.array(z.string()).optional(),
+      series: z.string().optional(), // P6fff
     }),
 });
 

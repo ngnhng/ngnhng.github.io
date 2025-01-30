@@ -9,6 +9,7 @@ interface ArticleCardProps {
   href?: string;
   children?: any;
   tags?: string[];
+  series?: string; // P9c27
 }
 
 export function ArticleCard({
@@ -20,6 +21,7 @@ export function ArticleCard({
   href,
   children,
   tags,
+  series, // P9c27
 }: ArticleCardProps) {
   return (
     <article className={`relative h-full ${large ? "md:flex" : ""}`}>
@@ -82,6 +84,11 @@ export function ArticleCard({
             </Link>
           ))}
         </div>
+        {series && ( // P9c27
+          <div className="text-sm text-gray-500 mt-2"> // P9c27
+            Series: {series} // P9c27
+          </div> // P9c27
+        )} // P9c27
       </div>
     </article>
   );
