@@ -1,8 +1,21 @@
 ---
 import TOC from "../components/TOC.astro";
+import { getCollection } from "astro:content";
 
 const { frontmatter, headings } = Astro.props;
-const { title, pubDate, tags } = frontmatter;
+const { title, pubDate, tags, series } = frontmatter;
+
+const notes = await getCollection("notes");
+const seriesNotes = series
+  ? notes.filter((note) => note.data.series === series)
+  : [];
+const currentIndex = seriesNotes.findIndex(
+  (note) => note.data.title === title
+);
+const nextNote =
+  currentIndex !== -1 && currentIndex < seriesNotes.length - 1
+    ? seriesNotes[currentIndex + 1]
+    : null;
 ---
 
 <div class="flex flex-col items-center">
@@ -21,6 +34,13 @@ const { title, pubDate, tags } = frontmatter;
                 month: "long",
               })
             : ""}
+        </p>
+      )
+    }
+    {
+      series && (
+        <p class="text-sm text-gray-500 dark:text-gray-400 w-full">
+          Series: {series}
         </p>
       )
     }
@@ -60,6 +80,19 @@ const { title, pubDate, tags } = frontmatter;
       >
         <slot />
       </article>
+      {
+        nextNote && (
+          <div class="mt-8">
+            <h2 class="text-xl font-semibold">Next in series</h2>
+            <a
+              href={`/notes/${nextNote.data.slug}`}
+              class="text-lg text-emerald-500 hover:underline"
+            >
+              {nextNote.data.title}
+            </a>
+          </div>
+        )
+      }
     </div>
   </div>
 </div>

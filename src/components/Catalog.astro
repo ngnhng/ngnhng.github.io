@@ -9,6 +9,7 @@ interface Props {
 export interface Query {
   tags: string[];
   sortBy: "date" | "title";
+  series?: string; // Optional series filter
 }
 
 const { query } = Astro.props;
@@ -16,8 +17,10 @@ const { query } = Astro.props;
 const blogPosts = await getCollection("notes");
 
 const posts = blogPosts.filter((post: any) => {
-  if (query.tags.length === 0) return true;
-  return query.tags.some((tag) => post.data?.tags?.includes(tag));
+  if (query.tags.length === 0 && !query.series) return true;
+  const matchesTags = query.tags.some((tag) => post.data?.tags?.includes(tag));
+  const matchesSeries = query.series ? post.data?.series === query.series : true;
+  return matchesTags && matchesSeries;
 });
 
 const sortedPosts = posts.sort((a: any, b: any) => {
