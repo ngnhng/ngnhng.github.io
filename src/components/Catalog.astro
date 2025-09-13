@@ -30,34 +30,89 @@ const sortedPosts = posts.sort((a: any, b: any) => {
 });
 ---
 
-<div class="space-y-12 p-2">
+<div class="space-y-16">
+  <!-- Hero Section -->
+  <section class="text-center py-12">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-6xl font-bold text-foreground mb-6 bg-gradient-to-r from-primary via-primary to-muted-foreground bg-clip-text text-transparent">
+        Welcome to My Notes
+      </h1>
+      <p class="text-xl text-muted-foreground mb-8 leading-relaxed">
+        A collection of thoughts, learnings, and insights from my journey in software development and beyond.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
+        <span class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          {sortedPosts.length} Articles
+        </span>
+        <span class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+          Regular Updates
+        </span>
+        <span class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+          Open Source
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Post -->
   {
     sortedPosts && sortedPosts.at(0) && (
-      <Card
-        large
-        imagePath={sortedPosts.at(0)?.data.image ?? ""}
-        altText={sortedPosts.at(0)?.data.imageAlt ?? ""}
-        name={sortedPosts.at(0)?.data.title ?? ""}
-        date={sortedPosts.at(0)?.data.pubDate.toDateString() ?? ""}
-        href={`/notes/${sortedPosts.at(0)?.data.slug}`}
-        tags={sortedPosts.at(0)?.data.tags ?? []}
-      />
+      <section>
+        <div class="mb-8">
+          <h2 class="text-2xl font-bold text-foreground mb-2">Featured Article</h2>
+          <p class="text-muted-foreground">Latest insights and learnings</p>
+        </div>
+        <Card
+          large
+          imagePath={sortedPosts.at(0)?.data.image ?? ""}
+          altText={sortedPosts.at(0)?.data.imageAlt ?? ""}
+          name={sortedPosts.at(0)?.data.title ?? ""}
+          date={sortedPosts.at(0)?.data.pubDate.toDateString() ?? ""}
+          href={`/notes/${sortedPosts.at(0)?.data.slug}`}
+          tags={sortedPosts.at(0)?.data.tags ?? []}
+        />
+      </section>
     )
   }
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {
-      sortedPosts
-        .slice(1)
-        .map((post) => (
-          <Card
-            imagePath={post.data.image ?? ""}
-            altText={post.data.imageAlt ?? ""}
-            name={post.data.title}
-            date={post.data.pubDate.toDateString()}
-            href={`/notes/${post.data.slug}`}
-            tags={post.data.tags ?? []}
-          />
-        ))
-    }
-  </div>
+
+  <!-- All Posts -->
+  {sortedPosts.length > 1 && (
+    <section>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-foreground mb-2">All Articles</h2>
+        <p class="text-muted-foreground">Explore the complete collection</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          sortedPosts
+            .slice(1)
+            .map((post) => (
+              <Card
+                imagePath={post.data.image ?? ""}
+                altText={post.data.imageAlt ?? ""}
+                name={post.data.title}
+                date={post.data.pubDate.toDateString()}
+                href={`/notes/${post.data.slug}`}
+                tags={post.data.tags ?? []}
+              />
+            ))
+        }
+      </div>
+    </section>
+  )}
+
+  {sortedPosts.length === 0 && (
+    <section class="text-center py-16">
+      <div class="max-w-md mx-auto">
+        <div class="text-6xl mb-6">📝</div>
+        <h3 class="text-xl font-semibold text-foreground mb-4">No articles found</h3>
+        <p class="text-muted-foreground">
+          There are no articles matching your current filter. Try adjusting your search criteria.
+        </p>
+      </div>
+    </section>
+  )}
 </div>

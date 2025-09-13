@@ -1,42 +1,48 @@
 ---
+import ThemeToggle from "./ThemeToggle";
+
 interface Props {
   hidden?: boolean;
 }
 ---
 
 <header
-  class="fixed inset-x-0 top-0 h-16 bg-white/50 backdrop-blur-sm border-b border-white/10 z-50"
+  class="fixed inset-x-0 top-0 h-16 bg-background/80 backdrop-blur-lg border-b border-border z-50 transition-all duration-300"
 >
-  <div class="h-full px-6 flex items-center justify-between">
-    <nav>
-      <ul class="flex items-center gap-6">
-        <li id="Notes">
-          <a
-            href="/"
-            class="text-sm font-medium text-black-200 hover:text-emerald-500"
-            >Notes</a
-          >
-        </li>
-        <ul>
-          <li id="Projects">
+  <div class="h-full px-6 flex items-center justify-between max-w-7xl mx-auto">
+    <div class="flex items-center gap-8">
+      <a href="/" class="text-xl font-bold text-foreground hover:text-primary transition-colors">
+        ngnhng
+      </a>
+      <nav>
+        <ul class="flex items-center gap-6">
+          <li>
+            <a
+              href="/"
+              class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
+              >Notes</a
+            >
+          </li>
+          <li>
             <a
               href="/projects"
-              class="text-sm font-medium text-black-200 hover:text-emerald-500"
+              class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
               >Projects</a
             >
           </li>
-        </ul>
-        <ul>
-          <li id="CV">
+          <li>
             <a
               target="_blank"
               href="https://docs.google.com/document/d/14spp_gFkWt8IvGKWwnr76JQAjes2bc6dat1URXsJpao/edit?usp=sharing"
-              class="text-sm font-medium text-black-200 hover:text-emerald-500"
+              class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
               >CV</a
             >
           </li>
         </ul>
-      </ul>
-    </nav>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <ThemeToggle client:load />
+    </div>
   </div>
 </header>
