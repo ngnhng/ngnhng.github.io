@@ -40,7 +40,8 @@ export default function SearchableCatalog({ posts }: SearchableCatalogProps) {
       </div>
 
       {/* Results */}
-      {filteredPosts.length > 0 ? (
+      <div className="transition-all duration-300 ease-in-out">
+        {filteredPosts.length > 0 ? (
         <>
           {/* Featured Post */}
           {featuredPost && (
@@ -55,7 +56,7 @@ export default function SearchableCatalog({ posts }: SearchableCatalogProps) {
                     <div className="relative overflow-hidden">
                       <div className="transition-transform duration-500 transform group-hover:scale-110">
                         <img 
-                          src={featuredPost.image.replace('/src/assets/', '/_astro/')} 
+                          src={featuredPost.image.includes('/_astro/') ? featuredPost.image : featuredPost.image.replace('/src/assets/', '/_astro/')} 
                           alt={featuredPost.imageAlt}
                           className="w-full h-full object-cover"
                         />
@@ -105,7 +106,7 @@ export default function SearchableCatalog({ posts }: SearchableCatalogProps) {
                       <a href={`/notes/${post.slug}`} className="block group-hover:opacity-90 transition-opacity duration-300">
                         <div className="transition-transform duration-500 transform group-hover:scale-110">
                           <img 
-                            src={post.image.replace('/src/assets/', '/_astro/')} 
+                            src={post.image.includes('/_astro/') ? post.image : post.image.replace('/src/assets/', '/_astro/')} 
                             alt={post.imageAlt}
                             className="w-full h-full object-cover"
                           />
@@ -142,7 +143,7 @@ export default function SearchableCatalog({ posts }: SearchableCatalogProps) {
           )}
         </>
       ) : (
-        <section className="text-center py-16">
+        <section className="text-center py-16 animate-fade-in">
           <div className="max-w-md mx-auto">
             <div className="text-6xl mb-6">🔍</div>
             <h3 className="text-xl font-semibold text-foreground mb-4">No articles found</h3>
@@ -152,6 +153,7 @@ export default function SearchableCatalog({ posts }: SearchableCatalogProps) {
           </div>
         </section>
       )}
+      </div>
     </div>
   );
 }
