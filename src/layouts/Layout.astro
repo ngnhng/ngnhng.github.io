@@ -5,26 +5,48 @@ import "@fontsource/ledger";
 
 interface Props {
   showSidebar?: boolean;
+  title?: string;
+  description?: string;
 }
+
+const { title = "ngnhng's notes", description = "Personal blog and notes by ngnhng" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>ngnhng's notes</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <title>{title}</title>
+    <script is:inline>
+      // Set theme before page loads to prevent flash
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored || (prefersDark ? 'dark' : 'light');
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    </script>
   </head>
-  <body>
-    <div id="container" class="min-h-screen flex flex-col pb-16">
+  <body class="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+    <div id="container" class="min-h-screen flex flex-col">
       <TopMenu />
-      <main class="pt-16">
-        <div class="max-w-7xl mx-auto space-y-12 w-full">
+      <main class="pt-20 pb-16 flex-1">
+        <div class="max-w-7xl mx-auto px-6 space-y-12 w-full">
           <slot />
         </div>
       </main>
+      <footer class="border-t border-border bg-muted/30 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+          <div class="text-center text-sm text-muted-foreground">
+            <p>&copy; 2025 ngnhng. Built with <a href="https://astro.build" class="text-primary hover:underline">Astro</a></p>
+          </div>
+        </div>
+      </footer>
     </div>
   </body>
 </html>

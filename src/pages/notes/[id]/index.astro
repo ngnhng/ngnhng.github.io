@@ -1,5 +1,4 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -14,6 +13,4 @@ const post = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Layout>
-  <Content />
-</Layout>
+<Content />

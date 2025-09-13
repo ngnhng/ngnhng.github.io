@@ -1,0 +1,74 @@
+---
+import { getCollection } from "astro:content";
+import Card from "./Card.astro";
+import SearchableCatalog from "./SearchableCatalog";
+
+interface Props {
+  query: Query;
+}
+
+export interface Query {
+  tags: string[];
+  sortBy: "date" | "title";
+}
+
+const { query } = Astro.props;
+
+const blogPosts = await getCollection("notes");
+
+const posts = blogPosts.filter((post: any) => {
+  if (query.tags.length === 0) return true;
+  return query.tags.some((tag) => post.data?.tags?.includes(tag));
+});
+
+const sortedPosts = posts.sort((a: any, b: any) => {
+  if (query.sortBy === "date") {
+    return (
+      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+    );
+  }
+  return a.data.title.localeCompare(b.data.title);
+});
+
+// Transform posts to a simple format for the React component
+const postsData = sortedPosts.map((post) => ({
+  title: post.data.title,
+  description: post.data.description,
+  pubDate: post.data.pubDate.toDateString(),
+  image: post.data.image,
+  imageAlt: post.data.imageAlt,
+  slug: post.data.slug,
+  tags: post.data.tags || [],
+}));
+---
+
+<div class="space-y-16">
+  <!-- Hero Section -->
+  <section class="text-center py-12">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-6xl font-bold text-foreground mb-6 bg-gradient-to-r from-primary via-primary to-muted-foreground bg-clip-text text-transparent">
+        Welcome to My Notes
+      </h1>
+      <p class="text-xl text-muted-foreground mb-8 leading-relaxed">
+        A collection of thoughts, learnings, and insights from my journey in software development and beyond.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
+        <span class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          {sortedPosts.length} Articles
+        </span>
+        <span class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+          Regular Updates
+        </span>
+        <span class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+          Open Source
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search and Content -->
+  <SearchableCatalog posts={postsData} client:load />
+</div>
