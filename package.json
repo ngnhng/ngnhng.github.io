@@ -1,41 +1,11 @@
 {
-  "name": "blog",
-  "type": "module",
-  "version": "0.0.1",
+  "name": "ngnhng.github.io",
+  "private": true,
+  "version": "0.1.0",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/mdx": "^4.0.3",
-    "@astrojs/react": "^4.1.2",
-    "@astrojs/tailwind": "^5.1.4",
-    "@fontsource/ledger": "^5.1.1",
-    "@radix-ui/react-separator": "^1.1.1",
-    "@radix-ui/react-slot": "^1.1.1",
-    "@radix-ui/react-tooltip": "^1.1.6",
-    "@types/react": "^19.0.2",
-    "@types/react-dom": "^19.0.2",
-    "astro": "^5.1.1",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "framer-motion": "^11.15.0",
-    "gray-matter": "^4.0.3",
-    "lucide": "^0.469.0",
-    "lucide-react": "^0.469.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "remark-mdx": "^3.1.0",
-    "satori": "^0.12.0",
-    "sharp": "^0.33.5",
-    "tailwind-merge": "^2.6.0",
-    "tailwindcss": "^3.4.17",
-    "tailwindcss-animate": "^1.0.7"
+    "start": "pnpm exec serve ."
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.16",
-    "@types/node": "^22.10.3"
+    "serve": "14.2.5"
   }
 }
