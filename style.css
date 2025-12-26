@@ -43,6 +43,9 @@ body {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 2rem 1.25rem 3rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -84,18 +87,27 @@ a:focus-visible {
 
 .content {
   margin: 0 0 var(--spacing-large);
+  flex: 1 0 auto;
 }
 
 h1,
 h2 {
   font-family: "JetBrains Mono", "Courier New", monospace;
-  color: var(--base08);
+  color: var(--base07);
+  text-decoration: underline;
+  text-decoration-color: var(--base08);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
 }
 
 h3 {
   font-family: "JetBrains Mono", "Courier New", monospace;
   font-size: 1.15rem;
-  color: var(--base09);
+  color: var(--base07);
+  text-decoration: underline;
+  text-decoration-color: var(--base09);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
   margin-bottom: var(--spacing-small);
 }
 
@@ -174,11 +186,41 @@ li {
 .contact-info {
   font-size: var(--font-size-large);
   color: var(--base04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
 }
 
 .resume-summary {
   font-size: var(--font-size-large);
   margin-bottom: var(--spacing-large);
+}
+
+.resume-actions {
+  margin-top: var(--spacing-medium);
+}
+
+.print-button {
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: var(--font-size-small);
+  color: var(--base06);
+  background-color: var(--base01);
+  border: 1px solid var(--base02);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.print-button:hover,
+.print-button:focus-visible {
+  color: var(--base07);
+  background-color: var(--base02);
 }
 
 .job-header-container {
@@ -225,6 +267,7 @@ li {
 .site-footer {
   color: var(--base04);
   font-size: var(--font-size-small);
+  margin-top: auto;
 }
 
 @media (min-width: 768px) {
@@ -254,5 +297,52 @@ li {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body.resume-page {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    background-color: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body.resume-page a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  body.resume-page h1,
+  body.resume-page h2,
+  body.resume-page h3 {
+    color: #000;
+  }
+
+  body.resume-page h1,
+  body.resume-page h2 {
+    text-decoration-color: var(--base08);
+  }
+
+  body.resume-page h3 {
+    text-decoration-color: var(--base09);
+  }
+
+  body.resume-page .resume-headline,
+  body.resume-page .resume-summary,
+  body.resume-page .contact-info,
+  body.resume-page .job-company,
+  body.resume-page .job-period-location,
+  body.resume-page .post-meta,
+  body.resume-page .site-title,
+  body.resume-page .site-footer {
+    color: #000;
+  }
+
+  body.resume-page .resume-actions {
+    display: none;
   }
 }

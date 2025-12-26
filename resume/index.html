@@ -15,20 +15,50 @@
       name="description"
       content="Resume of Nguyen Nhat Nguyen, software developer based in HCMC, Vietnam."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ngnhng.github.io/resume/" />
+    <meta property="og:title" content="Nhat-Nguyen Nguyen — Resume" />
+    <meta
+      property="og:description"
+      content="Resume of Nguyen Nhat Nguyen, software developer based in HCMC, Vietnam."
+    />
+    <meta
+      property="og:image"
+      content="https://ngnhng.github.io/og-placeholder.jpg"
+    />
+    <meta property="og:site_name" content="Nhat-Nguyen" />
   </head>
-  <body>
+  <body class="resume-page">
     <div class="page-header">
       <h1>Nguyễn Nhật Nguyên</h1>
-      <p class="resume-headline">
-        Backend Software Engineer (Go/Java) · Microservices · AWS/GCP
-      </p>
       <div class="contact-info">
-        <a href="mailto:mountngubinh@gmail.com">mountngubinh@gmail.com</a> •
-        <a href="https://github.com/ngnhng">https://github.com/ngnhng</a> •
-        <a href="https://www.linkedin.com/in/ngnhng1"
-          >https://www.linkedin.com/in/ngnhng1</a
-        >
-        • HCMC, Vietnam • +84 354184728
+        <div class="contact-row">
+          <a
+            href="mailto:mountngubinh@gmail.com"
+            target="_blank"
+            rel="noreferrer"
+            >mountngubinh@gmail.com</a
+          >
+          <a
+            href="https://github.com/ngnhng"
+            target="_blank"
+            rel="noreferrer"
+            >github.com/ngnhng</a
+          >
+          <a
+            href="https://www.linkedin.com/in/ngnhng1"
+            target="_blank"
+            rel="noreferrer"
+            >linkedin.com/in/ngnhng1</a
+          >
+        </div>
+        <div class="contact-row">
+          <span>HCMC, Vietnam</span>
+          <span>+84 354184728</span>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <button class="print-button" type="button">Print / Save as PDF</button>
       </div>
     </div>
 
@@ -43,7 +73,12 @@
     <div class="job-header-container">
       <div class="job-title-company">
         <h3>Software Developer</h3>
-        <a href="https://geekup.vn" target="_blank" class="job-header-link">
+        <a
+          href="https://geekup.vn"
+          target="_blank"
+          rel="noreferrer"
+          class="job-header-link"
+        >
           <div class="job-header">
             <span class="job-company"><strong>GEEK Up</strong></span>
           </div>
@@ -55,7 +90,7 @@
       </div>
     </div>
     <p>
-      <strong>Banking platform (Customer onboarding)</strong> · 12/2024 -
+      <strong>Digital platform for customer onboarding</strong> · 12/2024 -
       Present
     </p>
     <p class="post-meta">Stack: Go, Java (Spring Boot/Quarkus), SQL, BPM</p>
@@ -112,7 +147,12 @@
     <div class="job-header-container">
       <div class="job-title-company">
         <h3>Intern Software Developer</h3>
-        <a href="https://geekup.vn" target="_blank" class="job-header-link">
+        <a
+          href="https://geekup.vn"
+          target="_blank"
+          rel="noreferrer"
+          class="job-header-link"
+        >
           <div class="job-header">
             <span class="job-company">
               <strong>GEEK Up</strong> — Internship focused on backend
@@ -127,15 +167,15 @@
       </div>
     </div>
 
-    <h2>Core Skills</h2>
+    <h2>Technical Expertise</h2>
     <ul>
       <li>
-        <strong>Languages:</strong> Go, Java 21+ (Spring Boot, Quarkus),
+        <strong>Programming in:</strong> Go, Java 21+ (Spring Boot, Quarkus),
         JavaScript (ES6+), TypeScript.
       </li>
       <li>
-        <strong>Backend:</strong> RESTful APIs, gRPC, microservices,
-        event-driven systems (Kafka, NATS), NodeJS.
+        <strong>Designing and building backend systems:</strong> RESTful APIs,
+        gRPC, microservices, event-driven systems (Kafka, NATS), NodeJS.
       </li>
       <li><strong>Cloud/DevOps:</strong> AWS (Lambda, DynamoDB), GKE, EKS.</li>
       <li><strong>Databases:</strong> PostgreSQL, MySQL, DynamoDB.</li>
@@ -148,12 +188,24 @@
     <h2>Open Source Works</h2>
     <ul>
       <li>
-        <a href="https://github.com/ngnhng/durablefuture">DurableFuture</a> — A
+        <a
+          href="https://github.com/ngnhng/durablefuture"
+          target="_blank"
+          rel="noreferrer"
+          >DurableFuture</a
+        >
+        — A
         lightweight workflow engine in Go for building long-running, resilient
         applications.
       </li>
       <li>
-        <a href="https://github.com/DeluxeOwl/chronicle">chronicle</a> — A Go
+        <a
+          href="https://github.com/DeluxeOwl/chronicle"
+          target="_blank"
+          rel="noreferrer"
+          >chronicle</a
+        >
+        — A Go
         event-sourcing framework (community project; not my repository).
       </li>
     </ul>
@@ -173,5 +225,12 @@
         <span>HCMC, Vietnam</span>
       </div>
     </div>
+    <script>
+      const printButton = document.querySelector(".print-button");
+
+      if (printButton) {
+        printButton.addEventListener("click", () => window.print());
+      }
+    </script>
   </body>
 </html>

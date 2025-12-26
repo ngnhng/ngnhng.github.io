@@ -3,9 +3,10 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "start": "pnpm exec serve ."
+    "start": "pnpm exec live-server ."
   },
   "devDependencies": {
+    "live-server": "1.2.2",
     "serve": "14.2.5"
   }
 }

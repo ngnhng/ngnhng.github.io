@@ -8,6 +8,24 @@
       name="description"
       content="A short note about the joy of keeping systems small, legible, and kind to your future self."
     />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://ngnhng.github.io/blog/first-post/"
+    />
+    <meta
+      property="og:title"
+      content="The quiet joy of small systems — Nhat-Nguyen"
+    />
+    <meta
+      property="og:description"
+      content="A short note about the joy of keeping systems small, legible, and kind to your future self."
+    />
+    <meta
+      property="og:image"
+      content="https://ngnhng.github.io/og-placeholder.jpg"
+    />
+    <meta property="og:site_name" content="Nhat-Nguyen" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -47,6 +65,14 @@
 
     <footer class="site-footer">
       <p><a href="/">Back to home</a></p>
+      <p>© <span id="footer-year"></span> Nhat-Nguyen.</p>
     </footer>
+    <script>
+      const footerYear = document.querySelector("#footer-year");
+
+      if (footerYear) {
+        footerYear.textContent = new Date().getFullYear();
+      }
+    </script>
   </body>
 </html>
