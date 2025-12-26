@@ -92,6 +92,23 @@ h2 {
   color: var(--base08);
 }
 
+h3 {
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 1.15rem;
+  color: var(--base09);
+  margin-bottom: var(--spacing-small);
+}
+
+ul {
+  padding-left: 1.5rem;
+  margin: 0 0 var(--spacing-large);
+  font-size: var(--font-size-large);
+}
+
+li {
+  margin-bottom: var(--spacing-small);
+}
+
 .bio h1 {
   font-size: 2rem;
   margin-bottom: var(--spacing-medium);
@@ -138,6 +155,73 @@ h2 {
   text-align: justify;
 }
 
+.page-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.resume-headline {
+  font-size: 1.05rem;
+  color: var(--base04);
+  margin-bottom: 0.5rem;
+}
+
+.contact-info {
+  font-size: var(--font-size-large);
+  color: var(--base04);
+}
+
+.resume-summary {
+  font-size: var(--font-size-large);
+  margin-bottom: var(--spacing-large);
+}
+
+.job-header-container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.job-title-company {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.job-header-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.job-header-link:hover {
+  text-decoration: underline;
+}
+
+.job-header {
+  margin-bottom: 0.25rem;
+}
+
+.job-company {
+  color: var(--base06);
+}
+
+.job-period-location {
+  color: var(--base04);
+  font-size: var(--font-size-small);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
 .site-footer {
   color: var(--base04);
   font-size: var(--font-size-small);
@@ -152,6 +236,15 @@ h2 {
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
+  }
+
+  .job-header-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .job-period-location {
+    text-align: right;
   }
 }
 
