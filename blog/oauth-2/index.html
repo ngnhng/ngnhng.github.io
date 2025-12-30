@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      OAuth 2.0 Authorization Code Flow (Toy Simulator) - Nhat-Nguyen
+    </title>
+    <meta
+      name="description"
+      content="Interactive, browser-only simulator of the OAuth 2.0 Authorization Code flow."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://ngnhng.github.io/blog/oauth-2/" />
+    <meta
+      property="og:title"
+      content="OAuth 2.0 Authorization Code Flow (Toy Simulator) - Nhat-Nguyen"
+    />
+    <meta
+      property="og:description"
+      content="Interactive, browser-only simulator of the OAuth 2.0 Authorization Code flow."
+    />
+    <meta
+      property="og:image"
+      content="https://ngnhng.github.io/og-placeholder.jpg"
+    />
+    <meta property="og:site_name" content="Nhat-Nguyen" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/blog/oauth-2/styles.css" />
+  </head>
+  <body class="oauth-page">
+    <header class="site-header">
+      <p class="site-title">Nhat-Nguyen</p>
+      <p class="site-tagline">Notes on building calm systems.</p>
+    </header>
+
+    <main class="content">
+      <article class="post oauth-post">
+        <h1>OAuth 2.0 Authorization Code Flow (Toy Simulator)</h1>
+        <p class="post-meta">Interactive guide</p>
+        <p>
+          This is a browser-only walkthrough of the OAuth 2.0 Authorization Code
+          flow. It highlights the front-channel redirects, the back-channel
+          token exchange, and a quick token refresh.
+        </p>
+        <p class="oauth-note">
+          <strong>Note:</strong> This is for learning only. Real OAuth uses real
+          redirects, HTTPS, and secrets never belong in browser JavaScript.
+        </p>
+
+        <section
+          class="oauth-sim"
+          aria-label="OAuth 2.0 authorization code flow simulator"
+        >
+          <header class="topbar">
+            <div>
+              <h2>OAuth 2.0 Toy Simulator</h2>
+              <p class="sub">
+                A tiny, single-page demo of the Authorization Code flow
+                (simulated).
+              </p>
+            </div>
+            <div class="pill-row">
+              <span class="pill">Frontend channel</span>
+              <span class="pill pill-alt">Backend channel</span>
+            </div>
+          </header>
+
+          <div class="layout">
+            <section class="channel channel-frontend">
+              <div class="channel-title">Frontend channel</div>
+
+              <div class="grid">
+                <div class="card card-owner">
+                  <div class="card-title">Resource Owner (User)</div>
+
+                  <div class="field">
+                    <label for="username">Username</label>
+                    <input
+                      id="username"
+                      value="alice"
+                      autocomplete="username"
+                    />
+                  </div>
+
+                  <div class="field">
+                    <label for="password">Password</label>
+                    <input
+                      id="password"
+                      type="password"
+                      value="wonderland"
+                      autocomplete="current-password"
+                    />
+                  </div>
+
+                  <div class="hint">
+                    Demo credentials: <code>alice / wonderland</code>
+                  </div>
+
+                  <div class="row">
+                    <button id="btn1" class="btn primary" type="button">
+                      1) Authorization request
+                    </button>
+                    <button id="reset" class="btn" type="button">Reset</button>
+                  </div>
+
+                  <div class="mini">
+                    <b>Consent</b>
+                    <div class="consent">
+                      <label class="check" for="consent">
+                        <input id="consent" type="checkbox" checked />
+                        Allow "Toy Client App" to read your profile
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card card-client">
+                  <div class="card-title">Client App</div>
+
+                  <div class="kv">
+                    <div>
+                      <span>client_id</span><code id="clientIdView"></code>
+                    </div>
+                    <div>
+                      <span>redirect_uri</span><code id="redirectView"></code>
+                    </div>
+                    <div><span>scope</span><code id="scopeView"></code></div>
+                    <div><span>state</span><code id="stateView"></code></div>
+                  </div>
+
+                  <div class="row">
+                    <button
+                      id="btn3"
+                      class="btn primary"
+                      disabled
+                      type="button"
+                    >
+                      3) Request tokens (code -> tokens)
+                    </button>
+                    <button
+                      id="btn4"
+                      class="btn primary"
+                      disabled
+                      type="button"
+                    >
+                      4) Access protected resource
+                    </button>
+                  </div>
+
+                  <div class="row">
+                    <button id="btnRefresh" class="btn" disabled type="button">
+                      Use refresh token
+                    </button>
+                    <button id="toggleSecrets" class="btn" type="button">
+                      Show/hide client secret
+                    </button>
+                  </div>
+
+                  <div class="mini">
+                    <b>Client state</b>
+                    <pre id="clientState" class="pre"></pre>
+                  </div>
+                </div>
+
+                <div class="card card-auth">
+                  <div class="card-title">Authorization Server</div>
+
+                  <div class="mini">
+                    <b>What the user sees</b>
+                    <div id="authScreen" class="screen" aria-live="polite">
+                      Click "1) Authorization request" to start.
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <button
+                      id="btn2"
+                      class="btn primary"
+                      disabled
+                      type="button"
+                    >
+                      2) Approve delegation
+                    </button>
+                  </div>
+
+                  <div class="mini">
+                    <b>Issued items</b>
+                    <pre id="authState" class="pre"></pre>
+                  </div>
+                </div>
+
+                <div class="card card-resource">
+                  <div class="card-title">Resource Server (API)</div>
+
+                  <div class="row">
+                    <button
+                      id="btn5"
+                      class="btn primary"
+                      disabled
+                      type="button"
+                    >
+                      5) Verify access token
+                    </button>
+                  </div>
+
+                  <div class="mini">
+                    <b>API response</b>
+                    <pre id="apiState" class="pre"></pre>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <details class="log-drawer">
+              <summary class="log-drawer-summary">
+                Backend channel (simulated HTTP traffic)
+              </summary>
+              <section class="channel channel-backend">
+                <div class="channel-title">
+                  Backend channel (simulated HTTP traffic)
+                </div>
+
+                <div class="log-wrap">
+                  <div class="log-head">
+                    <div class="log-title">Message log</div>
+                    <div class="log-actions">
+                      <button id="copyLog" class="btn small" type="button">
+                        Copy log
+                      </button>
+                      <button id="clearLog" class="btn small" type="button">
+                        Clear
+                      </button>
+                    </div>
+                  </div>
+                  <div id="log" class="log" role="log" aria-live="polite"></div>
+                </div>
+              </section>
+            </details>
+          </div>
+
+          <div class="sim-footer">
+            Tip: access tokens expire fast in this demo so you can try refresh.
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        © <span id="footer-year"></span> Nhat-Nguyen Nguyen. Built with plain
+        HTML and CSS.
+      </p>
+    </footer>
+    <script>
+      const footerYear = document.querySelector("#footer-year");
+
+      if (footerYear) {
+        footerYear.textContent = new Date().getFullYear();
+      }
+    </script>
+    <script src="/blog/oauth-2/app.js"></script>
+  </body>
+</html>
