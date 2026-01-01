@@ -85,6 +85,21 @@ a:focus-visible {
   max-width: 32rem;
 }
 
+.site-links {
+  font-size: var(--font-size-small);
+  color: var(--base04);
+  margin-top: var(--spacing-small);
+}
+
+.site-links a {
+  color: inherit;
+}
+
+.site-links a:hover,
+.site-links a:focus {
+  color: var(--base0C);
+}
+
 .content {
   margin: 0 0 var(--spacing-large);
   flex: 1 0 auto;
@@ -145,6 +160,19 @@ li {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+}
+
+.post-list .is-wip {
+  opacity: 0.6;
+}
+
+.post-list .is-wip .post-title {
+  color: var(--base04);
+}
+
+.post-list .is-wip .post-meta {
+  color: var(--base03);
+  font-style: italic;
 }
 
 .post-meta {
