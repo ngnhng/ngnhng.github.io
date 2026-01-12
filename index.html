@@ -34,7 +34,7 @@
 
     <main class="content">
       <section class="bio">
-        <h1>Hi, I'm Nhat-Nguyen.</h1>
+        <h1>Hi, I'm Nhật Nguyên.</h1>
         <p>
           I build minimal systems and write to clarify what I learn. This site
           is a home for short essays, personal notes, and project reflections.
@@ -47,30 +47,244 @@
         <p><a href="/resume/">View resume</a></p>
       </section>
 
-      <section class="posts">
-        <h2>Blog posts</h2>
-        <ul class="post-list">
-          <li>
-            <a href="/blog/first-post/">The quiet joy of small systems</a>
-            <span class="post-meta">Mar 12, 2025</span>
-          </li>
-          <li class="is-wip">
-            <span class="post-title">REST API design workflow</span>
-            <span class="post-meta">Work in progress</span>
-          </li>
-          <li class="is-wip">
-            <span class="post-title">The Outbox pattern</span>
-            <span class="post-meta">Work in progress</span>
-          </li>
-          <li class="is-wip">
-            <span class="post-title">Building a Durable Execution engine</span>
-            <span class="post-meta">Work in progress</span>
-          </li>
-          <li class="is-wip">
-            <span class="post-title">OAuth 2.0 explained</span>
-            <span class="post-meta">Work in progress</span>
-          </li>
-        </ul>
+      <section class="library">
+        <h2>Library</h2>
+        <div class="tab-group">
+          <div class="tab-list" role="tablist" aria-label="Content">
+            <input
+              class="tab-input"
+              type="radio"
+              name="content-tabs"
+              id="tab-blogs"
+              checked
+            />
+            <label
+              class="tab-label"
+              for="tab-blogs"
+              role="tab"
+              aria-controls="panel-blogs"
+              >Blog</label
+            >
+            <input
+              class="tab-input"
+              type="radio"
+              name="content-tabs"
+              id="tab-notes"
+            />
+            <label
+              class="tab-label"
+              for="tab-notes"
+              role="tab"
+              aria-controls="panel-notes"
+              >Notes</label
+            >
+          </div>
+          <div class="tab-panels">
+            <section
+              class="posts"
+              id="panel-blogs"
+              role="tabpanel"
+              aria-labelledby="tab-blogs"
+            >
+              <h3>Blog posts</h3>
+              <ul class="post-list">
+                <li>
+                  <a href="/blog/first-post/">The quiet joy of small systems</a>
+                  <span class="post-meta">Mar 12, 2025</span>
+                </li>
+                <li>
+                  <a
+                    href="/blog/rest-api-design-workflow/"
+                    target="_blank"
+                    rel="noreferrer"
+                    >REST API design workflow</a
+                  >
+                  <span class="post-meta">WIP</span>
+                </li>
+                <li class="is-wip">
+                  <span class="post-title">The Outbox pattern</span>
+                  <span class="post-meta">Work in progress</span>
+                </li>
+                <li class="is-wip">
+                  <span class="post-title"
+                    >Building a Durable Execution engine</span
+                  >
+                  <span class="post-meta">Work in progress</span>
+                </li>
+                <li class="is-wip">
+                  <span class="post-title">OAuth 2.0 explained</span>
+                  <span class="post-meta">Work in progress</span>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="notes"
+              id="panel-notes"
+              role="tabpanel"
+              aria-labelledby="tab-notes"
+            >
+              <h3>Notes</h3>
+              <div class="tab-group tab-group--nested">
+                <div class="tab-list tab-list--with-search">
+                  <div
+                    class="tab-list__tabs"
+                    role="tablist"
+                    aria-label="Note topics"
+                  >
+                    <input
+                      class="tab-input"
+                      type="radio"
+                      name="note-tabs"
+                      id="note-tab-software"
+                      checked
+                    />
+                    <label
+                      class="tab-label"
+                      for="note-tab-software"
+                      role="tab"
+                      aria-controls="note-panel-software"
+                      >On Software</label
+                    >
+                  </div>
+                  <form
+                    class="tab-search"
+                    role="search"
+                    aria-label="Search notes"
+                  >
+                    <label class="tab-search__label" for="notes-search"
+                      >Search notes</label
+                    >
+                    <input
+                      class="tab-search__input"
+                      type="search"
+                      id="notes-search"
+                      name="q"
+                      placeholder="Search notes"
+                    />
+                  </form>
+                </div>
+                <div class="tab-panels note-panels">
+                  <section
+                    id="note-panel-software"
+                    role="tabpanel"
+                    aria-labelledby="note-tab-software"
+                  >
+                    <div class="tab-group tab-group--subnested">
+                      <div
+                        class="tab-list"
+                        role="tablist"
+                        aria-label="Software notes"
+                      >
+                        <input
+                          class="tab-input"
+                          type="radio"
+                          name="software-tabs"
+                          id="software-tab-sql"
+                          checked
+                        />
+                        <label
+                          class="tab-label"
+                          for="software-tab-sql"
+                          role="tab"
+                          aria-controls="software-panel-sql"
+                          >SQL</label
+                        >
+                        <input
+                          class="tab-input"
+                          type="radio"
+                          name="software-tabs"
+                          id="software-tab-java"
+                        />
+                        <label
+                          class="tab-label"
+                          for="software-tab-java"
+                          role="tab"
+                          aria-controls="software-panel-java"
+                          >Java</label
+                        >
+                        <input
+                          class="tab-input"
+                          type="radio"
+                          name="software-tabs"
+                          id="software-tab-patterns"
+                        />
+                        <label
+                          class="tab-label"
+                          for="software-tab-patterns"
+                          role="tab"
+                          aria-controls="software-panel-patterns"
+                          >Patterns</label
+                        >
+                      </div>
+                      <div class="tab-panels">
+                        <section
+                          id="software-panel-overview"
+                          role="tabpanel"
+                          aria-labelledby="software-tab-overview"
+                        >
+                          <ul class="note-list">
+                            <li
+                              data-note-tab="note-tab-software"
+                              data-software-tab="software-tab-overview"
+                            >
+                              <a href="/notes/software/"
+                                >Software notes overview</a
+                              >
+                            </li>
+                          </ul>
+                        </section>
+                        <section
+                          id="software-panel-sql"
+                          role="tabpanel"
+                          aria-labelledby="software-tab-sql"
+                        >
+                          <ul class="note-list">
+                            <li
+                              data-note-tab="note-tab-software"
+                              data-software-tab="software-tab-sql"
+                            >
+                              <a href="/notes/software/sql/window-function/"
+                                >Window Functions</a
+                              >
+                            </li>
+                          </ul>
+                        </section>
+                        <section
+                          id="software-panel-java"
+                          role="tabpanel"
+                          aria-labelledby="software-tab-java"
+                        >
+                          <ul class="note-list">
+                            <li
+                              data-note-tab="note-tab-software"
+                              data-software-tab="software-tab-java"
+                            >
+                              <a href="/notes/software/java/">Java Resources</a>
+                            </li>
+                          </ul>
+                        </section>
+                        <section
+                          id="software-panel-patterns"
+                          role="tabpanel"
+                          aria-labelledby="software-tab-patterns"
+                        >
+                          <ul class="note-list">
+                            <li
+                              data-note-tab="note-tab-software"
+                              data-software-tab="software-tab-patterns"
+                            >
+                              <a href="/notes/software/patterns/">Patterns</a>
+                            </li>
+                          </ul>
+                        </section>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
       </section>
     </main>
 
@@ -85,6 +299,83 @@
 
       if (footerYear) {
         footerYear.textContent = new Date().getFullYear();
+      }
+
+      const notesSearchInput = document.querySelector("#notes-search");
+      const notesPanel = document.querySelector("#panel-notes");
+
+      if (notesSearchInput && notesPanel) {
+        const notesSearchForm = notesSearchInput.closest("form");
+        const noteItems = Array.from(
+          notesPanel.querySelectorAll(".note-list li")
+        );
+        const tabInputs = Array.from(notesPanel.querySelectorAll(".tab-input"));
+        const noteTitles = noteItems.map((item) => {
+          const link = item.querySelector("a");
+          return (link ? link.textContent : item.textContent)
+            .trim()
+            .toLowerCase();
+        });
+
+        const showAllNotes = () => {
+          noteItems.forEach((item) => {
+            item.hidden = false;
+          });
+        };
+
+        if (notesSearchForm) {
+          notesSearchForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+          });
+        }
+
+        tabInputs.forEach((input) => {
+          input.addEventListener("change", () => {
+            if (notesSearchInput.value) {
+              notesSearchInput.value = "";
+              showAllNotes();
+            }
+          });
+        });
+
+        notesSearchInput.addEventListener("input", (event) => {
+          const query = event.target.value.trim().toLowerCase();
+          let firstMatch = null;
+
+          if (!query) {
+            showAllNotes();
+            return;
+          }
+
+          noteItems.forEach((item, index) => {
+            const matches = noteTitles[index].includes(query);
+            item.hidden = !matches;
+            if (!firstMatch && matches) {
+              firstMatch = item;
+            }
+          });
+
+          if (firstMatch) {
+            const noteTabId = firstMatch.dataset.noteTab;
+            const softwareTabId = firstMatch.dataset.softwareTab;
+
+            if (noteTabId) {
+              const noteTabInput = document.querySelector(`#${noteTabId}`);
+              if (noteTabInput) {
+                noteTabInput.checked = true;
+              }
+            }
+
+            if (softwareTabId) {
+              const softwareTabInput = document.querySelector(
+                `#${softwareTabId}`
+              );
+              if (softwareTabInput) {
+                softwareTabInput.checked = true;
+              }
+            }
+          }
+        });
       }
     </script>
   </body>

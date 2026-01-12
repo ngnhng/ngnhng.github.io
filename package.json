@@ -6,7 +6,11 @@
     "start": "pnpm exec live-server ."
   },
   "devDependencies": {
+    "@slidev/cli": "^52.11.1",
     "live-server": "1.2.2",
     "serve": "14.2.5"
+  },
+  "dependencies": {
+    "@slidev/theme-default": "^0.25.0"
   }
 }

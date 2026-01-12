@@ -141,13 +141,199 @@ li {
   margin-bottom: var(--spacing-medium);
 }
 
-.posts {
+.library {
   margin-top: 2rem;
 }
 
-.posts h2 {
+.library h2 {
   font-size: 1.3rem;
   margin-bottom: var(--spacing-medium);
+}
+
+.tab-group {
+  margin-top: var(--spacing-small);
+}
+
+.tab-group--nested {
+  margin-top: var(--spacing-medium);
+}
+
+.tab-group--subnested {
+  margin-top: var(--spacing-small);
+  padding: 0;
+}
+
+.tab-group--subnested .tab-list {
+  margin-bottom: var(--spacing-small);
+}
+
+.tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: var(--spacing-medium);
+}
+
+.tab-list--with-search {
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-medium);
+  flex-wrap: wrap;
+}
+
+.tab-list__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tab-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tab-label {
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--base04);
+  background-color: var(--base01);
+  border: 1px solid var(--base02);
+  border-bottom: none;
+  border-radius: 0.6rem 0.6rem 0 0;
+  padding: 0.35rem 0.9rem 0.4rem;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease;
+  position: relative;
+}
+
+.tab-label:hover {
+  color: var(--base06);
+  border-color: var(--base03);
+}
+
+.tab-input:focus-visible + .tab-label {
+  outline: 2px solid var(--base0D);
+  outline-offset: 3px;
+}
+
+.tab-input:checked + .tab-label {
+  color: var(--base07);
+  background-color: var(--base00);
+  border-color: var(--base0D);
+}
+
+.tab-input:checked + .tab-label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--base00);
+}
+
+.tab-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tab-search__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.tab-search__input {
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 0.85rem;
+  color: var(--base06);
+  background-color: var(--base01);
+  border: 1px solid var(--base02);
+  border-radius: 0.6rem;
+  padding: 0.4rem 0.75rem;
+  min-width: 180px;
+}
+
+.tab-search__input::placeholder {
+  color: var(--base04);
+}
+
+.tab-search__input:focus-visible {
+  outline: 2px solid var(--base0D);
+  outline-offset: 3px;
+}
+
+.tab-panels [role="tabpanel"] {
+  display: none;
+}
+
+.tab-panels {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+.tab-group--nested > .tab-panels,
+.tab-group--subnested > .tab-panels {
+  border: 1px solid var(--base02);
+  border-radius: 0.6rem;
+  padding: var(--spacing-medium);
+  background-color: var(--base00);
+}
+
+.tab-group:has(#tab-blogs:checked) #panel-blogs {
+  display: block;
+}
+
+.tab-group:has(#tab-notes:checked) #panel-notes {
+  display: block;
+}
+
+.tab-group--nested:has(#note-tab-software:checked) #note-panel-software {
+  display: block;
+}
+
+.tab-group--subnested:has(#software-tab-overview:checked)
+  #software-panel-overview {
+  display: block;
+}
+
+.tab-group--subnested:has(#software-tab-sql:checked) #software-panel-sql {
+  display: block;
+}
+
+.tab-group--subnested:has(#software-tab-java:checked) #software-panel-java {
+  display: block;
+}
+
+.tab-group--subnested:has(#software-tab-patterns:checked)
+  #software-panel-patterns {
+  display: block;
+}
+
+.tab-panels .posts {
+  margin-top: 0;
+}
+
+.note-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 var(--spacing-large);
+  display: grid;
+  gap: 0.5rem;
+  font-size: var(--font-size-large);
 }
 
 .post-list {
