@@ -27,9 +27,19 @@
   </head>
   <body>
     <header class="site-header">
-      <p class="site-tagline">
-        Writing about craft, systems, and the quiet parts of work.
-      </p>
+      <div class="site-header__row">
+        <p class="site-tagline">
+          Writing about craft, systems, and the quiet parts of work.
+        </p>
+        <button
+          class="theme-toggle"
+          type="button"
+          aria-pressed="false"
+          aria-label="Switch to light mode"
+        >
+          <span class="theme-toggle__label">Light</span>
+        </button>
+      </div>
     </header>
 
     <main class="content">
@@ -296,9 +306,43 @@
     </footer>
     <script>
       const footerYear = document.querySelector("#footer-year");
+      const themeToggle = document.querySelector(".theme-toggle");
+      const themeLabel = document.querySelector(".theme-toggle__label");
 
       if (footerYear) {
         footerYear.textContent = new Date().getFullYear();
+      }
+
+      const setTheme = (theme) => {
+        document.documentElement.setAttribute("data-theme", theme);
+        if (themeToggle) {
+          const isLight = theme === "light";
+          themeToggle.setAttribute("aria-pressed", String(isLight));
+          themeToggle.setAttribute(
+            "aria-label",
+            `Switch to ${isLight ? "dark" : "light"} mode`
+          );
+        }
+        if (themeLabel) {
+          themeLabel.textContent = theme === "light" ? "Dark" : "Light";
+        }
+      };
+
+      const storedTheme = localStorage.getItem("theme");
+      const prefersLight = window.matchMedia(
+        "(prefers-color-scheme: light)"
+      ).matches;
+      const initialTheme = storedTheme || (prefersLight ? "light" : "dark");
+      setTheme(initialTheme);
+
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme") || "dark";
+          const nextTheme = currentTheme === "light" ? "dark" : "light";
+          localStorage.setItem("theme", nextTheme);
+          setTheme(nextTheme);
+        });
       }
 
       const notesSearchInput = document.querySelector("#notes-search");
