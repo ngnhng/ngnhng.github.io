@@ -383,8 +383,7 @@ body.oauth-page {
   justify-content: space-between;
   align-items: center;
   padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid
-    color-mix(in srgb, var(--sim-accent2) 40%, var(--sim-line));
+  border-bottom: 1px solid color-mix(in srgb, var(--sim-accent2) 40%, var(--sim-line));
   background: color-mix(in srgb, var(--sim-accent2) 12%, var(--sim-bg));
 }
 

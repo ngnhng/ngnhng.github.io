@@ -1,16 +1,19 @@
 {
   "name": "ngnhng.github.io",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "pnpm exec live-server ."
+    "start": "pnpm exec live-server .",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  },
+  "dependencies": {
+    "@slidev/theme-default": "^0.25.0"
   },
   "devDependencies": {
     "@slidev/cli": "^52.11.1",
     "live-server": "1.2.2",
+    "oxfmt": "^0.24.0",
     "serve": "14.2.5"
-  },
-  "dependencies": {
-    "@slidev/theme-default": "^0.25.0"
   }
 }
