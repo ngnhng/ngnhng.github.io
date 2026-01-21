@@ -76,13 +76,21 @@
                 <circle cx="12" cy="7" r="1.3" fill="currentColor" />
               </svg>
             </span>
-            <span>Note</span>
+            <span>TL;DR</span>
           </div>
           <div class="callout__body">
             <p>
-              This is my personal notes which I made while studying Java, so the content below
+              🞿 This is my personal notes which I made while studying Java, so the content below
               should not be taken seriously as technical reference.
             </p>
+            <p>
+              🞿 I will be spending 70% of the note building up the basic understanding of the Java
+              memory model... to explain a difference that could be summarized in a single sentence:
+            </p>
+            <blockquote>
+              <code>==</code> checks same value for primitives and same object for references;
+              <code>equals()</code> checks whatever the class defines as equality.
+            </blockquote>
           </div>
         </blockquote>
 
@@ -91,12 +99,12 @@
           <a class="heading-anchor" href="#the-context" aria-label="Link to The Context">#</a>
         </h2>
         <p>
-          In Java, we have two methods for equality assertion of values: <code>equals()</code> and
+          In Java, we have two methods for equality comparison of values: <code>equals()</code> and
           the operand <code>==</code>.
         </p>
         <ul>
           <li>
-            <code>equals()</code> exists since the
+            <code>equals()</code> method exists since the
             <a href="/notes/software/java/jdk-jre-jvm" target="_blank" rel="noopener noreferrer"
               >JDK</a
             >
@@ -112,7 +120,7 @@
             as a public method of the class <code>Object</code>.
           </li>
           <li>
-            The <code>==</code> operand is common in most high-level programming languages and in
+            The <code>==</code> operator is common in most high-level programming languages and in
             Java, it is in the category of Equality &amp; Relational Operator
             <sup
               ><a
@@ -135,17 +143,18 @@
         </h2>
         <p>
           To understand how primitive values and objects are being asserted for equality in Java, I
-          think we must first <em>roughly</em> understand how values and objects in Java are managed
-          memory-wise.
+          think we must first <em>roughly</em> understand how they are being managed memory-wise.
         </p>
         <p>
-          It is known that Java is a <em>statically</em> and <em>strongly typed</em> language. The
-          terms <em>statically typed</em> and <em>strongly typed</em> is further explain in the
+          For context, it is known that Java is a <em>statically</em> and
+          <em>strongly typed</em> language. Static here means that every variable and expression
+          have a type that is known at compile time, and strongly here means that the type of the
+          value does not change.
           <a
             href="https://docs.oracle.com/javase/specs/jls/se25/html/jls-4.html"
             target="_blank"
             rel="noopener noreferrer"
-            >Java Spec</a
+            >See Chapter 4 of the Java Spec for more detail on the type system</a
           >.
         </p>
 
@@ -156,7 +165,7 @@
           >
         </h3>
         <p>
-          In Java, everything is an object, except for primitive values. In other words, there are
+          Java is object-oriented, but not everything is an object since there are primitive values. In other words, there are
           two kinds of types in Java: Primitive types and Reference types
           <sup
             ><a
@@ -168,10 +177,21 @@
           >.
         </p>
         <p>
-          From the spec, it is clear that a primitive value such as an integer <code>5</code> is
-          simply represented as <code>...000101</code> bits in memory, there is no object header, no
-          class pointer, no garbage collection markings, and no memory overhead. It is literally
-          just 32 slots of electricity (bits) representing the number 5.
+          It is clear that a primitive value such as an integer <code>5</code> is simply represented
+          as <code>...000101</code> in binary format (bits) in memory.
+        </p>
+
+        <p>
+          However, in Java, according to the
+          <a
+            href="https://docs.oracle.com/javase/specs/jvms/se11/jvms11.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            >JVM Spec section 2.3</a
+          >
+          only guarantees the semantics (logic/math) are 32-bit for <code>int</code> values. The
+          specification grants JVM implementations such as HotSpot OpenJ9, etc. freedom in how they
+          map the abstract machine to physical hardware.
         </p>
         <p>
           Meanwhile, the reference type (class, array, interface, String, etc.) values are really
@@ -657,8 +677,18 @@
           </svg>
         </p>
         <p>
-          Less simply, a reference is a bit pattern representing a virtual memory address (a
-          pointer) that indicates the starting byte of the <em>JVM Object Header</em> on the Heap.
+          Less simply, a reference is a value that identifies an object; how it is represented
+          (pointer, handle (pointers to pointers), compressed pointer, etc.) is JVM dependent.
+        </p>
+        <p>
+          In the HotSpot implementation, a reference is a bit pattern representing a virtual memory
+          address (a pointer, or a
+          <a
+            href="https://www.baeldung.com/jvm-compressed-oops"
+            target="_blank"
+            rel="noopener noreferrer"
+            >compressed offset decoded into a pointer</a
+          >) that indicates the starting byte of the <em>JVM Object Header</em> on the Heap.
         </p>
         <p>
           <?xml version="1.0" encoding="UTF-8"?>
