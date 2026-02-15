@@ -492,6 +492,24 @@ li {
   text-align: justify;
 }
 
+.post figure {
+  margin: 0 0 var(--spacing-large);
+}
+
+.post img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.post figcaption {
+  margin-top: var(--spacing-small);
+  color: var(--base04);
+  font-size: var(--font-size-small);
+  text-align: center;
+}
+
 .callout {
   --callout-accent: var(--base0D);
   --callout-bg: var(--base01);

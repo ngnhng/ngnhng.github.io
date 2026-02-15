@@ -1,4 +1,4 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["dist/**", "*.min.js", "assets/**"]
+  "ignorePatterns": ["dist/**", "*.min.js", "blog/rest-api-design-workflow/**"]
 }

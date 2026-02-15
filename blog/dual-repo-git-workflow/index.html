@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development — Nhat-Nguyen
+    </title>
+    <meta
+      name="description"
+      content="A practical dual-repository Git workflow for developing locally and delivering code into locked-down enterprise environments."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://ngnhng.github.io/blog/dual-repo-git-workflow/" />
+    <meta
+      property="og:title"
+      content="Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development — Nhat-Nguyen"
+    />
+    <meta
+      property="og:description"
+      content="A practical dual-repository Git workflow for developing locally and delivering code into locked-down enterprise environments."
+    />
+    <meta property="og:image" content="https://ngnhng.github.io/og-placeholder.jpg" />
+    <meta property="og:site_name" content="Nhat-Nguyen" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <script
+      data-goatcounter="https://ngnhng.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__row">
+        <p class="site-title">
+          <a href="/">Nhat-Nguyen</a>
+        </p>
+        <button
+          class="theme-toggle"
+          type="button"
+          aria-pressed="false"
+          aria-label="Switch to light mode"
+        >
+          <span class="theme-toggle__label">Light</span>
+        </button>
+      </div>
+      <p class="site-tagline">Notes on building calm systems.</p>
+      <p class="site-links">
+        <a href="https://www.linkedin.com/in/ngnhng1" target="_blank" rel="noopener noreferrer"
+          >LinkedIn</a
+        >
+        ·
+        <a href="https://github.com/ngnhng" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </p>
+    </header>
+    <main class="content">
+      <article class="post">
+        <h1 id="bridging-the-air-gap-a-dual-repo-strategy-for-enterprise-development">
+          Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development
+        </h1>
+
+        <h2 id="the-challenge-security-vs-velocity">
+          The Challenge: Security vs. Velocity
+          <a
+            class="heading-anchor"
+            href="#the-challenge-security-vs-velocity"
+            aria-label="Link to The Challenge: Security vs. Velocity"
+            >#</a
+          >
+        </h2>
+        <p>
+          In enterprise software development, security is paramount. We often work within "Jump
+          Hosts", provisioned Windows VMs inside a locked-down Intranet. While this architecture
+          secures the data, it severely hampers the development experience (DX).
+        </p>
+        <p>Common bottlenecks we faced included:</p>
+        <ul>
+          <li>
+            <strong>Tooling Limitations:</strong> Inability to install modern IDEs, plugins, or
+            container runtimes on the remote VM.
+          </li>
+          <li>
+            <strong>Input Latency:</strong> Developing via Windows Remote Desktop (RDP) introduces
+            perceptible input lag, making rapid coding and debugging frustrating.
+          </li>
+          <li>
+            <strong>The "Straw" Effect:</strong> Trying to push a large team's daily output through
+            a single RDP window creates a massive productivity bottleneck.
+          </li>
+        </ul>
+
+        <h2 id="the-constraints">
+          The Constraints
+          <a class="heading-anchor" href="#the-constraints" aria-label="Link to The Constraints"
+            >#</a
+          >
+        </h2>
+        <p>Our specific environment has a strict network topology:</p>
+        <ol>
+          <li>
+            <strong>Internal:</strong> An Intranet-only GitLab instance, accessible only via RDP.
+          </li>
+          <li>
+            <strong>No Direct Tunnel:</strong> We cannot use SSH tunnels or <code>git remote</code>
+            to bridge the local machine and the internal network.
+          </li>
+          <li>
+            <strong>Compliance:</strong> Crucially, our contract <strong>allows</strong> source code
+            to be hosted on our own secure infrastructure for development purposes.
+          </li>
+        </ol>
+
+        <h2 id="the-solution-the-patch-bridge-workflow">
+          The Solution: The "Patch-Bridge" Workflow
+          <a
+            class="heading-anchor"
+            href="#the-solution-the-patch-bridge-workflow"
+            aria-label='Link to The Solution: The "Patch-Bridge" Workflow'
+            >#</a
+          >
+        </h2>
+        <p>
+          To reclaim our productivity, we implemented a <strong>Dual-Repo Workflow</strong>. We
+          treat our local environment as the "Development Factory" and the Intranet environment as
+          the "Assembly Line."
+        </p>
+        <p>Here is how we sync them without a direct network connection:</p>
+
+        <h3 id="1-the-outer-loop-high-velocity">1. The "Outer" Loop (High Velocity)</h3>
+        <p>We set up a self-hosted GitLab instance outside the firewall.</p>
+        <ul>
+          <li>
+            <strong>Workflow:</strong> The team develops locally using preferred IDEs (VS Code,
+            JetBrains), runs local Docker containers, and uses local debugging tools.
+          </li>
+          <li>
+            <strong>Collaboration:</strong> We merge requests and perform code reviews on the
+            "Outer" GitLab. This allows us to move fast with zero latency.
+          </li>
+        </ul>
+
+        <figure>
+          <img
+            src="./workflow.png"
+            alt="Diagram of the dual-repository Git workflow from local development to enterprise GitLab."
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Dual-repository workflow overview.</figcaption>
+        </figure>
+
+        <h3 id="2-the-bridge-the-transfer">2. The Bridge (The Transfer)</h3>
+        <p>
+          Since we cannot push directly to the internal remote, we use Git’s inherent portability.
+        </p>
+        <ul>
+          <li>
+            Instead of copying raw files (which risks <code>CRLF</code> issues and misses metadata),
+            we use <strong>Git Patches</strong>.
+          </li>
+          <li>We generate a patch file for the finalized feature branch:</li>
+        </ul>
+        <pre><code class="language-bash">git format-patch master --stdout &gt; feature-update.patch</code></pre>
+
+        <h3 id="3-the-inner-loop-integration">3. The "Inner" Loop (Integration)</h3>
+        <ul>
+          <li>
+            <strong>Transfer:</strong> We transfer the <code>.patch</code> file via the RDP
+            clipboard or a mounted drive to the Windows VM.
+          </li>
+          <li>
+            <strong>Apply:</strong> Inside the Intranet, we apply the patch to the internal
+            repository:
+          </li>
+        </ul>
+        <pre><code class="language-bash">git apply --check feature-update.patch  # Dry run
+git am feature-update.patch             # Apply with commit history intact</code></pre>
+        <ul>
+          <li>
+            <strong>Push:</strong> The code is then pushed to the internal Enterprise GitLab for
+            final CI/CD processing.
+          </li>
+        </ul>
+
+        <h2 id="why-this-works">
+          Why This Works
+          <a class="heading-anchor" href="#why-this-works" aria-label="Link to Why This Works">#</a>
+        </h2>
+        <p>
+          By decoupling the <em>writing</em> of code from the <em>hosting</em> of code, we gained:
+        </p>
+        <ul>
+          <li><strong>Native Performance:</strong> Zero latency typing and scrolling.</li>
+          <li>
+            <strong>Better History:</strong> Using <code>git format-patch</code> /
+            <code>git am</code> preserves author information and commit timestamps, unlike simple
+            file copying.
+          </li>
+          <li>
+            <strong>Compliance:</strong> We respect the air-gap for the final build artifacts while
+            using authorized local hardware for the heavy lifting.
+          </li>
+        </ul>
+      </article>
+    </main>
+  </body>
+</html>
