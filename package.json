@@ -7,6 +7,7 @@
     "start": "astro dev",
     "prebuild": "node scripts/sync-presentation-artifacts.mjs",
     "build": "astro build",
+    "postbuild": "node scripts/cleanup-transient-public-assets.mjs",
     "publish:root": "node scripts/publish-root.mjs",
     "preview": "astro preview",
     "check": "astro check",
