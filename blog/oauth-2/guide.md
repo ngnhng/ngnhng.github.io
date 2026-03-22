@@ -27,8 +27,7 @@ Below is a tiny **plain HTML + CSS + JS** “OAuth2 Authorization Code flow” _
       <div>
         <h1>OAuth2 Toy Simulator</h1>
         <p class="sub">
-          A tiny, single-page demo of the <b>Authorization Code</b> flow
-          (simulated).
+          A tiny, single-page demo of the <b>Authorization Code</b> flow (simulated).
         </p>
       </div>
       <div class="pill-row">
@@ -54,22 +53,13 @@ Below is a tiny **plain HTML + CSS + JS** “OAuth2 Authorization Code flow” _
 
             <div class="field">
               <label>Password</label>
-              <input
-                id="password"
-                type="password"
-                value="wonderland"
-                autocomplete="off"
-              />
+              <input id="password" type="password" value="wonderland" autocomplete="off" />
             </div>
 
-            <div class="hint">
-              Demo credentials: <code>alice / wonderland</code>
-            </div>
+            <div class="hint">Demo credentials: <code>alice / wonderland</code></div>
 
             <div class="row">
-              <button id="btn1" class="btn primary">
-                1) Authorization request
-              </button>
+              <button id="btn1" class="btn primary">1) Authorization request</button>
               <button id="reset" class="btn">Reset</button>
             </div>
 
@@ -90,9 +80,7 @@ Below is a tiny **plain HTML + CSS + JS** “OAuth2 Authorization Code flow” _
 
             <div class="kv">
               <div><span>client_id</span><code id="clientIdView"></code></div>
-              <div>
-                <span>redirect_uri</span><code id="redirectView"></code>
-              </div>
+              <div><span>redirect_uri</span><code id="redirectView"></code></div>
               <div><span>scope</span><code id="scopeView"></code></div>
               <div><span>state</span><code id="stateView"></code></div>
             </div>
@@ -101,18 +89,12 @@ Below is a tiny **plain HTML + CSS + JS** “OAuth2 Authorization Code flow” _
               <button id="btn3" class="btn primary" disabled>
                 3) Request tokens (code → tokens)
               </button>
-              <button id="btn4" class="btn primary" disabled>
-                4) Access protected resource
-              </button>
+              <button id="btn4" class="btn primary" disabled>4) Access protected resource</button>
             </div>
 
             <div class="row">
-              <button id="btnRefresh" class="btn" disabled>
-                Use refresh token
-              </button>
-              <button id="toggleSecrets" class="btn">
-                Show/hide client secret
-              </button>
+              <button id="btnRefresh" class="btn" disabled>Use refresh token</button>
+              <button id="toggleSecrets" class="btn">Show/hide client secret</button>
             </div>
 
             <div class="mini">
@@ -127,15 +109,11 @@ Below is a tiny **plain HTML + CSS + JS** “OAuth2 Authorization Code flow” _
 
             <div class="mini">
               <b>What the user sees</b>
-              <div id="authScreen" class="screen">
-                Click “1) Authorization request” to start.
-              </div>
+              <div id="authScreen" class="screen">Click “1) Authorization request” to start.</div>
             </div>
 
             <div class="row">
-              <button id="btn2" class="btn primary" disabled>
-                2) Approve delegation
-              </button>
+              <button id="btn2" class="btn primary" disabled>2) Approve delegation</button>
             </div>
 
             <div class="mini">
@@ -149,9 +127,7 @@ Below is a tiny **plain HTML + CSS + JS** “OAuth2 Authorization Code flow” _
             <div class="card-title">Resource Server (API)</div>
 
             <div class="row">
-              <button id="btn5" class="btn primary" disabled>
-                5) Verify access token
-              </button>
+              <button id="btn5" class="btn primary" disabled>5) Verify access token</button>
             </div>
 
             <div class="mini">
@@ -164,9 +140,7 @@ Below is a tiny **plain HTML + CSS + JS** “OAuth2 Authorization Code flow” _
 
       <!-- BACKEND CHANNEL (log) -->
       <section class="channel channel-backend">
-        <div class="channel-title">
-          Backend channel (simulated HTTP traffic)
-        </div>
+        <div class="channel-title">Backend channel (simulated HTTP traffic)</div>
 
         <div class="log-wrap">
           <div class="log-head">
@@ -205,10 +179,10 @@ Below is a tiny **plain HTML + CSS + JS** “OAuth2 Authorization Code flow” _
   --accent: #2563eb;
   --accent2: #059669;
   --danger: #dc2626;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
-    Arial;
+  --mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
 }
 
 * {
@@ -512,11 +486,9 @@ function nowTime() {
 }
 
 function rand(n = 20) {
-  const chars =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let out = "";
-  for (let i = 0; i < n; i++)
-    out += chars[Math.floor(Math.random() * chars.length)];
+  for (let i = 0; i < n; i++) out += chars[Math.floor(Math.random() * chars.length)];
   return out;
 }
 
@@ -528,9 +500,7 @@ function logLine(type, text, extra = "") {
   const el = document.createElement("div");
   el.className = "line";
   const meta = `<span class="meta">[${nowTime()}]</span> `;
-  el.innerHTML = `${meta}${text} ${
-    extra ? `<span class="meta">${extra}</span>` : ""
-  }`;
+  el.innerHTML = `${meta}${text} ${extra ? `<span class="meta">${extra}</span>` : ""}`;
   $("log").prepend(el);
 }
 
@@ -563,7 +533,7 @@ function decodeFakeJwt(token) {
     const parts = token.split(".");
     if (parts.length < 2) return null;
     const json = decodeURIComponent(
-      escape(atob(parts[1].replaceAll("-", "+").replaceAll("_", "/")))
+      escape(atob(parts[1].replaceAll("-", "+").replaceAll("_", "/"))),
     );
     return JSON.parse(json);
   } catch {
@@ -601,31 +571,21 @@ const db = {
  * Simulated OAuth servers
  * -------------------------- */
 const authorizationServer = {
-  authorize({
-    client_id,
-    redirect_uri,
-    scope,
-    state,
-    username,
-    password,
-    consent,
-  }) {
+  authorize({ client_id, redirect_uri, scope, state, username, password, consent }) {
     logLine(
       "info",
       `${arrow("Client → Auth")}: GET /authorize`,
-      `client_id=${client_id}, scope=${scope}, state=${state}`
+      `client_id=${client_id}, scope=${scope}, state=${state}`,
     );
 
     const client = db.clients[client_id];
     if (!client) return { error: "unauthorized_client" };
-    if (client.redirect_uri !== redirect_uri)
-      return { error: "invalid_redirect_uri" };
+    if (client.redirect_uri !== redirect_uri) return { error: "invalid_redirect_uri" };
 
     const user = db.users[username];
     if (!user || user.password !== password)
       return { error: "access_denied", reason: "bad_credentials" };
-    if (!consent)
-      return { error: "access_denied", reason: "user_denied_consent" };
+    if (!consent) return { error: "access_denied", reason: "user_denied_consent" };
 
     const code = "code_" + rand(18);
     const exp = Date.now() + 60_000; // code valid 60s
@@ -634,38 +594,25 @@ const authorizationServer = {
     logLine(
       "info",
       `${arrow("Auth → Browser")}: 302 Redirect to redirect_uri`,
-      `?code=${code}&state=${state}`
+      `?code=${code}&state=${state}`,
     );
 
     return { code, state };
   },
 
-  token({
-    grant_type,
-    code,
-    redirect_uri,
-    client_id,
-    client_secret,
-    refresh_token,
-  }) {
-    logLine(
-      "info",
-      `${arrow("Client → Auth")}: POST /token`,
-      `grant_type=${grant_type}`
-    );
+  token({ grant_type, code, redirect_uri, client_id, client_secret, refresh_token }) {
+    logLine("info", `${arrow("Client → Auth")}: POST /token`, `grant_type=${grant_type}`);
 
     const client = db.clients[client_id];
     if (!client) return { error: "invalid_client" };
-    if (client.secret !== client_secret)
-      return { error: "invalid_client", reason: "bad_secret" };
+    if (client.secret !== client_secret) return { error: "invalid_client", reason: "bad_secret" };
 
     if (grant_type === "authorization_code") {
       const record = db.authCodes.get(code);
       if (!record) return { error: "invalid_grant", reason: "unknown_code" };
       if (record.redirect_uri !== redirect_uri)
         return { error: "invalid_grant", reason: "redirect_mismatch" };
-      if (record.exp < Date.now())
-        return { error: "invalid_grant", reason: "code_expired" };
+      if (record.exp < Date.now()) return { error: "invalid_grant", reason: "code_expired" };
 
       // one-time use
       db.authCodes.delete(code);
@@ -698,7 +645,7 @@ const authorizationServer = {
       logLine(
         "info",
         `${arrow("Auth → Client")}: 200 OK`,
-        ok("issued access_token + refresh_token")
+        ok("issued access_token + refresh_token"),
       );
 
       return {
@@ -712,10 +659,8 @@ const authorizationServer = {
 
     if (grant_type === "refresh_token") {
       const rr = db.refreshTokens.get(refresh_token);
-      if (!rr)
-        return { error: "invalid_grant", reason: "unknown_refresh_token" };
-      if (rr.client_id !== client_id)
-        return { error: "invalid_grant", reason: "client_mismatch" };
+      if (!rr) return { error: "invalid_grant", reason: "unknown_refresh_token" };
+      if (rr.client_id !== client_id) return { error: "invalid_grant", reason: "client_mismatch" };
 
       const accessExp = Date.now() + 15_000;
       const accessPayload = {
@@ -735,11 +680,7 @@ const authorizationServer = {
         exp: accessExp,
       });
 
-      logLine(
-        "info",
-        `${arrow("Auth → Client")}: 200 OK`,
-        ok("refreshed access_token")
-      );
+      logLine("info", `${arrow("Auth → Client")}: 200 OK`, ok("refreshed access_token"));
 
       return {
         token_type: "Bearer",
@@ -757,7 +698,7 @@ const authorizationServer = {
     logLine(
       "info",
       `${arrow("Resource → Auth")}: POST /introspect`,
-      `token=${access_token.slice(0, 18)}…`
+      `token=${access_token.slice(0, 18)}…`,
     );
 
     const rec = db.accessTokens.get(access_token);
@@ -781,7 +722,7 @@ const resourceServer = {
     logLine(
       "info",
       `${arrow("Client → Resource")}: GET /me`,
-      `Authorization: Bearer ${access_token.slice(0, 18)}…`
+      `Authorization: Bearer ${access_token.slice(0, 18)}…`,
     );
 
     // Resource server verifies token (introspection simulation)
@@ -790,7 +731,7 @@ const resourceServer = {
       logLine(
         "info",
         `${arrow("Resource → Client")}: 401 Unauthorized`,
-        bad("token invalid/expired")
+        bad("token invalid/expired"),
       );
       return {
         ok: false,
@@ -802,11 +743,7 @@ const resourceServer = {
 
     // Check scope (super simplified)
     if (!status.scope.includes("profile:read")) {
-      logLine(
-        "info",
-        `${arrow("Resource → Client")}: 403 Forbidden`,
-        bad("insufficient_scope")
-      );
+      logLine("info", `${arrow("Resource → Client")}: 403 Forbidden`, bad("insufficient_scope"));
       return {
         ok: false,
         status: 403,
@@ -817,11 +754,7 @@ const resourceServer = {
 
     const user = db.users[status.username];
     const body = { ok: true, status: 200, data: user.profile, token: status };
-    logLine(
-      "info",
-      `${arrow("Resource → Client")}: 200 OK`,
-      ok("returned protected resource")
-    );
+    logLine("info", `${arrow("Resource → Client")}: 200 OK`, ok("returned protected resource"));
     return body;
   },
 };
@@ -860,15 +793,9 @@ function updateViews() {
     scope: client.scope,
     state: client.state,
     authorization_code: client.authorization_code,
-    access_token: client.access_token
-      ? client.access_token.slice(0, 40) + "…"
-      : null,
-    refresh_token: client.refresh_token
-      ? client.refresh_token.slice(0, 22) + "…"
-      : null,
-    access_token_payload: client.access_token
-      ? decodeFakeJwt(client.access_token)
-      : null,
+    access_token: client.access_token ? client.access_token.slice(0, 40) + "…" : null,
+    refresh_token: client.refresh_token ? client.refresh_token.slice(0, 22) + "…" : null,
+    access_token_payload: client.access_token ? decodeFakeJwt(client.access_token) : null,
   };
   $("clientState").textContent = pretty(clientView);
 
@@ -951,8 +878,8 @@ function step1_authorizationRequest() {
     "info",
     `${arrow("Client → Browser")}: open Authorization URL`,
     `/authorize?client_id=${client.client_id}&redirect_uri=${encodeURIComponent(
-      client.redirect_uri
-    )}&scope=${encodeURIComponent(client.scope)}&state=${client.state}`
+      client.redirect_uri,
+    )}&scope=${encodeURIComponent(client.scope)}&state=${client.state}`,
   );
 
   updateViews();
@@ -983,7 +910,7 @@ function step2_approveDelegation() {
     logLine(
       "info",
       bad("Authorization failed"),
-      `error=${res.error}${res.reason ? `, reason=${res.reason}` : ""}`
+      `error=${res.error}${res.reason ? `, reason=${res.reason}` : ""}`,
     );
     client.authorization_code = null;
     updateViews();
@@ -1006,7 +933,7 @@ function step2_approveDelegation() {
   logLine(
     "info",
     `${arrow("Browser → Client")}: GET redirect_uri`,
-    `?code=${res.code}&state=${res.state}`
+    `?code=${res.code}&state=${res.state}`,
   );
 
   updateViews();
@@ -1028,7 +955,7 @@ function step3_requestTokens() {
     logLine(
       "info",
       bad("Token exchange failed"),
-      `error=${res.error}${res.reason ? `, reason=${res.reason}` : ""}`
+      `error=${res.error}${res.reason ? `, reason=${res.reason}` : ""}`,
     );
     return;
   }
@@ -1048,11 +975,7 @@ function step5_verifyTokenOnly() {
   if (!client.access_token) return;
   const status = authorizationServer.introspect(client.access_token);
   $("apiState").textContent = pretty({ introspection: status });
-  logLine(
-    "info",
-    `Verification result: ${status.active ? ok("active") : bad("inactive")}`,
-    ""
-  );
+  logLine("info", `Verification result: ${status.active ? ok("active") : bad("inactive")}`, "");
   updateViews();
 }
 
@@ -1077,17 +1000,13 @@ function refreshAccessToken() {
     logLine(
       "info",
       bad("Refresh failed"),
-      `error=${res.error}${res.reason ? `, reason=${res.reason}` : ""}`
+      `error=${res.error}${res.reason ? `, reason=${res.reason}` : ""}`,
     );
     return;
   }
 
   client.access_token = res.access_token;
-  logLine(
-    "info",
-    ok("Got new access token via refresh"),
-    `expires_in=${res.expires_in}s`
-  );
+  logLine("info", ok("Got new access token via refresh"), `expires_in=${res.expires_in}s`);
   startTick();
   updateViews();
 }
