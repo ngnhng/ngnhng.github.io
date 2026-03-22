@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PostCard from '../../components/PostCard.astro'
+import SiteHeader from '../../components/SiteHeader.astro'
+import { getNotes } from '../../lib/content'
+
+const notes = await getNotes({ includeDrafts: true })
+---
+
+<BaseLayout title="Notes — Nhat-Nguyen" description="Personal notes on software, systems, and learning.">
+  <SiteHeader tagline="Personal notes, references, and rough edges left visible." />
+  <main class="content">
+    <section class="library">
+      <h1>Notes</h1>
+      <ul class="post-list">
+        {notes.map(entry => (
+          <PostCard entry={entry} />
+        ))}
+      </ul>
+    </section>
+  </main>
+</BaseLayout>

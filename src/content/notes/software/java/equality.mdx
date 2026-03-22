@@ -1,0 +1,68 @@
+---
+title: "`==` and `.equals()` in Java"
+description: Personal notes on primitive values, references, and why Java equality feels simple until it is not.
+pubDate: 2026-03-12
+topic: Java
+tags:
+  - java
+  - memory
+  - equality
+---
+
+import Callout from '../../../../components/Callout.astro'
+
+# Notes on Equality Comparison in Java
+
+<Callout title="Note" variant="note">
+  <p>This is a study note, not a formal technical reference.</p>
+</Callout>
+
+## The Context
+
+In Java, we have two common equality mechanisms: `.equals()` and the `==` operator.
+
+- `equals()` has existed since JDK 1.0 as a method on `Object`.
+- `==` is the language-level equality operator.
+
+The superficial difference is easy to memorize. The useful difference only becomes clear once you think about what a Java variable actually holds.
+
+## The Mechanics
+
+To understand equality for primitives and objects, it helps to think first about Java's type system and memory model at a rough, practical level.
+
+### Java Type System
+
+Java has primitive types and reference types.
+
+Primitive values such as `5` are stored as the value itself. Reference values store the information the JVM uses to find the underlying object.
+
+![Primitive versus reference illustration.](/notes/software/java/equality/01.svg)
+
+In practical terms, a reference behaves like an object locator, even though treating it as a raw pointer is too simplistic.
+
+![Reference representation illustration.](/notes/software/java/equality/04.svg)
+
+<Callout title="Is a Java reference a pointer?" variant="qa">
+  <p>Not in the sense programmers can directly depend on. Garbage collectors can move objects, so Java references should be treated as JVM-managed reference values, not stable raw addresses.</p>
+</Callout>
+
+### Pass-by-value
+
+Java is pass-by-value.
+
+When you pass an object into a method, Java copies the reference value. Both variables can still reach the same object, but the value being passed is the copied reference, not a magical pass-by-reference mechanism.
+
+![Incorrect pass-by-reference intuition.](/notes/software/java/equality/02.svg)
+
+![What Java actually copies.](/notes/software/java/equality/03.svg)
+
+## Conclusion on Equality Comparison
+
+Once that model is clear, the difference becomes more concrete:
+
+| Syntax | Primitive type | Reference type |
+| --- | --- | --- |
+| `==` | Compares value-by-value | Compares the reference value |
+| `.equals()` | Not available on primitives | Compares according to the class implementation |
+
+For example, `String.equals()` compares content, while `==` on two `String` references compares whether they point to the same object identity.

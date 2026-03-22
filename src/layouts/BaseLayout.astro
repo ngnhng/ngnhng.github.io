@@ -1,0 +1,50 @@
+---
+import SiteFooter from '../components/SiteFooter.astro'
+import { siteConfig } from '../data/site'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title = `${siteConfig.title} — Notes & Essays`,
+  description = 'Personal site and blog of Nhat-Nguyen.',
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={siteConfig.title} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="alternate" type="application/rss+xml" title={`${siteConfig.title} RSS`} href={new URL('rss.xml', siteConfig.url)} />
+  </head>
+  <body>
+    <slot />
+    <SiteFooter />
+    <script
+      is:inline
+      data-goatcounter="https://ngnhng.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

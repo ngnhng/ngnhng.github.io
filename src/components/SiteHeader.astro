@@ -1,0 +1,29 @@
+---
+import ThemeToggle from './ThemeToggle.astro'
+import { siteConfig } from '../data/site'
+
+interface Props {
+  tagline?: string
+  home?: boolean
+}
+
+const { tagline = siteConfig.description, home = false } = Astro.props
+---
+
+<header class="site-header">
+  <div class="site-header__row">
+    <div>
+      {home ? (
+        <p class="site-tagline">{tagline}</p>
+      ) : (
+        <>
+          <p class="site-title">
+            <a href="/">{siteConfig.title}</a>
+          </p>
+          <p class="site-tagline site-tagline--compact">{tagline}</p>
+        </>
+      )}
+    </div>
+    <ThemeToggle />
+  </div>
+</header>

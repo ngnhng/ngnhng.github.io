@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import PostCard from '../../components/PostCard.astro'
+import SiteHeader from '../../components/SiteHeader.astro'
+import { getBlogPosts } from '../../lib/content'
+
+const posts = await getBlogPosts()
+---
+
+<BaseLayout title="Blog — Nhat-Nguyen" description="Essays and project reflections by Nhat-Nguyen.">
+  <SiteHeader tagline="Writing about craft, systems, and the quiet parts of work." />
+  <main class="content">
+    <section class="library">
+      <h1>Blog</h1>
+      <ul class="post-list">
+        {posts.map(entry => (
+          <PostCard entry={entry} />
+        ))}
+      </ul>
+    </section>
+  </main>
+</BaseLayout>

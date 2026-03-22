@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  entry: CollectionEntry<'blog'> | CollectionEntry<'notes'>
+}
+
+const { entry } = Astro.props
+const href = entry.collection === 'blog' ? `/blog/${entry.id}/` : `/notes/${entry.id}/`
+---
+
+<li class:list={['post-card', { 'is-draft': entry.data.draft }]}>
+  {entry.data.draft ? (
+    <span class="post-title">{entry.data.title}</span>
+  ) : (
+    <a href={href}>{entry.data.title}</a>
+  )}
+  <span class="post-meta">
+    {entry.data.draft ? 'Work in progress' : entry.data.pubDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })}
+  </span>
+  <p class="post-description">{entry.data.description}</p>
+</li>

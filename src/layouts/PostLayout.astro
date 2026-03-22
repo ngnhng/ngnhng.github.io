@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import BaseLayout from './BaseLayout.astro'
+import SiteHeader from '../components/SiteHeader.astro'
+
+interface Props {
+  entry: CollectionEntry<'blog'> | CollectionEntry<'notes'>
+}
+
+const { entry } = Astro.props
+const title = `${entry.data.title} — Nhat-Nguyen`
+const artifactUrl = 'artifactUrl' in entry.data ? entry.data.artifactUrl : undefined
+const pdfUrl = 'pdfUrl' in entry.data ? entry.data.pdfUrl : undefined
+---
+
+<BaseLayout title={title} description={entry.data.description}>
+  <SiteHeader tagline="Notes on building calm systems." />
+  <main class="content">
+    <article class="post">
+      <header class="post-header">
+        <p class="eyebrow">{entry.collection === 'blog' ? 'Blog' : 'Note'}</p>
+        <h1>{entry.data.title}</h1>
+        <p class="post-meta">
+          Published {entry.data.pubDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </p>
+        <p class="post-summary">{entry.data.description}</p>
+        {(artifactUrl || pdfUrl) && (
+          <div class="post-actions">
+            {artifactUrl && <a class="post-action" href={artifactUrl}>Open deck</a>}
+            {pdfUrl && <a class="post-action" href={pdfUrl}>Download PDF</a>}
+          </div>
+        )}
+      </header>
+      <slot />
+    </article>
+  </main>
+</BaseLayout>
