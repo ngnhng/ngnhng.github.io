@@ -1,29 +1,67 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>`==` and `.equals()` in Java — Nhat-Nguyen</title><meta name="description" content="Personal notes on primitive values, references, and why Java equality feels simple until it is not."><meta property="og:type" content="website"><meta property="og:url" content="https://ngnhng.github.io/notes/software/java/equality/"><meta property="og:title" content="`==` and `.equals()` in Java — Nhat-Nguyen"><meta property="og:description" content="Personal notes on primitive values, references, and why Java equality feels simple until it is not."><meta property="og:site_name" content="Nhat-Nguyen"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="Nhat-Nguyen RSS" href="https://ngnhng.github.io/rss.xml"><link rel="stylesheet" href="/_astro/SiteHeader.BUHiJ_LD.css"></head> <body>  <header class="site-header"> <div class="site-header__row"> <div>  <p class="site-title"> <a href="/">Nhat-Nguyen</a> </p> <p class="site-tagline site-tagline--compact">Notes on building calm systems.</p>  </div> <site-theme-toggle> <button class="theme-toggle" type="button" aria-hidden="true" tabindex="-1"> <span class="theme-toggle__label">Theme</span> </button> </site-theme-toggle> <script type="module" src="/_astro/ThemeToggle.astro_astro_type_script_index_0_lang.D6E4U5-C.js"></script> </div> </header> <main class="content"> <article class="post"> <header class="post-header"> <p class="eyebrow">Note</p> <h1>`==` and `.equals()` in Java</h1> <p class="post-meta">
-Published March 12, 2026 </p> <p class="post-summary">Personal notes on primitive values, references, and why Java equality feels simple until it is not.</p>  </header>  <h1 id="notes-on-equality-comparison-in-java">Notes on Equality Comparison in Java</h1>
-<aside class="callout callout--note"> <p class="callout__title">Note</p> <div class="callout__body"> <p>This is a study note, not a formal technical reference.</p> </div> </aside>
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Notes on Equality Comparison in Java — Nhat-Nguyen</title><meta name="description" content="Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`."><meta property="og:type" content="website"><meta property="og:url" content="https://ngnhng.github.io/notes/software/java/equality/"><meta property="og:title" content="Notes on Equality Comparison in Java — Nhat-Nguyen"><meta property="og:description" content="Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`."><meta property="og:site_name" content="Nhat-Nguyen"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="Nhat-Nguyen RSS" href="https://ngnhng.github.io/rss.xml"><link rel="stylesheet" href="/_astro/SiteHeader.C0GfVsiu.css"></head> <body>  <header class="site-header"> <div class="site-header__row"> <div>  <p class="site-title"> <a href="/">Nhat-Nguyen</a> </p> <p class="site-tagline site-tagline--compact">Notes on building calm systems.</p>  </div> <site-theme-toggle> <button class="theme-toggle" type="button" aria-hidden="true" tabindex="-1"> <span class="theme-toggle__label">Theme</span> </button> </site-theme-toggle> <script type="module" src="/_astro/ThemeToggle.astro_astro_type_script_index_0_lang.B-acEYQi.js"></script> </div> </header> <main class="content"> <article class="post"> <header class="post-header"> <p class="eyebrow">Note</p> <h1>Notes on Equality Comparison in Java</h1> <p class="post-meta">
+Published March 12, 2026 </p> <p class="post-summary">Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`.</p>  </header>  <aside class="callout callout--note"> <p class="callout__title">TL;DR</p> <div class="callout__body"> <p><p>This is my personal notes which I made while studying Java, so the content below should not be
+taken seriously as technical reference.</p></p><p><p>I will be spending 70% of the note building up the basic understanding of the Java memory
+model to explain a difference that could be summarized in a single sentence:</p></p><blockquote><p><code>==</code> checks same value for primitives and same object for references; 
+<code>equals()</code> checks whatever the class defines as equality.</p></blockquote> </div> </aside>
 <h2 id="the-context">The Context</h2>
-<p>In Java, we have two common equality mechanisms: <code>.equals()</code> and the <code>==</code> operator.</p>
+<p>In Java, we have two methods for equality comparison of values: <code>equals()</code> and the operator <code>==</code>.</p>
 <ul>
-<li><code>equals()</code> has existed since JDK 1.0 as a method on <code>Object</code>.</li>
-<li><code>==</code> is the language-level equality operator.</li>
+<li><code>equals()</code> exists since <a href="/notes/software/java/jdk-jre-jvm">JDK 1.0</a> as a public method of
+<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)"><code>Object</code></a>.</li>
+<li><code>==</code> is part of Java’s
+<a href="https://dev.java/learn/language-basics/all-operators/">equality and relational operators</a>.</li>
 </ul>
-<p>The superficial difference is easy to memorize. The useful difference only becomes clear once you think about what a Java variable actually holds.</p>
+<p>So what’s the difference between using <code>==</code> and <code>equals()</code> in Java? Turns out there’s a lot.</p>
 <h2 id="the-mechanics">The Mechanics</h2>
-<p>To understand equality for primitives and objects, it helps to think first about Java’s type system and memory model at a rough, practical level.</p>
+<p>To understand how primitive values and objects are asserted for equality in Java, I think we must
+first roughly understand how they are managed memory-wise.</p>
+<p>For context, Java is a statically and strongly typed language. Static here means that every
+variable and expression has a type that is known at compile time, and strongly here means that the
+type of the value does not change. See
+<a href="https://docs.oracle.com/javase/specs/jls/se25/html/jls-4.html">Chapter 4 of the Java Language Specification</a>
+for more detail on the type system.</p>
 <h3 id="java-type-system">Java Type System</h3>
-<p>Java has primitive types and reference types.</p>
-<p>Primitive values such as <code>5</code> are stored as the value itself. Reference values store the information the JVM uses to find the underlying object.</p>
+<p>Java is object-oriented, but not everything is an object since there are primitive values. In other
+words, there are two kinds of types in Java: primitive types and reference types.</p>
+<p>It is clear that a primitive value such as an integer <code>5</code> is simply represented as <code>...000101</code> in
+binary format in memory.</p>
+<p>However, in Java, according to
+<a href="https://docs.oracle.com/javase/specs/jvms/se11/jvms11.pdf">JVM Spec section 2.3</a>, the
+specification only guarantees the semantics are 32-bit for <code>int</code> values. JVM implementations such
+as HotSpot and OpenJ9 still have freedom in how they map the abstract machine to physical hardware.</p>
+<p>Meanwhile, reference type values such as classes, arrays, interfaces, and <code>String</code> are really just
+reference values that point the JVM toward the actual object in heap space.</p>
+<p>Most simply, reference type values are values that the JVM can use to find the actual object during
+runtime.</p>
 <p><img src="/notes/software/java/equality/01.svg" alt="Primitive versus reference illustration."/></p>
-<p>In practical terms, a reference behaves like an object locator, even though treating it as a raw pointer is too simplistic.</p>
+<p>Less simply, a reference is a value that identifies an object; how it is represented, whether as a
+pointer, handle, compressed pointer, or something else, is JVM-dependent.</p>
+<p>In the HotSpot implementation, a reference is a bit pattern representing a virtual memory address,
+either a pointer or a compressed offset decoded into a pointer, that indicates the starting byte of
+the JVM object header on the heap.</p>
 <p><img src="/notes/software/java/equality/04.svg" alt="Reference representation illustration."/></p>
-<aside class="callout callout--qa"> <p class="callout__title">Is a Java reference a pointer?</p> <div class="callout__body"> <p>Not in the sense programmers can directly depend on. Garbage collectors can move objects, so Java references should be treated as JVM-managed reference values, not stable raw addresses.</p> </div> </aside>
+<aside class="callout callout--qa"> <p class="callout__title">Q&amp;A</p> <div class="callout__body"> <p><p><strong>Q:</strong> Is Java’s reference a pointer?</p></p><p><p><strong>A:</strong> Short answer, no.</p></p><p><p>There are multiple JVM implementations, and in some of them the garbage collector can move
+objects to reduce fragmentation and improve locality. So we should not expect a reference to
+remain the same across time.</p></p><p><p>This means Java references are GC-aware and should not be treated as raw addresses or pointers
+that programmers can directly control.</p></p> </div> </aside>
+<aside class="callout callout--qa"> <p class="callout__title">Q&amp;A</p> <div class="callout__body"> <p><p><strong>Q:</strong> What’s in the JVM header or metadata?</p></p><p><p><strong>A:</strong> See <a href="/notes/software/java/jdk-jre-jvm">JVM</a>.</p></p> </div> </aside>
 <h3 id="pass-by-value">Pass-by-value</h3>
-<p>Java is pass-by-value.</p>
-<p>When you pass an object into a method, Java copies the reference value. Both variables can still reach the same object, but the value being passed is the copied reference, not a magical pass-by-reference mechanism.</p>
+<p>Now that we’ve seen something about how Java manages its objects, we can look at why Java is
+pass-by-value and not pass-by-reference.</p>
+<ul>
+<li>The assumption: when passing an object to a method, we are passing the object itself, or rather
+the direct link to the original one.</li>
+</ul>
 <p><img src="/notes/software/java/equality/02.svg" alt="Incorrect pass-by-reference intuition."/></p>
+<ul>
+<li>The reality: Java copies the bits inside the original variable. Since <code>p</code> holds a reference value
+in this example, that value is copied into the new method parameter.</li>
+</ul>
 <p><img src="/notes/software/java/equality/03.svg" alt="What Java actually copies."/></p>
+<p>So in short, Java is pass-by-value, and the values passed are reference values for reference types.</p>
 <h2 id="conclusion-on-equality-comparison">Conclusion on Equality Comparison</h2>
-<p>Once that model is clear, the difference becomes more concrete:</p>
+<p>Now that we have cleared the concepts around references in Java, we can finally produce a clearer
+answer on how <code>==</code> and <code>.equals()</code> differ:</p>
 
 
 
@@ -44,5 +82,10 @@ Published March 12, 2026 </p> <p class="post-summary">Personal notes on primitiv
 
 
 
-<table><thead><tr><th>Syntax</th><th>Primitive type</th><th>Reference type</th></tr></thead><tbody><tr><td><code>==</code></td><td>Compares value-by-value</td><td>Compares the reference value</td></tr><tr><td><code>.equals()</code></td><td>Not available on primitives</td><td>Compares according to the class implementation</td></tr></tbody></table>
-<p>For example, <code>String.equals()</code> compares content, while <code>==</code> on two <code>String</code> references compares whether they point to the same object identity.</p>  </article> </main>  <footer class="site-footer"> <p>© 2026 Nhat-Nguyen Nguyen. Built with Astro and Lit.</p> </footer> <script data-goatcounter="https://ngnhng.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> </body> </html> 
+<table><thead><tr><th>Operator</th><th>Primitive type</th><th>Reference type</th></tr></thead><tbody><tr><td><code>==</code></td><td>Compares value-by-value</td><td>Compares the reference value, which could be the heap address</td></tr><tr><td><code>.equals()</code></td><td>Primitive types do not have methods</td><td>Depends on the specific implementation. For example, <code>String.equals()</code> compares underlying content. A more complex <code>equals()</code> implementation can be seen in <a href="/notes/software/java/hash/"><code>HashMap</code></a>.</td></tr></tbody></table>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://docs.oracle.com/javase/specs/index.html">Java Language Specification</a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/index.html">Java Platform, Standard Edition &amp; Java Development Kit Version 25 API Specification</a></li>
+<li><a href="https://docs.oracle.com/javase/specs/jls/se25/html/jls-4.html">Java SE Spec, Chapter 4</a></li>
+</ol>  </article> </main>  <footer class="site-footer"> <p>© 2026 Nhat-Nguyen Nguyen. Built with Astro and Lit.</p> </footer> <script data-goatcounter="https://ngnhng.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> </body> </html> 

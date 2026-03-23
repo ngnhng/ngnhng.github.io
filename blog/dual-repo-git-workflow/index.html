@@ -1,40 +1,65 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development — Nhat-Nguyen</title><meta name="description" content="A practical dual-repository Git workflow for developing locally and delivering code into locked-down enterprise environments."><meta property="og:type" content="website"><meta property="og:url" content="https://ngnhng.github.io/blog/dual-repo-git-workflow/"><meta property="og:title" content="Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development — Nhat-Nguyen"><meta property="og:description" content="A practical dual-repository Git workflow for developing locally and delivering code into locked-down enterprise environments."><meta property="og:site_name" content="Nhat-Nguyen"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="Nhat-Nguyen RSS" href="https://ngnhng.github.io/rss.xml"><link rel="stylesheet" href="/_astro/SiteHeader.BUHiJ_LD.css"></head> <body>  <header class="site-header"> <div class="site-header__row"> <div>  <p class="site-title"> <a href="/">Nhat-Nguyen</a> </p> <p class="site-tagline site-tagline--compact">Notes on building calm systems.</p>  </div> <site-theme-toggle> <button class="theme-toggle" type="button" aria-hidden="true" tabindex="-1"> <span class="theme-toggle__label">Theme</span> </button> </site-theme-toggle> <script type="module" src="/_astro/ThemeToggle.astro_astro_type_script_index_0_lang.D6E4U5-C.js"></script> </div> </header> <main class="content"> <article class="post"> <header class="post-header"> <p class="eyebrow">Blog</p> <h1>Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development</h1> <p class="post-meta">
-Published February 15, 2026 </p> <p class="post-summary">A practical dual-repository Git workflow for developing locally and delivering code into locked-down enterprise environments.</p>  </header>  <h2 id="the-challenge-security-vs-velocity">The Challenge: Security vs. Velocity</h2>
-<p>In enterprise software development, security is paramount. We often work within “Jump Hosts” provisioned Windows VMs inside a locked-down intranet. While this architecture secures the data, it also slows development down in all the familiar ways.</p>
-<p>Common bottlenecks included:</p>
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development — Nhat-Nguyen</title><meta name="description" content="A practical dual-repository Git workflow for developing locally and delivering code into locked-down enterprise environments."><meta property="og:type" content="website"><meta property="og:url" content="https://ngnhng.github.io/blog/dual-repo-git-workflow/"><meta property="og:title" content="Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development — Nhat-Nguyen"><meta property="og:description" content="A practical dual-repository Git workflow for developing locally and delivering code into locked-down enterprise environments."><meta property="og:site_name" content="Nhat-Nguyen"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="Nhat-Nguyen RSS" href="https://ngnhng.github.io/rss.xml"><link rel="stylesheet" href="/_astro/SiteHeader.C0GfVsiu.css"></head> <body>  <header class="site-header"> <div class="site-header__row"> <div>  <p class="site-title"> <a href="/">Nhat-Nguyen</a> </p> <p class="site-tagline site-tagline--compact">Notes on building calm systems.</p>  </div> <site-theme-toggle> <button class="theme-toggle" type="button" aria-hidden="true" tabindex="-1"> <span class="theme-toggle__label">Theme</span> </button> </site-theme-toggle> <script type="module" src="/_astro/ThemeToggle.astro_astro_type_script_index_0_lang.B-acEYQi.js"></script> </div> </header> <main class="content"> <article class="post"> <header class="post-header"> <p class="eyebrow">Blog</p> <h1>Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development</h1> <p class="post-meta">
+Published February 15, 2026 </p> <p class="post-summary">A practical dual-repository Git workflow for developing locally and delivering code into locked-down enterprise environments.</p>  </header>  <h1 id="bridging-the-air-gap-a-dual-repo-strategy-for-enterprise-development">Bridging the Air-Gap: A Dual-Repo Strategy for Enterprise Development</h1>
+<h2 id="the-challenge-security-vs-velocity">The Challenge: Security vs. Velocity</h2>
+<p>In enterprise software development, security is paramount. We often work within “Jump Hosts”,
+provisioned Windows VMs inside a locked-down Intranet. While this architecture secures the data, it
+severely hampers the development experience (DX).</p>
+<p>Common bottlenecks we faced included:</p>
 <ul>
-<li><strong>Tooling limitations:</strong> inability to install modern IDEs, plugins, or container runtimes on the remote VM.</li>
-<li><strong>Input latency:</strong> developing through Windows Remote Desktop introduces perceptible lag during routine editing.</li>
-<li><strong>The “straw” effect:</strong> pushing a whole team’s daily output through a single RDP window becomes its own systems bottleneck.</li>
+<li><strong>Tooling Limitations:</strong> Inability to install modern IDEs, plugins, or container runtimes on the
+remote VM.</li>
+<li><strong>Input Latency:</strong> Developing via Windows Remote Desktop (RDP) introduces perceptible input lag,
+making rapid coding and debugging frustrating.</li>
+<li><strong>The “Straw” Effect:</strong> Trying to push a large team’s daily output through a single RDP window
+creates a massive productivity bottleneck.</li>
 </ul>
 <h2 id="the-constraints">The Constraints</h2>
-<p>The environment had a strict network topology:</p>
+<p>Our specific environment has a strict network topology:</p>
 <ol>
-<li><strong>Internal:</strong> an intranet-only GitLab instance accessible only through RDP.</li>
-<li><strong>No direct tunnel:</strong> no SSH tunnels or direct <code>git remote</code> bridge between local machines and the internal network.</li>
-<li><strong>Compliance:</strong> source code could still be hosted on our own secure infrastructure for development work.</li>
+<li><strong>Internal:</strong> An Intranet-only GitLab instance, accessible only via RDP.</li>
+<li><strong>No Direct Tunnel:</strong> We cannot use SSH tunnels or <code>git remote</code> to bridge the local machine and
+the internal network.</li>
+<li><strong>Compliance:</strong> Crucially, our contract <strong>allows</strong> source code to be hosted on our own secure
+infrastructure for development purposes.</li>
 </ol>
-<h2 id="the-solution-the-patch-bridge-workflow">The Solution: The Patch-Bridge Workflow</h2>
-<p>To reclaim a usable development loop, we separated the place where code is <strong>written</strong> from the place where code is <strong>integrated</strong>.</p>
-<h3 id="1-the-outer-loop">1. The outer loop</h3>
-<p>The team works on a self-hosted GitLab outside the firewall.</p>
+<h2 id="the-solution-the-patch-bridge-workflow">The Solution: The “Patch-Bridge” Workflow</h2>
+<p>To reclaim our productivity, we implemented a <strong>Dual-Repo Workflow</strong>. We treat our local
+environment as the “Development Factory” and the Intranet environment as the “Assembly Line.”</p>
+<p>Here is how we sync them without a direct network connection:</p>
+<h3 id="1-the-outer-loop-high-velocity">1. The “Outer” Loop (High Velocity)</h3>
+<p>We set up a self-hosted GitLab instance outside the firewall.</p>
 <ul>
-<li>Development stays local with preferred IDEs and tooling.</li>
-<li>Merge requests and reviews happen in the fast environment first.</li>
+<li><strong>Workflow:</strong> The team develops locally using preferred IDEs such as VS Code and JetBrains, runs
+local Docker containers, and uses local debugging tools.</li>
+<li><strong>Collaboration:</strong> We merge requests and perform code reviews on the “Outer” GitLab. This allows
+us to move fast with zero latency.</li>
 </ul>
-<h3 id="2-the-bridge">2. The bridge</h3>
-<p>Instead of copying raw files, we use Git patches.</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> format-patch</span><span style="color:#9ECBFF"> master</span><span style="color:#79B8FF"> --stdout</span><span style="color:#F97583"> ></span><span style="color:#9ECBFF"> feature-update.patch</span></span></code></pre>
-<p><img src="/blog/dual-repo-git-workflow/workflow.png" alt="Diagram of the dual-repository Git workflow from local development to enterprise GitLab."></p>
-<h3 id="3-the-inner-loop">3. The inner loop</h3>
-<p>The patch is transferred into the intranet environment and applied there:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> apply</span><span style="color:#79B8FF"> --check</span><span style="color:#9ECBFF"> feature-update.patch</span></span>
-<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> am</span><span style="color:#9ECBFF"> feature-update.patch</span></span></code></pre>
-<p>This keeps author metadata and commit history intact while avoiding line-ending drift and other manual transfer problems.</p>
-<h2 id="why-this-works">Why This Works</h2>
-<p>Decoupling development from internal hosting bought back:</p>
+<p><img src="/blog/dual-repo-git-workflow/workflow.png" alt="Dual-repository workflow overview."></p>
+<h3 id="2-the-bridge-the-transfer">2. The Bridge (The Transfer)</h3>
+<p>Since we cannot push directly to the internal remote, we use Git’s inherent portability.</p>
 <ul>
-<li><strong>Native performance:</strong> zero-latency typing and local debugging.</li>
-<li><strong>Better history:</strong> <code>git format-patch</code> and <code>git am</code> preserve commit information cleanly.</li>
-<li><strong>Compliance:</strong> the final code path still lands in the internal enterprise GitLab.</li>
+<li>Instead of copying raw files, which risks <code>CRLF</code> issues and misses metadata, we use <strong>Git
+Patches</strong>.</li>
+<li>We generate a patch file for the finalized feature branch:</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> format-patch</span><span style="color:#9ECBFF"> master</span><span style="color:#79B8FF"> --stdout</span><span style="color:#F97583"> ></span><span style="color:#9ECBFF"> feature-update.patch</span></span></code></pre>
+<h3 id="3-the-inner-loop-integration">3. The “Inner” Loop (Integration)</h3>
+<ul>
+<li><strong>Transfer:</strong> We transfer the <code>.patch</code> file via the RDP clipboard or a mounted drive to the
+Windows VM.</li>
+<li><strong>Apply:</strong> Inside the Intranet, we apply the patch to the internal repository:</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> apply</span><span style="color:#79B8FF"> --check</span><span style="color:#9ECBFF"> feature-update.patch</span><span style="color:#6A737D">  # Dry run</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> am</span><span style="color:#9ECBFF"> feature-update.patch</span><span style="color:#6A737D">             # Apply with commit history intact</span></span></code></pre>
+<ul>
+<li><strong>Push:</strong> The code is then pushed to the internal Enterprise GitLab for final CI/CD processing.</li>
+</ul>
+<h2 id="why-this-works">Why This Works</h2>
+<p>By decoupling the <em>writing</em> of code from the <em>hosting</em> of code, we gained:</p>
+<ul>
+<li><strong>Native Performance:</strong> Zero latency typing and scrolling.</li>
+<li><strong>Better History:</strong> Using <code>git format-patch</code> / <code>git am</code> preserves author information and commit
+timestamps, unlike simple file copying.</li>
+<li><strong>Compliance:</strong> We respect the air-gap for the final build artifacts while using authorized local
+hardware for the heavy lifting.</li>
 </ul>  </article> </main>  <footer class="site-footer"> <p>© 2026 Nhat-Nguyen Nguyen. Built with Astro and Lit.</p> </footer> <script data-goatcounter="https://ngnhng.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> </body> </html> 
