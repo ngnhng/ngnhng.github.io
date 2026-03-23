@@ -2,49 +2,90 @@ This file provides guidance when working with code in this repository.
 
 ## Project Overview
 
-This is a personal website and blog for Nhat-Nguyen, built as a static site using pure HTML and CSS. The project follows a minimalist philosophy prioritizing performance, accessibility, and readability.
+This is a personal website and notes/blog site for Nhat-Nguyen. The current codebase is built with Astro, Markdown/MDX content collections, and a small Lit custom element for the theme toggle. The generated site is committed back into the repository root for GitHub Pages style publishing.
+
+## Toolchain
+
+- Always start with `nvm use`
+- `.nvmrc` pins Node `22`
+- Package manager: `pnpm`
+- Main framework: Astro
+- Content format: Markdown and MDX
+- Interactive UI: Lit web component in `src/components/widgets/theme-toggle.ts`
 
 ## Development Commands
 
-- Always start with `nvm use`
-- `pnpm start` - Start local development server using the `serve` package
+- `pnpm dev` or `pnpm start` - run the Astro dev server
+- `pnpm check` - run Astro type/content checks
+- `pnpm build` - build the site into `dist/`
+- `pnpm publish:root` - copy `dist/` output into the repository root
+- `pnpm fmt` - format the codebase with `oxfmt`
+- `pnpm fmt:check` - check formatting without modifying files
 
-## Architecture
+## Development Flow
 
-### Design Philosophy
+- Make source edits in `src/`, `public/`, or other true source directories
+- Do not hand-edit generated root output unless the task is explicitly about published artifacts
+- For normal site work:
+  1. `nvm use`
+  2. edit source files
+  3. run `pnpm check`
+  4. run `pnpm build` if the change affects generated output
+  5. run `pnpm publish:root` when the published root files need to be refreshed
 
-- Pure HTML/CSS approach (no JavaScript frameworks)
-- Mobile-first responsive design with single-column layout
-- Base16 default dark color scheme
-- Modern browser support only
-- Focus on content readability across devices
+## Source Of Truth
 
-### File Structure
+- `src/pages/` defines routes
+- `src/layouts/` contains Astro layouts
+- `src/components/` contains Astro components
+- `src/components/widgets/` contains Lit custom elements
+- `src/content/` is the source of truth for blog posts and notes
+- `src/styles/global.css` holds the shared site theme and typography
+- `public/` contains static assets that should be copied through as-is
 
-- `/index.html` - Homepage with bio and blog post links
-- `/style.css` - Global styles using CSS custom properties for theming
-- `/blog/[post-name]/index.html` - Individual blog posts in their own directories
-- `/TODO.md` - Project roadmap and planned features
+## Generated And Published Artifacts
 
-### CSS Architecture
+These paths are generated or published output and should usually be updated through the build flow, not edited directly:
 
-- Uses CSS custom properties for consistent theming
-- Mobile-first responsive design with 768px breakpoint
-- Typography: JetBrains Mono for headings, Literata for body text
-- Includes accessibility features (focus states, reduced motion support)
-- Performance optimizations (font preconnection, minimal dependencies)
+- `/index.html`
+- `/blog/**/index.html`
+- `/notes/**/index.html`
+- `/_astro/`
+- `/rss.xml`
+- `/sitemap-*.xml`
+- `/sitemap-index.xml`
+- `/dist/`
 
-### Blog Structure
+The repository root acts as the published site output after `pnpm publish:root`.
 
-Each blog post lives in its own directory under `/blog/` with:
+## Content Architecture
 
-- `index.html` containing the post content
-- Associated images stored alongside the post
-- Shared styling from root `/style.css`
+- Blog content lives in `src/content/blog/**/*.{md,mdx}`
+- Notes content lives in `src/content/notes/**/*.{md,mdx}`
+- Content schemas are defined in `src/content.config.ts`
+- Blog and notes routes are rendered from Astro pages in `src/pages/blog/` and `src/pages/notes/`
+- If a note or post references static media, keep those assets under `public/` unless there is a clear Astro-specific reason to do otherwise
 
-## Development Notes
+## Presentations
 
-- The project uses semantic HTML and follows accessibility best practices
-- All styling is done through CSS custom properties for maintainability
-- Images should be optimized and properly sized for web delivery
-- No build process currently exists - files are served directly
+- The REST API design workshop presentation is checked in under `blog/rest-api-design-workflow/`
+- `pnpm build` runs `scripts/sync-presentation-artifacts.mjs` before the Astro build
+- That script copies presentation artifacts into `public/presentations/rest-api-design-workflow`
+- `scripts/cleanup-transient-public-assets.mjs` removes those transient copied assets after the build
+- Avoid editing `public/presentations/` directly; treat it as transient build input
+
+## Styling And UI
+
+- The site uses CSS custom properties in `src/styles/global.css` for theming
+- Default theme is dark, with a light theme selected through the Lit theme toggle
+- Keep the visual style minimalist, readable, and content-first
+- Preserve semantic HTML and accessibility-focused markup
+- For Lit reactive properties, avoid class-field shadowing of declared reactive properties
+
+## Working Conventions
+
+- Prefer changing Astro source files over generated HTML
+- Prefer updating content in `src/content/` over editing published pages in `blog/` or `notes/`
+- When changing routes or layouts, verify both dev behavior and generated output expectations
+- When touching theme behavior, check both the site CSS and the Lit toggle component
+- Keep static assets optimized and use stable, web-friendly file paths

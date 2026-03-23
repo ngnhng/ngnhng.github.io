@@ -7,6 +7,8 @@ export class SiteThemeToggle extends LitElement {
     theme: { state: true },
   }
 
+  declare theme: Theme
+
   static styles = css`
     :host {
       display: inline-flex;
@@ -81,7 +83,10 @@ export class SiteThemeToggle extends LitElement {
     }
   `
 
-  theme: Theme = 'dark'
+  constructor() {
+    super()
+    this.theme = 'dark'
+  }
 
   connectedCallback() {
     super.connectedCallback()
@@ -97,6 +102,7 @@ export class SiteThemeToggle extends LitElement {
 
   private applyTheme() {
     document.documentElement.setAttribute('data-theme', this.theme)
+    document.documentElement.style.colorScheme = this.theme
   }
 
   private toggleTheme() {
