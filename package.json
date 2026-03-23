@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/sync-presentation-artifacts.mjs",
     "dev": "astro dev",
+    "prestart": "node scripts/sync-presentation-artifacts.mjs",
     "start": "astro dev",
     "prebuild": "node scripts/sync-presentation-artifacts.mjs",
     "build": "astro build",
