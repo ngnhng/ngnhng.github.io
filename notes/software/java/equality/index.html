@@ -1,5 +1,7 @@
-<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Notes on Equality Comparison in Java — Nhat-Nguyen</title><meta name="description" content="Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`."><meta property="og:type" content="website"><meta property="og:url" content="https://ngnhng.github.io/notes/software/java/equality/"><meta property="og:title" content="Notes on Equality Comparison in Java — Nhat-Nguyen"><meta property="og:description" content="Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`."><meta property="og:site_name" content="Nhat-Nguyen"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="Nhat-Nguyen RSS" href="https://ngnhng.github.io/rss.xml"><link rel="stylesheet" href="/_astro/SiteHeader.C0GfVsiu.css"></head> <body>  <header class="site-header"> <div class="site-header__row"> <div>  <p class="site-title"> <a href="/">Nhat-Nguyen</a> </p> <p class="site-tagline site-tagline--compact">Notes on building calm systems.</p>  </div> <site-theme-toggle> <button class="theme-toggle" type="button" aria-hidden="true" tabindex="-1"> <span class="theme-toggle__label">Theme</span> </button> </site-theme-toggle> <script type="module" src="/_astro/ThemeToggle.astro_astro_type_script_index_0_lang.B-acEYQi.js"></script> </div> </header> <main class="content"> <article class="post"> <header class="post-header"> <p class="eyebrow">Note</p> <h1>Notes on Equality Comparison in Java</h1> <p class="post-meta">
-Published March 12, 2026 </p> <p class="post-summary">Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`.</p>  </header>  <aside class="callout callout--note"> <p class="callout__title">TL;DR</p> <div class="callout__body"> <p><p>This is my personal notes which I made while studying Java, so the content below should not be
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Notes on Equality Comparison in Java — Nhat-Nguyen</title><meta name="description" content="Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`."><meta property="og:type" content="website"><meta property="og:url" content="https://ngnhng.github.io/notes/software/java/equality/"><meta property="og:title" content="Notes on Equality Comparison in Java — Nhat-Nguyen"><meta property="og:description" content="Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`."><meta property="og:site_name" content="Nhat-Nguyen"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet"><link rel="alternate" type="application/rss+xml" title="Nhat-Nguyen RSS" href="https://ngnhng.github.io/rss.xml"><link rel="stylesheet" href="/_astro/SiteHeader.DhCFkcJY.css">
+<link rel="stylesheet" href="/_astro/PostLayout.CVF3yn75.css"><style>.article-split[data-astro-cid-hetdxikr]{margin:1.75rem 0;padding:1.25rem;border:1px solid var(--base02);display:grid;gap:1.25rem;align-items:start;background:color-mix(in srgb,var(--base01) 82%,transparent);min-width:0;overflow:hidden}.article-split__body[data-astro-cid-hetdxikr] :first-child{margin-top:0}.article-split__body[data-astro-cid-hetdxikr] :last-child{margin-bottom:0}.article-split__zoom-trigger[data-astro-cid-hetdxikr]{display:block;width:100%;padding:0;border:0;background:transparent;cursor:zoom-in}.article-split__body[data-astro-cid-hetdxikr],.article-split__media[data-astro-cid-hetdxikr]{min-width:0}.article-split__media[data-astro-cid-hetdxikr] img[data-astro-cid-hetdxikr]{display:block;width:100%;max-width:var(--article-split-image-max-width);height:auto;margin-inline:auto;border:1px solid var(--base02);background:var(--base00)}.article-split[data-astro-cid-hetdxikr] figcaption[data-astro-cid-hetdxikr]{margin-top:.6rem}.article-split__dialog[data-astro-cid-hetdxikr]{width:min(92vw,72rem);max-height:90vh;padding:1rem;border:1px solid var(--base02);background:var(--base00);color:var(--base05)}.article-split__dialog[data-astro-cid-hetdxikr]::backdrop{background:color-mix(in srgb,var(--base00) 82%,black);backdrop-filter:blur(4px)}.article-split__dialog[data-astro-cid-hetdxikr] img[data-astro-cid-hetdxikr]{display:block;max-width:100%;max-height:calc(90vh - 5rem);width:auto;height:auto;margin:0 auto;background:var(--base00)}.article-split__dialog-close[data-astro-cid-hetdxikr]{display:inline-flex;margin:0 0 1rem auto;padding:.35rem .7rem;border:1px solid var(--base02);color:var(--base05);background:color-mix(in srgb,var(--base01) 82%,transparent);cursor:pointer}.article-split__dialog-caption[data-astro-cid-hetdxikr]{margin:.9rem 0 0;text-align:center;color:var(--base03)}@media(min-width:56rem){.article-split[data-astro-cid-hetdxikr]{grid-template-columns:minmax(0,1.15fr) var(--article-split-media-width)}.article-split--left[data-astro-cid-hetdxikr]{grid-template-columns:var(--article-split-media-width) minmax(0,1.15fr)}.article-split--left[data-astro-cid-hetdxikr] .article-split__media[data-astro-cid-hetdxikr]{order:-1}}@media(max-width:55.99rem){.article-split[data-astro-cid-hetdxikr]{padding:1rem}}.scrollable-table[data-astro-cid-3nhz7hlp]{margin:1.5rem 0;overflow-x:auto;-webkit-overflow-scrolling:touch}.scrollable-table[data-astro-cid-3nhz7hlp] table{width:max-content;min-width:100%;border-collapse:collapse}.scrollable-table[data-astro-cid-3nhz7hlp] th,.scrollable-table[data-astro-cid-3nhz7hlp] td{padding:.75rem;border:1px solid var(--base02);vertical-align:top;white-space:nowrap}
+</style></head> <body>  <div class="post-site-header" data-astro-cid-gjtny2mx> <header class="site-header"> <div class="site-header__row"> <div>  <p class="site-title"> <a href="/">Nhat-Nguyen</a> </p> <p class="site-tagline site-tagline--compact">Notes on building calm systems.</p>  </div> <site-theme-toggle> <button class="theme-toggle" type="button" aria-hidden="true" tabindex="-1"> <span class="theme-toggle__label">Theme</span> </button> </site-theme-toggle> <script type="module" src="/_astro/ThemeToggle.astro_astro_type_script_index_0_lang.B-acEYQi.js"></script> </div> </header> </div> <main class="content post-shell" data-astro-cid-gjtny2mx> <article class="post" data-astro-cid-gjtny2mx> <header class="post-header post-card" data-astro-cid-gjtny2mx> <p class="eyebrow" data-astro-cid-gjtny2mx>Note</p> <h1 data-astro-cid-gjtny2mx>Notes on Equality Comparison in Java</h1> <p class="post-meta" data-astro-cid-gjtny2mx>
+Published March 12, 2026 </p> <p class="post-summary" data-astro-cid-gjtny2mx>Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`.</p>  </header> <nav class="mobile-toc" aria-label="Mobile table of contents" data-astro-cid-gjtny2mx> <div class="mobile-toc__label" data-astro-cid-gjtny2mx>On this page</div> <ol class="mobile-toc__list" data-astro-cid-gjtny2mx> <li class="toc-depth-2" data-astro-cid-gjtny2mx> <a href="#the-context" data-toc-link data-heading-id="the-context" data-astro-cid-gjtny2mx> The Context </a> </li><li class="toc-depth-2" data-astro-cid-gjtny2mx> <a href="#the-mechanics" data-toc-link data-heading-id="the-mechanics" data-astro-cid-gjtny2mx> The Mechanics </a> </li><li class="toc-depth-3" data-astro-cid-gjtny2mx> <a href="#java-type-system" data-toc-link data-heading-id="java-type-system" data-astro-cid-gjtny2mx> Java Type System </a> </li><li class="toc-depth-3" data-astro-cid-gjtny2mx> <a href="#pass-by-value" data-toc-link data-heading-id="pass-by-value" data-astro-cid-gjtny2mx> Pass-by-value </a> </li><li class="toc-depth-2" data-astro-cid-gjtny2mx> <a href="#conclusion-on-equality-comparison" data-toc-link data-heading-id="conclusion-on-equality-comparison" data-astro-cid-gjtny2mx> Conclusion on Equality Comparison </a> </li><li class="toc-depth-2" data-astro-cid-gjtny2mx> <a href="#references" data-toc-link data-heading-id="references" data-astro-cid-gjtny2mx> References </a> </li> </ol> </nav> <div class="post-card post-content" data-astro-cid-gjtny2mx>  <aside class="callout callout--note"> <p class="callout__title">TL;DR</p> <div class="callout__body"> <p><p>This is my personal notes which I made while studying Java, so the content below should not be
 taken seriously as technical reference.</p></p><p><p>I will be spending 70% of the note building up the basic understanding of the Java memory
 model to explain a difference that could be summarized in a single sentence:</p></p><blockquote><p><code>==</code> checks same value for primitives and same object for references; 
 <code>equals()</code> checks whatever the class defines as equality.</p></blockquote> </div> </aside>
@@ -33,13 +35,72 @@ as HotSpot and OpenJ9 still have freedom in how they map the abstract machine to
 reference values that point the JVM toward the actual object in heap space.</p>
 <p>Most simply, reference type values are values that the JVM can use to find the actual object during
 runtime.</p>
-<p><img src="/notes/software/java/equality/01.svg" alt="Primitive versus reference illustration."/></p>
+<figure class="article-split article-split--right" data-article-split style="--article-split-media-width: 40rem; --article-split-image-max-width: 38rem;" data-astro-cid-hetdxikr> <div class="article-split__body" data-astro-cid-hetdxikr> <p><p>The first distinction is conceptual: primitives are represented by their bits directly, while
+reference variables store a value the JVM can use to locate an object.</p></p><p><p>That is why <code>==</code> feels simple for primitives and more subtle for objects. The variable does not
+carry the whole object; it carries enough information for the runtime to resolve one.</p></p> </div> <div class="article-split__media" data-astro-cid-hetdxikr> <button type="button" class="article-split__zoom-trigger" data-article-split-trigger aria-label="Open enlarged image: Primitive versus reference illustration." data-astro-cid-hetdxikr> <img src="/notes/software/java/equality/01.svg" alt="Primitive versus reference illustration." loading="lazy" data-astro-cid-hetdxikr> </button> <figcaption data-astro-cid-hetdxikr>Primitive values are stored directly; reference values let the JVM locate an object.</figcaption> </div> <dialog class="article-split__dialog" data-article-split-dialog aria-label="Primitive versus reference illustration." data-astro-cid-hetdxikr> <button type="button" class="article-split__dialog-close" data-article-split-close aria-label="Close enlarged image" data-astro-cid-hetdxikr>
+Close
+</button> <img src="/notes/software/java/equality/01.svg" alt="Primitive versus reference illustration." data-astro-cid-hetdxikr> <p class="article-split__dialog-caption" data-astro-cid-hetdxikr>Primitive values are stored directly; reference values let the JVM locate an object.</p> </dialog> </figure>  <script>
+  for (const block of document.querySelectorAll('[data-article-split]')) {
+    const trigger = block.querySelector('[data-article-split-trigger]')
+    const dialog = block.querySelector('[data-article-split-dialog]')
+    const close = block.querySelector('[data-article-split-close]')
+
+    if (!(trigger instanceof HTMLButtonElement) || !(dialog instanceof HTMLDialogElement))
+      continue
+
+    trigger.addEventListener('click', () => dialog.showModal())
+
+    close?.addEventListener('click', () => dialog.close())
+
+    dialog.addEventListener('click', (event) => {
+      const rect = dialog.getBoundingClientRect()
+      const isBackdropClick
+        = event.clientX < rect.left
+          || event.clientX > rect.right
+          || event.clientY < rect.top
+          || event.clientY > rect.bottom
+
+      if (isBackdropClick)
+        dialog.close()
+    })
+  }
+</script>
 <p>Less simply, a reference is a value that identifies an object; how it is represented, whether as a
 pointer, handle, compressed pointer, or something else, is JVM-dependent.</p>
 <p>In the HotSpot implementation, a reference is a bit pattern representing a virtual memory address,
 either a pointer or a compressed offset decoded into a pointer, that indicates the starting byte of
 the JVM object header on the heap.</p>
-<p><img src="/notes/software/java/equality/04.svg" alt="Reference representation illustration."/></p>
+<figure class="article-split article-split--left" data-article-split style="--article-split-media-width: 40rem; --article-split-image-max-width: 38rem;" data-astro-cid-hetdxikr> <div class="article-split__body" data-astro-cid-hetdxikr> <p><p>A useful mental model is that the reference value identifies where the object begins, not what
+the object contains semantically. That keeps the distinction between object identity and object
+state visible.</p></p><p><p>The exact encoding remains JVM-dependent, so this is an implementation-oriented picture rather
+than a universal law of the language.</p></p> </div> <div class="article-split__media" data-astro-cid-hetdxikr> <button type="button" class="article-split__zoom-trigger" data-article-split-trigger aria-label="Open enlarged image: Reference representation illustration." data-astro-cid-hetdxikr> <img src="/notes/software/java/equality/04.svg" alt="Reference representation illustration." loading="lazy" data-astro-cid-hetdxikr> </button> <figcaption data-astro-cid-hetdxikr>One implementation detail: a reference can be mapped to the object header in heap memory.</figcaption> </div> <dialog class="article-split__dialog" data-article-split-dialog aria-label="Reference representation illustration." data-astro-cid-hetdxikr> <button type="button" class="article-split__dialog-close" data-article-split-close aria-label="Close enlarged image" data-astro-cid-hetdxikr>
+Close
+</button> <img src="/notes/software/java/equality/04.svg" alt="Reference representation illustration." data-astro-cid-hetdxikr> <p class="article-split__dialog-caption" data-astro-cid-hetdxikr>One implementation detail: a reference can be mapped to the object header in heap memory.</p> </dialog> </figure>  <script>
+  for (const block of document.querySelectorAll('[data-article-split]')) {
+    const trigger = block.querySelector('[data-article-split-trigger]')
+    const dialog = block.querySelector('[data-article-split-dialog]')
+    const close = block.querySelector('[data-article-split-close]')
+
+    if (!(trigger instanceof HTMLButtonElement) || !(dialog instanceof HTMLDialogElement))
+      continue
+
+    trigger.addEventListener('click', () => dialog.showModal())
+
+    close?.addEventListener('click', () => dialog.close())
+
+    dialog.addEventListener('click', (event) => {
+      const rect = dialog.getBoundingClientRect()
+      const isBackdropClick
+        = event.clientX < rect.left
+          || event.clientX > rect.right
+          || event.clientY < rect.top
+          || event.clientY > rect.bottom
+
+      if (isBackdropClick)
+        dialog.close()
+    })
+  }
+</script>
 <aside class="callout callout--qa"> <p class="callout__title">Q&amp;A</p> <div class="callout__body"> <p><p><strong>Q:</strong> Is Java’s reference a pointer?</p></p><p><p><strong>A:</strong> Short answer, no.</p></p><p><p>There are multiple JVM implementations, and in some of them the garbage collector can move
 objects to reduce fragmentation and improve locality. So we should not expect a reference to
 remain the same across time.</p></p><p><p>This means Java references are GC-aware and should not be treated as raw addresses or pointers
@@ -52,40 +113,161 @@ pass-by-value and not pass-by-reference.</p>
 <li>The assumption: when passing an object to a method, we are passing the object itself, or rather
 the direct link to the original one.</li>
 </ul>
-<p><img src="/notes/software/java/equality/02.svg" alt="Incorrect pass-by-reference intuition."/></p>
+<figure class="article-split article-split--right" data-article-split style="--article-split-media-width: minmax(16rem, 0.85fr); --article-split-image-max-width: 100%;" data-astro-cid-hetdxikr> <div class="article-split__body" data-astro-cid-hetdxikr> <p><p>This is the trap: because a method can mutate the object through the received reference, it is
+easy to describe that behavior as pass-by-reference.</p></p><p><p>But mutation through a copied reference value is still different from passing the caller’s
+variable itself. That distinction is exactly where many equality explanations get blurred.</p></p> </div> <div class="article-split__media" data-astro-cid-hetdxikr> <button type="button" class="article-split__zoom-trigger" data-article-split-trigger aria-label="Open enlarged image: Incorrect pass-by-reference intuition." data-astro-cid-hetdxikr> <img src="/notes/software/java/equality/02.svg" alt="Incorrect pass-by-reference intuition." loading="lazy" data-astro-cid-hetdxikr> </button> <figcaption data-astro-cid-hetdxikr>The common but incorrect intuition is that Java passes the original object into the method.</figcaption> </div> <dialog class="article-split__dialog" data-article-split-dialog aria-label="Incorrect pass-by-reference intuition." data-astro-cid-hetdxikr> <button type="button" class="article-split__dialog-close" data-article-split-close aria-label="Close enlarged image" data-astro-cid-hetdxikr>
+Close
+</button> <img src="/notes/software/java/equality/02.svg" alt="Incorrect pass-by-reference intuition." data-astro-cid-hetdxikr> <p class="article-split__dialog-caption" data-astro-cid-hetdxikr>The common but incorrect intuition is that Java passes the original object into the method.</p> </dialog> </figure>  <script>
+  for (const block of document.querySelectorAll('[data-article-split]')) {
+    const trigger = block.querySelector('[data-article-split-trigger]')
+    const dialog = block.querySelector('[data-article-split-dialog]')
+    const close = block.querySelector('[data-article-split-close]')
+
+    if (!(trigger instanceof HTMLButtonElement) || !(dialog instanceof HTMLDialogElement))
+      continue
+
+    trigger.addEventListener('click', () => dialog.showModal())
+
+    close?.addEventListener('click', () => dialog.close())
+
+    dialog.addEventListener('click', (event) => {
+      const rect = dialog.getBoundingClientRect()
+      const isBackdropClick
+        = event.clientX < rect.left
+          || event.clientX > rect.right
+          || event.clientY < rect.top
+          || event.clientY > rect.bottom
+
+      if (isBackdropClick)
+        dialog.close()
+    })
+  }
+</script>
 <ul>
 <li>The reality: Java copies the bits inside the original variable. Since <code>p</code> holds a reference value
 in this example, that value is copied into the new method parameter.</li>
 </ul>
-<p><img src="/notes/software/java/equality/03.svg" alt="What Java actually copies."/></p>
+<figure class="article-split article-split--left" data-article-split style="--article-split-media-width: minmax(16rem, 0.85fr); --article-split-image-max-width: 100%;" data-astro-cid-hetdxikr> <div class="article-split__body" data-astro-cid-hetdxikr> <p><p>Once framed this way, the phrase “Java is pass-by-value” becomes much less mysterious. The
+copied value can still lead both variables to the same heap object, but the variables remain
+separate bindings.</p></p><p><p>That is also why <code>==</code> on references compares whether the stored reference values identify the
+same object, not whether two objects merely look alike.</p></p> </div> <div class="article-split__media" data-astro-cid-hetdxikr> <button type="button" class="article-split__zoom-trigger" data-article-split-trigger aria-label="Open enlarged image: What Java actually copies." data-astro-cid-hetdxikr> <img src="/notes/software/java/equality/03.svg" alt="What Java actually copies." loading="lazy" data-astro-cid-hetdxikr> </button> <figcaption data-astro-cid-hetdxikr>Method calls copy the stored value; for objects, that copied value is the reference.</figcaption> </div> <dialog class="article-split__dialog" data-article-split-dialog aria-label="What Java actually copies." data-astro-cid-hetdxikr> <button type="button" class="article-split__dialog-close" data-article-split-close aria-label="Close enlarged image" data-astro-cid-hetdxikr>
+Close
+</button> <img src="/notes/software/java/equality/03.svg" alt="What Java actually copies." data-astro-cid-hetdxikr> <p class="article-split__dialog-caption" data-astro-cid-hetdxikr>Method calls copy the stored value; for objects, that copied value is the reference.</p> </dialog> </figure>  <script>
+  for (const block of document.querySelectorAll('[data-article-split]')) {
+    const trigger = block.querySelector('[data-article-split-trigger]')
+    const dialog = block.querySelector('[data-article-split-dialog]')
+    const close = block.querySelector('[data-article-split-close]')
+
+    if (!(trigger instanceof HTMLButtonElement) || !(dialog instanceof HTMLDialogElement))
+      continue
+
+    trigger.addEventListener('click', () => dialog.showModal())
+
+    close?.addEventListener('click', () => dialog.close())
+
+    dialog.addEventListener('click', (event) => {
+      const rect = dialog.getBoundingClientRect()
+      const isBackdropClick
+        = event.clientX < rect.left
+          || event.clientX > rect.right
+          || event.clientY < rect.top
+          || event.clientY > rect.bottom
+
+      if (isBackdropClick)
+        dialog.close()
+    })
+  }
+</script>
 <p>So in short, Java is pass-by-value, and the values passed are reference values for reference types.</p>
 <h2 id="conclusion-on-equality-comparison">Conclusion on Equality Comparison</h2>
 <p>Now that we have cleared the concepts around references in Java, we can finally produce a clearer
 answer on how <code>==</code> and <code>.equals()</code> differ:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<table><thead><tr><th>Operator</th><th>Primitive type</th><th>Reference type</th></tr></thead><tbody><tr><td><code>==</code></td><td>Compares value-by-value</td><td>Compares the reference value, which could be the heap address</td></tr><tr><td><code>.equals()</code></td><td>Primitive types do not have methods</td><td>Depends on the specific implementation. For example, <code>String.equals()</code> compares underlying content. A more complex <code>equals()</code> implementation can be seen in <a href="/notes/software/java/hash/"><code>HashMap</code></a>.</td></tr></tbody></table>
+<div class="scrollable-table" data-astro-cid-3nhz7hlp> <table><thead><tr><th>Operator</th><th>Primitive type</th><th>Reference type</th></tr></thead><tbody><tr><td><code>==</code></td><td>Compares value-by-value</td><td>Compares the reference value, which could be the heap address</td></tr><tr><td><code>.equals()</code></td><td>Primitive types do not have methods</td><td><p>Depends on the specific implementation. For example, <code>String.equals()</code> 
+compares underlying content. A more complex <code>equals()</code> implementation can be
+seen in <a href="/notes/software/java/hash/">HashMap</a>.</p></td></tr></tbody></table> </div>
 <h2 id="references">References</h2>
 <ol>
 <li><a href="https://docs.oracle.com/javase/specs/index.html">Java Language Specification</a></li>
 <li><a href="https://docs.oracle.com/en/java/javase/25/docs/api/index.html">Java Platform, Standard Edition &amp; Java Development Kit Version 25 API Specification</a></li>
 <li><a href="https://docs.oracle.com/javase/specs/jls/se25/html/jls-4.html">Java SE Spec, Chapter 4</a></li>
-</ol>  </article> </main>  <footer class="site-footer"> <p>© 2026 Nhat-Nguyen Nguyen. Built with Astro and Lit.</p> </footer> <script data-goatcounter="https://ngnhng.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> </body> </html> 
+</ol>  </div> </article> <aside class="post-sidebar" aria-label="Article sidebar" data-astro-cid-gjtny2mx> <section class="sidebar-card sidebar-card--compact" data-astro-cid-gjtny2mx> <div class="sidebar-icon-links" aria-label="Personal links" data-astro-cid-gjtny2mx> <a href="https://github.com/ngnhng" aria-label="GitHub" title="GitHub" data-astro-cid-gjtny2mx> <svg viewBox="0 0 24 24" aria-hidden="true" data-astro-cid-gjtny2mx> <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.5 2.87 8.32 6.84 9.66.5.1.68-.22.68-.5 0-.24-.01-1.04-.02-1.88-2.78.62-3.37-1.2-3.37-1.2-.46-1.2-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .08 1.54 1.06 1.54 1.06.9 1.58 2.36 1.13 2.94.86.09-.67.35-1.13.63-1.39-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.72 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.84c.85 0 1.71.12 2.5.36 1.9-1.33 2.74-1.05 2.74-1.05.56 1.42.21 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.95-2.34 4.82-4.57 5.08.36.32.68.94.68 1.9 0 1.38-.01 2.49-.01 2.83 0 .28.18.61.69.5A10.24 10.24 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" data-astro-cid-gjtny2mx></path> </svg> </a> <a href="https://www.linkedin.com/in/ngnhng1" aria-label="LinkedIn" title="LinkedIn" data-astro-cid-gjtny2mx> <svg viewBox="0 0 24 24" aria-hidden="true" data-astro-cid-gjtny2mx> <path d="M6.94 8.5A1.56 1.56 0 1 1 6.94 5.4a1.56 1.56 0 0 1 0 3.1ZM5.6 18.4h2.68V9.64H5.6V18.4Zm4.37 0h2.67v-4.88c0-1.28.24-2.52 1.78-2.52 1.52 0 1.54 1.42 1.54 2.6v4.8H18.63v-5.34c0-2.63-.56-4.65-3.63-4.65-1.48 0-2.47.83-2.88 1.61h-.04V9.64H9.97c.03.9 0 8.76 0 8.76Z" data-astro-cid-gjtny2mx></path> </svg> </a> <a href="/resume/" aria-label="Resume" title="Resume" data-astro-cid-gjtny2mx> <svg viewBox="0 0 24 24" aria-hidden="true" data-astro-cid-gjtny2mx> <path d="M7 3.5h6.5L18 8v12.5H7V3.5Zm7 1.6v3.4h3.35L14 5.1ZM9 10h6v1.5H9V10Zm0 3h6v1.5H9V13Zm0 3h4.5v1.5H9V16Z" data-astro-cid-gjtny2mx></path> </svg> </a> </div> </section> <section class="sidebar-card sidebar-card--toc" data-astro-cid-gjtny2mx> <p class="sidebar-kicker" data-astro-cid-gjtny2mx>Navigate</p> <nav class="toc" aria-label="Table of contents" data-astro-cid-gjtny2mx> <ol data-astro-cid-gjtny2mx> <li class="toc-depth-2" data-astro-cid-gjtny2mx> <a href="#the-context" data-toc-link data-heading-id="the-context" data-astro-cid-gjtny2mx> The Context </a> </li><li class="toc-depth-2" data-astro-cid-gjtny2mx> <a href="#the-mechanics" data-toc-link data-heading-id="the-mechanics" data-astro-cid-gjtny2mx> The Mechanics </a> </li><li class="toc-depth-3" data-astro-cid-gjtny2mx> <a href="#java-type-system" data-toc-link data-heading-id="java-type-system" data-astro-cid-gjtny2mx> Java Type System </a> </li><li class="toc-depth-3" data-astro-cid-gjtny2mx> <a href="#pass-by-value" data-toc-link data-heading-id="pass-by-value" data-astro-cid-gjtny2mx> Pass-by-value </a> </li><li class="toc-depth-2" data-astro-cid-gjtny2mx> <a href="#conclusion-on-equality-comparison" data-toc-link data-heading-id="conclusion-on-equality-comparison" data-astro-cid-gjtny2mx> Conclusion on Equality Comparison </a> </li><li class="toc-depth-2" data-astro-cid-gjtny2mx> <a href="#references" data-toc-link data-heading-id="references" data-astro-cid-gjtny2mx> References </a> </li> </ol> </nav> </section> <section class="sidebar-card" data-astro-cid-gjtny2mx> <p class="sidebar-kicker" data-astro-cid-gjtny2mx>Keep reading</p> <ul class="sidebar-list" data-astro-cid-gjtny2mx> <li data-astro-cid-gjtny2mx> <a href="/blog/rest-api-design-workflow/" data-astro-cid-gjtny2mx>Workshop Presentation: REST API Design Workflow</a> <p data-astro-cid-gjtny2mx>Public WIP</p> </li> </ul> </section> </aside> </main>  <footer class="site-footer"> <p>© 2026 Nhat-Nguyen Nguyen. Built with Astro and Lit.</p> </footer> <script data-goatcounter="https://ngnhng.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> </body> </html>   <script>
+  const tocLinks = Array.from(document.querySelectorAll("[data-toc-link]"));
+  const headings = tocLinks
+    .map((link) => {
+      const id = link.getAttribute("data-heading-id");
+      if (!id) return null;
+      return {
+        id,
+        link,
+        element: document.getElementById(id),
+      };
+    })
+    .filter((item) => item && item.element);
+
+  if (headings.length > 0) {
+    let activeId = headings[0].id;
+
+    const updateActiveLink = (id) => {
+      if (!id || id === activeId) return;
+      activeId = id;
+      for (const heading of headings) {
+        heading.link.classList.toggle("is-active", heading.id === activeId);
+        if (heading.id === activeId)
+          heading.link.setAttribute("aria-current", "true");
+        else heading.link.removeAttribute("aria-current");
+      }
+
+      const activeLinks = headings
+        .filter((heading) => heading.id === activeId)
+        .map((heading) => heading.link);
+
+      for (const link of activeLinks) {
+        const mobileList = link.closest(".mobile-toc__list");
+        if (mobileList) {
+          link.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center",
+          });
+        }
+      }
+    };
+
+    updateActiveLink(activeId);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (left, right) =>
+              left.boundingClientRect.top - right.boundingClientRect.top,
+          );
+
+        if (visible.length > 0) {
+          updateActiveLink(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-25% 0px -60% 0px",
+        threshold: [0, 1],
+      },
+    );
+
+    for (const heading of headings) observer.observe(heading.element);
+
+    const syncFromScroll = () => {
+      const passed = headings.filter(
+        (heading) => heading.element.getBoundingClientRect().top <= 140,
+      );
+      const current = passed.at(-1) ?? headings[0];
+      updateActiveLink(current.id);
+    };
+
+    window.addEventListener("scroll", syncFromScroll, { passive: true });
+    window.addEventListener("hashchange", () =>
+      updateActiveLink(window.location.hash.slice(1)),
+    );
+    syncFromScroll();
+  }
+</script>
