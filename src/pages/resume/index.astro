@@ -1,0 +1,359 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const title = "Nhat-Nguyen Nguyen — Resume";
+const description =
+  "Resume of Nguyen Nhat Nguyen, software developer based in HCMC, Vietnam.";
+---
+
+<BaseLayout title={title} description={description}>
+  <main class="content resume-page">
+    <header class="resume-header">
+      <div>
+        <h1>Nguyễn Nhật Nguyên</h1>
+        <div class="contact-info">
+          <div class="contact-row">
+            <a href="mailto:mountngubinh@gmail.com">mountngubinh@gmail.com</a>
+            <a href="https://github.com/ngnhng" target="_blank" rel="noreferrer">
+              github.com/ngnhng
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ngnhng1"
+              target="_blank"
+              rel="noreferrer"
+            >
+              linkedin.com/in/ngnhng1
+            </a>
+          </div>
+          <div class="contact-row">
+            <span>HCMC, Vietnam</span>
+            <span>+84 354184728</span>
+          </div>
+        </div>
+      </div>
+      <div class="resume-actions">
+        <button class="print-button" type="button">Print / Save as PDF</button>
+      </div>
+    </header>
+
+    <p class="resume-summary">
+      Backend software engineer focused on Go/Java services for finance and
+      data-heavy platforms. I build scalable APIs, workflow automation, and
+      performance improvements across distributed systems.
+    </p>
+
+    <section class="resume-section">
+      <h2>Work Experience</h2>
+
+      <div class="job-header-container">
+        <div class="job-title-company">
+          <h3>Software Developer</h3>
+          <a
+            href="https://geekup.vn"
+            target="_blank"
+            rel="noreferrer"
+            class="job-header-link"
+          >
+            <div class="job-header">
+              <span class="job-company"><strong>GEEK Up</strong></span>
+            </div>
+          </a>
+        </div>
+        <div class="job-period-location">
+          <span>12/2024 - Present, <strong>1 yr</strong></span>
+          <span>HCMC, Vietnam</span>
+        </div>
+      </div>
+
+      <p><strong>Digital platform for customer onboarding</strong> · 12/2024 - Present</p>
+      <p class="resume-stack">Stack: Go, Java (Spring Boot/Quarkus), SQL, BPM</p>
+      <ul>
+        <li>
+          Built customer onboarding microservices for a major Vietnamese bank
+          and delivered P99 &lt; 1s at 1000 CCU by optimizing critical paths,
+          queries, and network calls.
+        </li>
+        <li>
+          Prepared services for production compliance (OWASP top 10, pen-test,
+          code audit) and release readiness.
+        </li>
+        <li>
+          Designed BPM workflows to automate complex business decisions and
+          approvals.
+        </li>
+        <li>
+          Applied DDD-aligned service boundaries and reusable patterns to keep
+          domains clear and maintainable.
+        </li>
+        <li>
+          Implemented read-replica and cache-aside strategies to reduce read
+          load and improve reliability under peak traffic.
+        </li>
+        <li>
+          Profiled latency hotspots across service and database layers to remove
+          performance bottlenecks.
+        </li>
+      </ul>
+
+      <p><strong>Financial data services</strong> · 06/2024 - 12/2024</p>
+      <p class="resume-stack">
+        Stack: ReactJS, Go, AWS Lambda, DynamoDB, Step Functions, MySQL
+      </p>
+      <ul>
+        <li>Implemented efficient query APIs for large dataset (4 mil. records).</li>
+        <li>
+          Built ingestion and processing pipelines for company health and risk
+          signals, plus automated daily report distribution via email.
+        </li>
+        <li>
+          Shipped full-stack features with React and Go, integrating AWS
+          services with cost and performance constraints.
+        </li>
+        <li>
+          Query optimization for MySQL and DynamoDB databases to improve data
+          retrieval times.
+        </li>
+      </ul>
+
+      <div class="job-header-container">
+        <div class="job-title-company">
+          <h3>Intern Software Developer</h3>
+          <a
+            href="https://geekup.vn"
+            target="_blank"
+            rel="noreferrer"
+            class="job-header-link"
+          >
+            <div class="job-header">
+              <span class="job-company">
+                <strong>GEEK Up</strong> — Internship focused on backend
+                development, top performer in the cohort
+              </span>
+            </div>
+          </a>
+        </div>
+        <div class="job-period-location">
+          <span>06/2023 - 08/2023, <strong>2 mos</strong></span>
+          <span>HCMC, Vietnam</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="resume-section">
+      <h2>Technical Expertise</h2>
+      <ul>
+        <li>
+          <strong>Programming in:</strong> Go, Java 21+ (Spring Boot, Quarkus),
+          JavaScript (ES6+), TypeScript.
+        </li>
+        <li>
+          <strong>Designing and building backend systems:</strong> RESTful APIs,
+          gRPC, microservices, event-driven systems (Kafka, NATS), NodeJS.
+        </li>
+        <li><strong>Cloud/DevOps:</strong> AWS (Lambda, DynamoDB), GKE, EKS.</li>
+        <li><strong>Databases:</strong> PostgreSQL, MySQL, DynamoDB.</li>
+        <li>
+          <strong>Languages:</strong> Vietnamese (native), English (IELTS 7.5,
+          professional working proficiency).
+        </li>
+      </ul>
+    </section>
+
+    <section class="resume-section">
+      <h2>Open Source Works</h2>
+      <ul>
+        <li>
+          <a
+            href="https://github.com/ngnhng/durablefuture"
+            target="_blank"
+            rel="noreferrer"
+          >
+            DurableFuture
+          </a>
+          — A lightweight workflow engine in Go for building long-running,
+          resilient applications.
+        </li>
+        <li>
+          <a
+            href="https://github.com/DeluxeOwl/chronicle"
+            target="_blank"
+            rel="noreferrer"
+          >
+            chronicle
+          </a>
+          — A Go event-sourcing framework (community project; not my
+          repository).
+        </li>
+      </ul>
+    </section>
+
+    <section class="resume-section">
+      <h2>Education</h2>
+      <div class="job-header-container">
+        <div class="job-title-company">
+          <h3>Bachelor of Computer Science</h3>
+          <div class="job-header">
+            <span class="job-company">
+              <strong>HCMC University of Technology (HCMUT)</strong>
+            </span>
+          </div>
+        </div>
+        <div class="job-period-location">
+          <span>2020 - 2024, <strong>4 yrs</strong></span>
+          <span>HCMC, Vietnam</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    const printButton = document.querySelector(".print-button");
+
+    if (printButton) {
+      printButton.addEventListener("click", () => window.print());
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .resume-page {
+    max-width: 56rem;
+    padding-bottom: 2rem;
+  }
+
+  .resume-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .resume-page h1,
+  .resume-page h2,
+  .resume-page h3 {
+    text-decoration: none;
+  }
+
+  .resume-page h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+  }
+
+  .resume-page h2 {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+  }
+
+  .resume-page h3 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  .contact-info {
+    display: grid;
+    gap: 0.45rem;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.92rem;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+
+  .resume-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .print-button {
+    padding: 0.6rem 0.95rem;
+    border: 1px solid var(--base02);
+    background: var(--base01);
+    color: var(--base05);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .resume-summary {
+    margin: 0 0 2rem;
+    max-width: 44rem;
+    font-size: 1.12rem;
+    color: var(--base04);
+  }
+
+  .resume-section {
+    margin-top: 2rem;
+  }
+
+  .resume-stack {
+    margin-top: -0.25rem;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.92rem;
+    color: var(--base03);
+  }
+
+  .job-header-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  .job-title-company {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .job-header-link,
+  .job-header-link:hover,
+  .job-header-link:focus-visible {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .job-company {
+    color: var(--base06);
+  }
+
+  .job-period-location {
+    display: grid;
+    gap: 0.2rem;
+    justify-items: end;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.88rem;
+    color: var(--base03);
+  }
+
+  .resume-page p,
+  .resume-page li {
+    font-size: 1rem;
+  }
+
+  @media (max-width: 720px) {
+    .resume-actions {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    .job-period-location {
+      justify-items: start;
+    }
+  }
+
+  @media print {
+    .resume-actions,
+    :global(.site-footer) {
+      display: none;
+    }
+
+    .resume-page {
+      max-width: none;
+    }
+  }
+</style>

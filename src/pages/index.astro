@@ -1,13 +1,13 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
-import PostCard from '../components/PostCard.astro'
-import SiteHeader from '../components/SiteHeader.astro'
-import { featuredLinks, siteConfig } from '../data/site'
-import { getBlogPosts, getNotes } from '../lib/content'
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostCard from "../components/PostCard.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import { featuredLinks, siteConfig } from "../data/site";
+import { getBlogPosts, getNotes } from "../lib/content";
 
-const blogPosts = await getBlogPosts({ includeDrafts: true })
-const notes = await getNotes({ includeDrafts: true })
-const publishedBlogPosts = blogPosts.filter(post => !post.data.draft)
+const blogPosts = await getBlogPosts({ includeDrafts: true });
+const notes = await getNotes({ includeDrafts: true });
+const publishedBlogPosts = blogPosts.filter((post) => !post.data.draft);
 ---
 
 <BaseLayout>
@@ -16,11 +16,7 @@ const publishedBlogPosts = blogPosts.filter(post => !post.data.draft)
   <main class="content">
     <section class="bio">
       <h1>Hi, I'm Nhật Nguyên.</h1>
-      <p>
-        I build minimal systems and write to clarify what I learn. This site is moving from
-        hand-authored static HTML into an Astro and Lit setup that stays as small as possible while
-        being easier to maintain.
-      </p>
+      <p>I build minimal systems and write to clarify what I learn.</p>
       <p>
         <a href={siteConfig.social.linkedin}>LinkedIn</a>
         ·
@@ -33,12 +29,14 @@ const publishedBlogPosts = blogPosts.filter(post => !post.data.draft)
     <section class="library">
       <h2>Featured</h2>
       <ul class="post-list">
-        {featuredLinks.map(link => (
-          <li class="post-card">
-            <a href={link.href}>{link.label}</a>
-            <span class="post-meta">{link.meta}</span>
-          </li>
-        ))}
+        {
+          featuredLinks.map((link) => (
+            <li class="post-card">
+              <a href={link.href}>{link.label}</a>
+              <span class="post-meta">{link.meta}</span>
+            </li>
+          ))
+        }
       </ul>
     </section>
 
@@ -48,9 +46,7 @@ const publishedBlogPosts = blogPosts.filter(post => !post.data.draft)
         <a class="section-link" href="/blog/">View archive</a>
       </div>
       <ul class="post-list">
-        {blogPosts.map(entry => (
-          <PostCard entry={entry} />
-        ))}
+        {blogPosts.map((entry) => <PostCard entry={entry} />)}
       </ul>
     </section>
 
@@ -60,9 +56,7 @@ const publishedBlogPosts = blogPosts.filter(post => !post.data.draft)
         <a class="section-link" href="/notes/">Browse notes</a>
       </div>
       <ul class="post-list">
-        {notes.map(entry => (
-          <PostCard entry={entry} />
-        ))}
+        {notes.map((entry) => <PostCard entry={entry} />)}
       </ul>
     </section>
 
@@ -71,7 +65,9 @@ const publishedBlogPosts = blogPosts.filter(post => !post.data.draft)
       <p>
         <a href="/rss.xml">Subscribe via RSS</a> to published blog posts.
       </p>
-      <p class="post-meta">{publishedBlogPosts.length} published blog post(s) in the current migration.</p>
+      <p class="post-meta">
+        {publishedBlogPosts.length} published blog post(s) in the current migration.
+      </p>
     </section>
   </main>
 </BaseLayout>

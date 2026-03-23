@@ -159,7 +159,7 @@ const taxonomy =
 
 <style>
   .post-shell {
-    width: min(100%, 90rem);
+    width: min(100%, 100rem);
     margin: 0 auto;
     display: grid;
     gap: clamp(2rem, 4vw, 4.5rem);
@@ -169,13 +169,13 @@ const taxonomy =
   }
 
   .post-site-header :global(.site-header) {
-    width: min(100%, 90rem);
+    width: min(100%, 100rem);
     margin: 0 auto 1.25rem;
   }
 
   .post {
     min-width: 0;
-    max-width: 44rem;
+    max-width: 64rem;
   }
 
   .sidebar-card {
@@ -281,7 +281,7 @@ const taxonomy =
   .post-header h1 {
     margin: 0;
     font-family: "Literata", "Times New Roman", serif;
-    font-size: clamp(2.35rem, 6vw, 4rem);
+    font-size: clamp(2rem, 4vw, 3.2rem);
     font-weight: 500;
     line-height: 1.06;
     letter-spacing: -0.03em;
@@ -319,21 +319,21 @@ const taxonomy =
   .sidebar-card {
     position: relative;
     height: fit-content;
-    padding-left: 1.5rem;
+    padding-left: 1.1rem;
     border-left: 1px solid color-mix(in srgb, var(--base02) 70%, transparent);
   }
 
   .sidebar-kicker {
     margin: 0 0 0.75rem;
     font-family: "JetBrains Mono", "Courier New", monospace;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--base03);
   }
 
   .toc a {
-    font-size: 0.97rem;
+    font-size: 0.88rem;
   }
 
   .toc ol,
@@ -346,13 +346,13 @@ const taxonomy =
   }
 
   .toc-depth-3 {
-    padding-left: 1rem;
+    padding-left: 0.7rem;
   }
 
   .toc a {
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.45rem;
     color: var(--base04);
     transition:
       color 160ms ease,
@@ -361,7 +361,7 @@ const taxonomy =
 
   .toc a::before {
     content: "";
-    width: 0.9rem;
+    width: 0.7rem;
     height: 1px;
     background: color-mix(in srgb, var(--base03) 70%, transparent);
     flex: 0 0 auto;
@@ -428,12 +428,12 @@ const taxonomy =
   }
 
   .post-content :global(h2) {
-    font-size: clamp(1.9rem, 1.55rem + 1vw, 2.4rem);
+    font-size: clamp(1.7rem, 1.45rem + 0.8vw, 2.1rem);
     line-height: 1.15;
   }
 
   .post-content :global(h3) {
-    font-size: clamp(1.35rem, 1.15rem + 0.55vw, 1.7rem);
+    font-size: clamp(1.2rem, 1.05rem + 0.35vw, 1.45rem);
     line-height: 1.25;
   }
 
@@ -445,8 +445,7 @@ const taxonomy =
 
   @media (min-width: 72rem) {
     .post-shell {
-      grid-template-columns: minmax(0, 44rem) minmax(14rem, 18rem);
-      justify-content: center;
+      grid-template-columns: minmax(0, 1fr) minmax(11rem, 14rem);
     }
 
     .mobile-toc {
@@ -475,7 +474,7 @@ const taxonomy =
     }
 
     .post-header h1 {
-      font-size: clamp(2.1rem, 10vw, 3rem);
+      font-size: clamp(1.9rem, 8vw, 2.6rem);
     }
   }
 </style>

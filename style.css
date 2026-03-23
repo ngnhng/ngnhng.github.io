@@ -443,16 +443,9 @@ li {
   font-size: var(--font-size-large);
 }
 
-.post-list {
-  list-style: none;
-  display: grid;
-  gap: 1rem;
-}
-
 .post-list li {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
 }
 
 .post-list .is-wip {
