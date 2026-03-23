@@ -1,0 +1,25 @@
+<div class="scrollable-table">
+  <slot />
+</div>
+
+<style>
+  .scrollable-table {
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scrollable-table :global(table) {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+  }
+
+  .scrollable-table :global(th),
+  .scrollable-table :global(td) {
+    padding: 0.75rem;
+    border: 1px solid var(--base02);
+    vertical-align: top;
+    white-space: nowrap;
+  }
+</style>

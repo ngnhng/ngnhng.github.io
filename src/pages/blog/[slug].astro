@@ -11,9 +11,23 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props
-const { Content } = await render(post)
+const { Content, headings } = await render(post)
+const relatedPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .filter(candidate => candidate.id !== post.id)
+  .filter(candidate => candidate.data.tags.some(tag => post.data.tags.includes(tag)))
+  .sort((left, right) => right.data.pubDate.getTime() - left.data.pubDate.getTime())
+  .slice(0, 3)
+  .map(candidate => ({
+    href: `/blog/${candidate.id}/`,
+    label: candidate.data.title,
+    meta: candidate.data.pubDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    }),
+  }))
 ---
 
-<PostLayout entry={post}>
+<PostLayout entry={post} headings={headings} relatedLinks={relatedPosts}>
   <Content />
 </PostLayout>

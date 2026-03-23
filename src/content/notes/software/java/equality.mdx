@@ -10,6 +10,8 @@ tags:
 ---
 
 import Callout from '../../../../components/Callout.astro'
+import ArticleSplit from '../../../../components/ArticleSplit.astro'
+import ScrollableTable from '../../../../components/ScrollableTable.astro'
 
 <Callout title="TL;DR" variant="note">
   <p>
@@ -67,7 +69,22 @@ reference values that point the JVM toward the actual object in heap space.
 Most simply, reference type values are values that the JVM can use to find the actual object during
 runtime.
 
-![Primitive versus reference illustration.](/notes/software/java/equality/01.svg)
+<ArticleSplit
+  src="/notes/software/java/equality/01.svg"
+  alt="Primitive versus reference illustration."
+  caption="Primitive values are stored directly; reference values let the JVM locate an object."
+  mediaWidth="40rem"
+  imageMaxWidth="38rem"
+>
+  <p>
+    The first distinction is conceptual: primitives are represented by their bits directly, while
+    reference variables store a value the JVM can use to locate an object.
+  </p>
+  <p>
+    That is why `==` feels simple for primitives and more subtle for objects. The variable does not
+    carry the whole object; it carries enough information for the runtime to resolve one.
+  </p>
+</ArticleSplit>
 
 Less simply, a reference is a value that identifies an object; how it is represented, whether as a
 pointer, handle, compressed pointer, or something else, is JVM-dependent.
@@ -76,7 +93,24 @@ In the HotSpot implementation, a reference is a bit pattern representing a virtu
 either a pointer or a compressed offset decoded into a pointer, that indicates the starting byte of
 the JVM object header on the heap.
 
-![Reference representation illustration.](/notes/software/java/equality/04.svg)
+<ArticleSplit
+  src="/notes/software/java/equality/04.svg"
+  alt="Reference representation illustration."
+  imagePosition="left"
+  caption="One implementation detail: a reference can be mapped to the object header in heap memory."
+  mediaWidth="40rem"
+  imageMaxWidth="38rem"
+>
+  <p>
+    A useful mental model is that the reference value identifies where the object begins, not what
+    the object contains semantically. That keeps the distinction between object identity and object
+    state visible.
+  </p>
+  <p>
+    The exact encoding remains JVM-dependent, so this is an implementation-oriented picture rather
+    than a universal law of the language.
+  </p>
+</ArticleSplit>
 
 <Callout title="Q&A" variant="qa">
   <p>
@@ -113,12 +147,40 @@ pass-by-value and not pass-by-reference.
 - The assumption: when passing an object to a method, we are passing the object itself, or rather
   the direct link to the original one.
 
-![Incorrect pass-by-reference intuition.](/notes/software/java/equality/02.svg)
+<ArticleSplit
+  src="/notes/software/java/equality/02.svg"
+  alt="Incorrect pass-by-reference intuition."
+  caption="The common but incorrect intuition is that Java passes the original object into the method."
+>
+  <p>
+    This is the trap: because a method can mutate the object through the received reference, it is
+    easy to describe that behavior as pass-by-reference.
+  </p>
+  <p>
+    But mutation through a copied reference value is still different from passing the caller's
+    variable itself. That distinction is exactly where many equality explanations get blurred.
+  </p>
+</ArticleSplit>
 
 - The reality: Java copies the bits inside the original variable. Since `p` holds a reference value
   in this example, that value is copied into the new method parameter.
 
-![What Java actually copies.](/notes/software/java/equality/03.svg)
+<ArticleSplit
+  src="/notes/software/java/equality/03.svg"
+  alt="What Java actually copies."
+  imagePosition="left"
+  caption="Method calls copy the stored value; for objects, that copied value is the reference."
+>
+  <p>
+    Once framed this way, the phrase "Java is pass-by-value" becomes much less mysterious. The
+    copied value can still lead both variables to the same heap object, but the variables remain
+    separate bindings.
+  </p>
+  <p>
+    That is also why `==` on references compares whether the stored reference values identify the
+    same object, not whether two objects merely look alike.
+  </p>
+</ArticleSplit>
 
 So in short, Java is pass-by-value, and the values passed are reference values for reference types.
 
@@ -127,10 +189,33 @@ So in short, Java is pass-by-value, and the values passed are reference values f
 Now that we have cleared the concepts around references in Java, we can finally produce a clearer
 answer on how `==` and `.equals()` differ:
 
-| Operator | Primitive type | Reference type |
-| --- | --- | --- |
-| `==` | Compares value-by-value | Compares the reference value, which could be the heap address |
-| `.equals()` | Primitive types do not have methods | Depends on the specific implementation. For example, `String.equals()` compares underlying content. A more complex `equals()` implementation can be seen in [`HashMap`](/notes/software/java/hash/). |
+<ScrollableTable>
+  <table>
+    <thead>
+      <tr>
+        <th>Operator</th>
+        <th>Primitive type</th>
+        <th>Reference type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>==</code></td>
+        <td>Compares value-by-value</td>
+        <td>Compares the reference value, which could be the heap address</td>
+      </tr>
+      <tr>
+        <td><code>.equals()</code></td>
+        <td>Primitive types do not have methods</td>
+        <td>
+          Depends on the specific implementation. For example, <code>String.equals()</code>{' '}
+          compares underlying content. A more complex <code>equals()</code> implementation can be
+          seen in <a href="/notes/software/java/hash/">HashMap</a>.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ScrollableTable>
 
 ## References
 

@@ -11,9 +11,19 @@ export async function getStaticPaths() {
 }
 
 const { note } = Astro.props
-const { Content } = await render(note)
+const { Content, headings } = await render(note)
+const siblingNotes = (await getCollection('notes', ({ data }) => !data.draft))
+  .filter(candidate => candidate.id !== note.id)
+  .filter(candidate => candidate.data.topic === note.data.topic || candidate.data.tags.some(tag => note.data.tags.includes(tag)))
+  .sort((left, right) => right.data.pubDate.getTime() - left.data.pubDate.getTime())
+  .slice(0, 3)
+  .map(candidate => ({
+    href: `/notes/${candidate.id}/`,
+    label: candidate.data.title,
+    meta: candidate.data.topic,
+  }))
 ---
 
-<PostLayout entry={note}>
+<PostLayout entry={note} headings={headings} relatedLinks={siblingNotes}>
   <Content />
 </PostLayout>

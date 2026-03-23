@@ -1,0 +1,201 @@
+---
+interface Props {
+  src: string
+  alt: string
+  caption?: string
+  imagePosition?: 'left' | 'right'
+  mediaWidth?: string
+  imageMaxWidth?: string
+  zoomable?: boolean
+}
+
+const {
+  src,
+  alt,
+  caption,
+  imagePosition = 'right',
+  mediaWidth = 'minmax(16rem, 0.85fr)',
+  imageMaxWidth = '100%',
+  zoomable = true,
+} = Astro.props
+---
+
+<figure
+  class={`article-split article-split--${imagePosition}`}
+  data-article-split
+  style={`--article-split-media-width: ${mediaWidth}; --article-split-image-max-width: ${imageMaxWidth};`}
+>
+  <div class="article-split__body">
+    <slot />
+  </div>
+  <div class="article-split__media">
+    {
+      zoomable
+        ? (
+            <button
+              type="button"
+              class="article-split__zoom-trigger"
+              data-article-split-trigger
+              aria-label={`Open enlarged image: ${alt}`}
+            >
+              <img src={src} alt={alt} loading="lazy" />
+            </button>
+          )
+        : <img src={src} alt={alt} loading="lazy" />
+    }
+    {caption && <figcaption>{caption}</figcaption>}
+  </div>
+  {
+    zoomable && (
+      <dialog class="article-split__dialog" data-article-split-dialog aria-label={alt}>
+        <button
+          type="button"
+          class="article-split__dialog-close"
+          data-article-split-close
+          aria-label="Close enlarged image"
+        >
+          Close
+        </button>
+        <img src={src} alt={alt} />
+        {caption && <p class="article-split__dialog-caption">{caption}</p>}
+      </dialog>
+    )
+  }
+</figure>
+
+<style>
+  .article-split {
+    margin: 1.75rem 0;
+    padding: 1.25rem;
+    border: 1px solid var(--base02);
+    display: grid;
+    gap: 1.25rem;
+    align-items: start;
+    background: color-mix(in srgb, var(--base01) 82%, transparent);
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .article-split__body :global(:first-child) {
+    margin-top: 0;
+  }
+
+  .article-split__body :global(:last-child) {
+    margin-bottom: 0;
+  }
+
+  .article-split__zoom-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+  }
+
+  .article-split__body,
+  .article-split__media {
+    min-width: 0;
+  }
+
+  .article-split__media img {
+    display: block;
+    width: 100%;
+    max-width: var(--article-split-image-max-width);
+    height: auto;
+    margin-inline: auto;
+    border: 1px solid var(--base02);
+    background: var(--base00);
+  }
+
+  .article-split figcaption {
+    margin-top: 0.6rem;
+  }
+
+  .article-split__dialog {
+    width: min(92vw, 72rem);
+    max-height: 90vh;
+    padding: 1rem;
+    border: 1px solid var(--base02);
+    background: var(--base00);
+    color: var(--base05);
+  }
+
+  .article-split__dialog::backdrop {
+    background: color-mix(in srgb, var(--base00) 82%, black);
+    backdrop-filter: blur(4px);
+  }
+
+  .article-split__dialog img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(90vh - 5rem);
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    background: var(--base00);
+  }
+
+  .article-split__dialog-close {
+    display: inline-flex;
+    margin: 0 0 1rem auto;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--base02);
+    color: var(--base05);
+    background: color-mix(in srgb, var(--base01) 82%, transparent);
+    cursor: pointer;
+  }
+
+  .article-split__dialog-caption {
+    margin: 0.9rem 0 0;
+    text-align: center;
+    color: var(--base03);
+  }
+
+  @media (min-width: 56rem) {
+    .article-split {
+      grid-template-columns: minmax(0, 1.15fr) var(--article-split-media-width);
+    }
+
+    .article-split--left {
+      grid-template-columns: var(--article-split-media-width) minmax(0, 1.15fr);
+    }
+
+    .article-split--left .article-split__media {
+      order: -1;
+    }
+  }
+
+  @media (max-width: 55.99rem) {
+    .article-split {
+      padding: 1rem;
+    }
+  }
+</style>
+
+<script is:inline>
+  for (const block of document.querySelectorAll('[data-article-split]')) {
+    const trigger = block.querySelector('[data-article-split-trigger]')
+    const dialog = block.querySelector('[data-article-split-dialog]')
+    const close = block.querySelector('[data-article-split-close]')
+
+    if (!(trigger instanceof HTMLButtonElement) || !(dialog instanceof HTMLDialogElement))
+      continue
+
+    trigger.addEventListener('click', () => dialog.showModal())
+
+    close?.addEventListener('click', () => dialog.close())
+
+    dialog.addEventListener('click', (event) => {
+      const rect = dialog.getBoundingClientRect()
+      const isBackdropClick
+        = event.clientX < rect.left
+          || event.clientX > rect.right
+          || event.clientY < rect.top
+          || event.clientY > rect.bottom
+
+      if (isBackdropClick)
+        dialog.close()
+    })
+  }
+</script>
