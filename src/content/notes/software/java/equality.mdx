@@ -1,6 +1,6 @@
 ---
-title: "`==` and `.equals()` in Java"
-description: Personal notes on primitive values, references, and why Java equality feels simple until it is not.
+title: "Notes on Equality Comparison in Java"
+description: Personal notes on Java equality, covering primitives, references, and the difference between `==` and `equals()`.
 pubDate: 2026-03-12
 topic: Java
 tags:
@@ -11,58 +11,129 @@ tags:
 
 import Callout from '../../../../components/Callout.astro'
 
-# Notes on Equality Comparison in Java
-
-<Callout title="Note" variant="note">
-  <p>This is a study note, not a formal technical reference.</p>
+<Callout title="TL;DR" variant="note">
+  <p>
+    This is my personal notes which I made while studying Java, so the content below should not be
+    taken seriously as technical reference.
+  </p>
+  <p>
+    I will be spending 70% of the note building up the basic understanding of the Java memory
+    model to explain a difference that could be summarized in a single sentence:
+  </p>
+  <blockquote>
+    <code>==</code> checks same value for primitives and same object for references;{' '}
+    <code>equals()</code> checks whatever the class defines as equality.
+  </blockquote>
 </Callout>
 
 ## The Context
 
-In Java, we have two common equality mechanisms: `.equals()` and the `==` operator.
+In Java, we have two methods for equality comparison of values: `equals()` and the operator `==`.
 
-- `equals()` has existed since JDK 1.0 as a method on `Object`.
-- `==` is the language-level equality operator.
+- `equals()` exists since [JDK 1.0](/notes/software/java/jdk-jre-jvm) as a public method of
+  [`Object`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)).
+- `==` is part of Java's
+  [equality and relational operators](https://dev.java/learn/language-basics/all-operators/).
 
-The superficial difference is easy to memorize. The useful difference only becomes clear once you think about what a Java variable actually holds.
+So what's the difference between using `==` and `equals()` in Java? Turns out there's a lot.
 
 ## The Mechanics
 
-To understand equality for primitives and objects, it helps to think first about Java's type system and memory model at a rough, practical level.
+To understand how primitive values and objects are asserted for equality in Java, I think we must
+first roughly understand how they are managed memory-wise.
+
+For context, Java is a statically and strongly typed language. Static here means that every
+variable and expression has a type that is known at compile time, and strongly here means that the
+type of the value does not change. See
+[Chapter 4 of the Java Language Specification](https://docs.oracle.com/javase/specs/jls/se25/html/jls-4.html)
+for more detail on the type system.
 
 ### Java Type System
 
-Java has primitive types and reference types.
+Java is object-oriented, but not everything is an object since there are primitive values. In other
+words, there are two kinds of types in Java: primitive types and reference types.
 
-Primitive values such as `5` are stored as the value itself. Reference values store the information the JVM uses to find the underlying object.
+It is clear that a primitive value such as an integer `5` is simply represented as `...000101` in
+binary format in memory.
+
+However, in Java, according to
+[JVM Spec section 2.3](https://docs.oracle.com/javase/specs/jvms/se11/jvms11.pdf), the
+specification only guarantees the semantics are 32-bit for `int` values. JVM implementations such
+as HotSpot and OpenJ9 still have freedom in how they map the abstract machine to physical hardware.
+
+Meanwhile, reference type values such as classes, arrays, interfaces, and `String` are really just
+reference values that point the JVM toward the actual object in heap space.
+
+Most simply, reference type values are values that the JVM can use to find the actual object during
+runtime.
 
 ![Primitive versus reference illustration.](/notes/software/java/equality/01.svg)
 
-In practical terms, a reference behaves like an object locator, even though treating it as a raw pointer is too simplistic.
+Less simply, a reference is a value that identifies an object; how it is represented, whether as a
+pointer, handle, compressed pointer, or something else, is JVM-dependent.
+
+In the HotSpot implementation, a reference is a bit pattern representing a virtual memory address,
+either a pointer or a compressed offset decoded into a pointer, that indicates the starting byte of
+the JVM object header on the heap.
 
 ![Reference representation illustration.](/notes/software/java/equality/04.svg)
 
-<Callout title="Is a Java reference a pointer?" variant="qa">
-  <p>Not in the sense programmers can directly depend on. Garbage collectors can move objects, so Java references should be treated as JVM-managed reference values, not stable raw addresses.</p>
+<Callout title="Q&A" variant="qa">
+  <p>
+    <strong>Q:</strong> Is Java's reference a pointer?
+  </p>
+  <p>
+    <strong>A:</strong> Short answer, no.
+  </p>
+  <p>
+    There are multiple JVM implementations, and in some of them the garbage collector can move
+    objects to reduce fragmentation and improve locality. So we should not expect a reference to
+    remain the same across time.
+  </p>
+  <p>
+    This means Java references are GC-aware and should not be treated as raw addresses or pointers
+    that programmers can directly control.
+  </p>
+</Callout>
+
+<Callout title="Q&A" variant="qa">
+  <p>
+    <strong>Q:</strong> What's in the JVM header or metadata?
+  </p>
+  <p>
+    <strong>A:</strong> See <a href="/notes/software/java/jdk-jre-jvm">JVM</a>.
+  </p>
 </Callout>
 
 ### Pass-by-value
 
-Java is pass-by-value.
+Now that we've seen something about how Java manages its objects, we can look at why Java is
+pass-by-value and not pass-by-reference.
 
-When you pass an object into a method, Java copies the reference value. Both variables can still reach the same object, but the value being passed is the copied reference, not a magical pass-by-reference mechanism.
+- The assumption: when passing an object to a method, we are passing the object itself, or rather
+  the direct link to the original one.
 
 ![Incorrect pass-by-reference intuition.](/notes/software/java/equality/02.svg)
 
+- The reality: Java copies the bits inside the original variable. Since `p` holds a reference value
+  in this example, that value is copied into the new method parameter.
+
 ![What Java actually copies.](/notes/software/java/equality/03.svg)
+
+So in short, Java is pass-by-value, and the values passed are reference values for reference types.
 
 ## Conclusion on Equality Comparison
 
-Once that model is clear, the difference becomes more concrete:
+Now that we have cleared the concepts around references in Java, we can finally produce a clearer
+answer on how `==` and `.equals()` differ:
 
-| Syntax | Primitive type | Reference type |
+| Operator | Primitive type | Reference type |
 | --- | --- | --- |
-| `==` | Compares value-by-value | Compares the reference value |
-| `.equals()` | Not available on primitives | Compares according to the class implementation |
+| `==` | Compares value-by-value | Compares the reference value, which could be the heap address |
+| `.equals()` | Primitive types do not have methods | Depends on the specific implementation. For example, `String.equals()` compares underlying content. A more complex `equals()` implementation can be seen in [`HashMap`](/notes/software/java/hash/). |
 
-For example, `String.equals()` compares content, while `==` on two `String` references compares whether they point to the same object identity.
+## References
+
+1. [Java Language Specification](https://docs.oracle.com/javase/specs/index.html)
+2. [Java Platform, Standard Edition & Java Development Kit Version 25 API Specification](https://docs.oracle.com/en/java/javase/25/docs/api/index.html)
+3. [Java SE Spec, Chapter 4](https://docs.oracle.com/javase/specs/jls/se25/html/jls-4.html)

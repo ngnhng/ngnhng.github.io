@@ -1,0 +1,485 @@
+<svg
+            xmlns="http://www.w3.org/2000/svg"
+            style="background: var(--base00); color: var(--base05)"
+            viewBox="0 0 441 171"
+          >
+            <defs>
+              <style>
+                :root {
+                  --base00: #181818;
+                  --base05: #d8d8d8;
+                }
+
+                @media (prefers-color-scheme: light) {
+                  :root {
+                    --base00: #f6f6f6;
+                    --base05: #3d3d3d;
+                  }
+                }
+
+                @import url(https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500);
+              </style>
+            </defs>
+            <rect fill="var(--base00)" width="100%" height="100%" />
+            <g data-cell-id="0">
+              <g data-cell-id="1">
+                <g data-cell-id="3N5BuD9OqR8EhbLhhQqN-1">
+                  <path
+                    fill="var(--base00)"
+                    pointer-events="all"
+                    transform="translate(.5 .5)"
+                    d="M0 0h230v30H0z"
+                  />
+                  <switch>
+                    <foreignObject
+                      style="overflow: visible; text-align: left"
+                      pointer-events="none"
+                      width="100%"
+                      height="100%"
+                      requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+                    >
+                      <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        style="
+                          display: flex;
+                          align-items: unsafe center;
+                          justify-content: unsafe flex-start;
+                          width: 228px;
+                          height: 1px;
+                          padding-top: 15px;
+                          margin-left: 2px;
+                        "
+                      >
+                        <div
+                          style="
+                            box-sizing: border-box;
+                            font-size: 0;
+                            text-align: left;
+                            color: currentColor;
+                          "
+                        >
+                          <div
+                            style="
+                              display: inline-block;
+                              font-size: 12px;
+                              font-family: &quot;JetBrains Mono&quot;;
+                              color: currentColor;
+                              line-height: 1.2;
+                              pointer-events: all;
+                              white-space: normal;
+                              word-wrap: normal;
+                            "
+                          >
+                            Person p = new Person();
+                          </div>
+                        </div>
+                      </div>
+                    </foreignObject>
+                    <text
+                      x="2"
+                      y="19"
+                      fill="currentColor"
+                      font-family="'JetBrains Mono'"
+                      font-size="12"
+                    >
+                      Person p = new Person();
+                    </text>
+                  </switch>
+                </g>
+                <g data-cell-id="3N5BuD9OqR8EhbLhhQqN-2">
+                  <path
+                    fill="var(--base00)"
+                    stroke="currentColor"
+                    stroke-dasharray="3 3"
+                    pointer-events="all"
+                    transform="translate(.5 .5)"
+                    d="M0 50h160v120H0z"
+                  />
+                  <switch>
+                    <foreignObject
+                      style="overflow: visible; text-align: left"
+                      pointer-events="none"
+                      width="100%"
+                      height="100%"
+                      requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+                    >
+                      <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        style="
+                          display: flex;
+                          align-items: unsafe flex-start;
+                          justify-content: unsafe center;
+                          width: 158px;
+                          height: 1px;
+                          padding-top: 57px;
+                          margin-left: 1px;
+                        "
+                      >
+                        <div
+                          style="
+                            box-sizing: border-box;
+                            font-size: 0;
+                            text-align: center;
+                            color: currentColor;
+                          "
+                        >
+                          <div
+                            style="
+                              display: inline-block;
+                              font-size: 12px;
+                              font-family: &quot;JetBrains Mono&quot;;
+                              color: currentColor;
+                              line-height: 1.2;
+                              pointer-events: all;
+                              white-space: normal;
+                              word-wrap: normal;
+                            "
+                          >
+                            <i> Stack (main frame) </i>
+                          </div>
+                        </div>
+                      </div>
+                    </foreignObject>
+                    <text
+                      x="80"
+                      y="69"
+                      fill="currentColor"
+                      font-family="'JetBrains Mono'"
+                      font-size="12"
+                      text-anchor="middle"
+                    >
+                      Stack (main frame)
+                    </text>
+                  </switch>
+                </g>
+                <g data-cell-id="3N5BuD9OqR8EhbLhhQqN-3">
+                  <path
+                    fill="var(--base00)"
+                    stroke="currentColor"
+                    stroke-dasharray="3 3"
+                    pointer-events="all"
+                    transform="translate(.5 .5)"
+                    d="M200 50h240v120H200z"
+                  />
+                  <switch>
+                    <foreignObject
+                      style="overflow: visible; text-align: left"
+                      pointer-events="none"
+                      width="100%"
+                      height="100%"
+                      requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+                    >
+                      <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        style="
+                          display: flex;
+                          align-items: unsafe flex-start;
+                          justify-content: unsafe center;
+                          width: 238px;
+                          height: 1px;
+                          padding-top: 57px;
+                          margin-left: 201px;
+                        "
+                      >
+                        <div
+                          style="
+                            box-sizing: border-box;
+                            font-size: 0;
+                            text-align: center;
+                            color: currentColor;
+                          "
+                        >
+                          <div
+                            style="
+                              display: inline-block;
+                              font-size: 12px;
+                              font-family: &quot;JetBrains Mono&quot;;
+                              color: currentColor;
+                              line-height: 1.2;
+                              pointer-events: all;
+                              white-space: normal;
+                              word-wrap: normal;
+                            "
+                          >
+                            <i>
+                              Heap
+                              <br />
+                            </i>
+                            <br />
+                            <div style="text-align: left">
+                              <br />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </foreignObject>
+                    <text
+                      x="320"
+                      y="69"
+                      fill="currentColor"
+                      font-family="'JetBrains Mono'"
+                      font-size="12"
+                      text-anchor="middle"
+                    >
+                      Heap...
+                    </text>
+                  </switch>
+                </g>
+                <g data-cell-id="3N5BuD9OqR8EhbLhhQqN-4">
+                  <path
+                    fill="var(--base00)"
+                    stroke="currentColor"
+                    pointer-events="all"
+                    transform="translate(.5 .5)"
+                    d="M230 90h180v60H230z"
+                  />
+                  <switch>
+                    <foreignObject
+                      style="overflow: visible; text-align: left"
+                      pointer-events="none"
+                      width="100%"
+                      height="100%"
+                      requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+                    >
+                      <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        style="
+                          display: flex;
+                          align-items: unsafe center;
+                          justify-content: unsafe flex-start;
+                          width: 178px;
+                          height: 1px;
+                          padding-top: 120px;
+                          margin-left: 232px;
+                        "
+                      >
+                        <div
+                          style="
+                            box-sizing: border-box;
+                            font-size: 0;
+                            text-align: left;
+                            color: currentColor;
+                          "
+                        >
+                          <div
+                            style="
+                              display: inline-block;
+                              font-size: 12px;
+                              font-family: &quot;JetBrains Mono&quot;;
+                              color: currentColor;
+                              line-height: 1.2;
+                              pointer-events: all;
+                              white-space: normal;
+                              word-wrap: normal;
+                            "
+                          >
+                            Person object @0xA1B2
+                            <br />
+                            [JVM header/metadata]
+                            <br />
+                            name = null
+                            <br />
+                            age = 0
+                          </div>
+                        </div>
+                      </div>
+                    </foreignObject>
+                    <text
+                      x="232"
+                      y="124"
+                      fill="currentColor"
+                      font-family="'JetBrains Mono'"
+                      font-size="12"
+                    >
+                      Person object @0xA1B2...
+                    </text>
+                  </switch>
+                </g>
+                <g data-cell-id="3N5BuD9OqR8EhbLhhQqN-5">
+                  <path
+                    fill="var(--base00)"
+                    stroke="currentColor"
+                    pointer-events="all"
+                    transform="translate(.5 .5)"
+                    d="M20 100h120v40H20z"
+                  />
+                  <switch>
+                    <foreignObject
+                      style="overflow: visible; text-align: left"
+                      pointer-events="none"
+                      width="100%"
+                      height="100%"
+                      requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+                    >
+                      <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        style="
+                          display: flex;
+                          align-items: unsafe center;
+                          justify-content: unsafe flex-start;
+                          width: 118px;
+                          height: 1px;
+                          padding-top: 120px;
+                          margin-left: 22px;
+                        "
+                      >
+                        <div
+                          style="
+                            box-sizing: border-box;
+                            font-size: 0;
+                            text-align: left;
+                            color: currentColor;
+                          "
+                        >
+                          <div
+                            style="
+                              display: inline-block;
+                              font-size: 12px;
+                              font-family: &quot;JetBrains Mono&quot;;
+                              color: currentColor;
+                              line-height: 1.2;
+                              pointer-events: all;
+                              white-space: normal;
+                              word-wrap: normal;
+                            "
+                          >
+                            p: Person
+                            <br />
+                            <div>
+                              <span style="background-color: transparent; color: currentColor">
+                                value = 0xA1B2
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </foreignObject>
+                    <text
+                      x="22"
+                      y="124"
+                      fill="currentColor"
+                      font-family="'JetBrains Mono'"
+                      font-size="12"
+                    >
+                      p: Person...
+                    </text>
+                  </switch>
+                </g>
+                <g data-cell-id="3N5BuD9OqR8EhbLhhQqN-6">
+                  <path
+                    d="m132 127 91.65-6.55"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-miterlimit="10"
+                    pointer-events="stroke"
+                    transform="translate(.5 .5)"
+                  />
+                  <path
+                    d="m228.88 120.08-6.81 2.83 1.58-2.46-1.91-2.2Z"
+                    stroke="currentColor"
+                    stroke-miterlimit="10"
+                    pointer-events="all"
+                    fill="currentColor"
+                    transform="translate(.5 .5)"
+                  />
+                </g>
+                <g data-cell-id="fTPNu795Q7Ba855nVZtG-1">
+                  <path
+                    fill="none"
+                    pointer-events="all"
+                    d="m105.058 132.51 155.884-90 15 25.98-155.884 90z"
+                  />
+                  <switch transform="rotate(-30 190 100)" opacity=".5">
+                    <foreignObject
+                      style="overflow: visible; text-align: left"
+                      pointer-events="none"
+                      width="100%"
+                      height="100%"
+                      requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+                    >
+                      <div
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        style="
+                          display: flex;
+                          align-items: unsafe center;
+                          justify-content: unsafe center;
+                          width: 178px;
+                          height: 1px;
+                          padding-top: 100px;
+                          margin-left: 101px;
+                        "
+                      >
+                        <div
+                          style="
+                            box-sizing: border-box;
+                            font-size: 0;
+                            text-align: center;
+                            color: currentColor;
+                          "
+                        >
+                          <div
+                            style="
+                              display: inline-block;
+                              font-size: 12px;
+                              font-family: Helvetica;
+                              color: currentColor;
+                              line-height: 1.2;
+                              pointer-events: all;
+                              white-space: normal;
+                              word-wrap: normal;
+                            "
+                          >
+                            ngnhng.github.io
+                          </div>
+                        </div>
+                      </div>
+                    </foreignObject>
+                    <text
+                      x="190"
+                      y="104"
+                      fill="currentColor"
+                      font-family="Helvetica"
+                      font-size="12"
+                      text-anchor="middle"
+                    >
+                      ngnhng.github.io
+                    </text>
+                  </switch>
+                </g>
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-2" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-3" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-4" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-5" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-6" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-8" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-10" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-12" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-13" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-15" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-16" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-17" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-18" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-19" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-20" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-21" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-22" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-23" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-24" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-25" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-26" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-7" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-27" />
+                <g data-cell-id="g1kHLxwIz9Rbm4jFRSAC-28" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-13" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-14" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-15" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-16" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-17" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-19" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-20" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-21" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-23" />
+                <g data-cell-id="px7SnIMkkuJ-scLYALrx-24" />
+              </g>
+            </g>
+          </svg>
