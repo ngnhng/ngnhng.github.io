@@ -80,7 +80,7 @@ git am feature-update.patch             # Apply with commit history intact
 
 ## Why This Works
 
-By decoupling the *writing* of code from the *hosting* of code, we gained:
+By decoupling the _writing_ of code from the _hosting_ of code, we gained:
 
 - **Native Performance:** Zero latency typing and scrolling.
 - **Better History:** Using `git format-patch` / `git am` preserves author information and commit

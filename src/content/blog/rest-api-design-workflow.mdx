@@ -7,7 +7,6 @@ tags:
   - workshop
   - presentation
 artifactUrl: "/presentations/rest-api-design-workflow/"
-pdfUrl: "/presentations/rest-api-design-workflow/WS REST API Workflow.pdf"
 ---
 
 import Callout from '../../components/Callout.astro'
@@ -18,10 +17,11 @@ The deck itself was built with Slidev before being committed, so Astro owns the 
 
 <Callout title="Presentation artifact" variant="note">
   <p>
-    Open the full deck at <a href="/presentations/rest-api-design-workflow/">/presentations/rest-api-design-workflow/</a>.
-  </p>
-  <p>
-    A PDF export is also available for offline reading and sharing.
+    Open the full deck at{" "}
+    <a href="/presentations/rest-api-design-workflow/" target="_blank" rel="noopener noreferrer">
+      /presentations/rest-api-design-workflow/
+    </a>
+    .
   </p>
 </Callout>
 
@@ -30,12 +30,3 @@ The deck itself was built with Slidev before being committed, so Astro owns the 
 - a repeatable sequence for moving from requirements to resource design
 - practical trade-offs around endpoint shape and payload boundaries
 - how to keep API design discussions concrete enough for workshops and reviews
-
-## Why Keep This as an Artifact
-
-The Slidev output is already a compiled application with its own runtime assets and routing behavior. Trying to fold that into MDX would make the content pipeline more fragile for very little gain.
-
-The simpler split is:
-
-- Astro manages discovery and metadata.
-- The artifact remains independently buildable and publishable.

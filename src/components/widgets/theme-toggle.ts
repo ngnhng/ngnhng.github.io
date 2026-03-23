@@ -1,19 +1,19 @@
-import { LitElement, css, html } from 'lit'
+import { LitElement, css, html } from "lit";
 
-type Theme = 'dark' | 'light'
+type Theme = "dark" | "light";
 
 export class SiteThemeToggle extends LitElement {
   static properties = {
     theme: { state: true },
-  }
+  };
 
-  declare theme: Theme
+  declare theme: Theme;
 
   static styles = css`
     :host {
       display: inline-flex;
     }
-
+    
     button {
       font: inherit;
       font-family: "JetBrains Mono", "Courier New", monospace;
@@ -35,9 +35,9 @@ export class SiteThemeToggle extends LitElement {
         background-color 0.2s ease,
         border-color 0.2s ease;
     }
-
+    
     button::before {
-      content: '';
+      content: "";
       position: absolute;
       inset: 4px;
       border-radius: 999px;
@@ -49,8 +49,8 @@ export class SiteThemeToggle extends LitElement {
         transparent 100%
       );
     }
-
-    button[data-theme='light']::before {
+    
+    button[data-theme="light"]::before {
       background: linear-gradient(
         135deg,
         transparent 0%,
@@ -59,17 +59,17 @@ export class SiteThemeToggle extends LitElement {
         var(--base07) 100%
       );
     }
-
+    
     button:hover {
       color: var(--base07);
       border-color: var(--base03);
     }
-
+    
     button:focus-visible {
       outline: 2px solid var(--base0D);
       outline-offset: 3px;
     }
-
+    
     .label {
       position: absolute;
       width: 1px;
@@ -81,50 +81,51 @@ export class SiteThemeToggle extends LitElement {
       white-space: nowrap;
       border: 0;
     }
-  `
+  `;
 
   constructor() {
-    super()
-    this.theme = 'dark'
+    super();
+    this.theme = "dark";
   }
 
   connectedCallback() {
-    super.connectedCallback()
-    const storedTheme = window.localStorage.getItem('theme')
-    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches
-    this.theme = storedTheme === 'light' || storedTheme === 'dark'
-      ? storedTheme
-      : prefersLight
-        ? 'light'
-        : 'dark'
-    this.applyTheme()
+    super.connectedCallback();
+    const storedTheme = window.localStorage.getItem("theme");
+    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+    this.theme =
+      storedTheme === "light" || storedTheme === "dark"
+        ? storedTheme
+        : prefersLight
+          ? "light"
+          : "dark";
+    this.applyTheme();
   }
 
   private applyTheme() {
-    document.documentElement.setAttribute('data-theme', this.theme)
-    document.documentElement.style.colorScheme = this.theme
+    document.documentElement.setAttribute("data-theme", this.theme);
+    document.documentElement.style.colorScheme = this.theme;
   }
 
   private toggleTheme() {
-    this.theme = this.theme === 'light' ? 'dark' : 'light'
-    window.localStorage.setItem('theme', this.theme)
-    this.applyTheme()
+    this.theme = this.theme === "light" ? "dark" : "light";
+    window.localStorage.setItem("theme", this.theme);
+    this.applyTheme();
   }
 
   render() {
-    const isLight = this.theme === 'light'
+    const isLight = this.theme === "light";
     return html`
       <button
         type="button"
         data-theme=${this.theme}
         aria-pressed=${String(isLight)}
-        aria-label=${`Switch to ${isLight ? 'dark' : 'light'} mode`}
+        aria-label=${`Switch to ${isLight ? "dark" : "light"} mode`}
         @click=${this.toggleTheme}
       >
-        <span class="label">${isLight ? 'Dark' : 'Light'}</span>
+        <span class="label">${isLight ? "Dark" : "Light"}</span>
       </button>
-    `
+    `;
   }
 }
 
-customElements.define('site-theme-toggle', SiteThemeToggle)
+customElements.define("site-theme-toggle", SiteThemeToggle);

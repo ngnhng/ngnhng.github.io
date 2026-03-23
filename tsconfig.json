@@ -9,12 +9,5 @@
     "src/**/*.md",
     "src/**/*.mdx"
   ],
-  "exclude": [
-    "dist",
-    "blog",
-    "notes",
-    "editor",
-    "resume",
-    "public/resume"
-  ]
+  "exclude": ["dist", "blog", "notes", "editor", "resume", "public/resume"]
 }

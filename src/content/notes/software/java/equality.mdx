@@ -9,9 +9,9 @@ tags:
   - equality
 ---
 
-import Callout from '../../../../components/Callout.astro'
-import ArticleSplit from '../../../../components/ArticleSplit.astro'
-import ScrollableTable from '../../../../components/ScrollableTable.astro'
+import Callout from "../../../../components/Callout.astro";
+import ArticleSplit from "../../../../components/ArticleSplit.astro";
+import ScrollableTable from "../../../../components/ScrollableTable.astro";
 
 <Callout title="TL;DR" variant="note">
   <p>
@@ -19,11 +19,11 @@ import ScrollableTable from '../../../../components/ScrollableTable.astro'
     taken seriously as technical reference.
   </p>
   <p>
-    I will be spending 70% of the note building up the basic understanding of the Java memory
-    model to explain a difference that could be summarized in a single sentence:
+    I will be spending 70% of the note building up the basic understanding of the Java memory model
+    to explain a difference that could be summarized in a single sentence:
   </p>
   <blockquote>
-    <code>==</code> checks same value for primitives and same object for references;{' '}
+    <code>==</code> checks same value for primitives and same object for references;{" "}
     <code>equals()</code> checks whatever the class defines as equality.
   </blockquote>
 </Callout>
@@ -33,7 +33,7 @@ import ScrollableTable from '../../../../components/ScrollableTable.astro'
 In Java, we have two methods for equality comparison of values: `equals()` and the operator `==`.
 
 - `equals()` exists since [JDK 1.0](/notes/software/java/jdk-jre-jvm) as a public method of
-  [`Object`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)).
+  [`Object`](<https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)>).
 - `==` is part of Java's
   [equality and relational operators](https://dev.java/learn/language-basics/all-operators/).
 
@@ -200,17 +200,21 @@ answer on how `==` and `.equals()` differ:
     </thead>
     <tbody>
       <tr>
-        <td><code>==</code></td>
+        <td>
+          <code>==</code>
+        </td>
         <td>Compares value-by-value</td>
         <td>Compares the reference value, which could be the heap address</td>
       </tr>
       <tr>
-        <td><code>.equals()</code></td>
+        <td>
+          <code>.equals()</code>
+        </td>
         <td>Primitive types do not have methods</td>
         <td>
-          Depends on the specific implementation. For example, <code>String.equals()</code>{' '}
-          compares underlying content. A more complex <code>equals()</code> implementation can be
-          seen in <a href="/notes/software/java/hash/">HashMap</a>.
+          Depends on the specific implementation. For example, <code>String.equals()</code> compares
+          underlying content. A more complex <code>equals()</code> implementation can be seen in{" "}
+          <a href="/notes/software/java/hash/">HashMap</a>.
         </td>
       </tr>
     </tbody>
