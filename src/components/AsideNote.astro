@@ -1,0 +1,47 @@
+---
+interface Props {
+  id: string
+  index: string | number
+}
+
+const { id, index } = Astro.props
+---
+
+<section class="aside-note" id={id}>
+  <p class="aside-note__index" aria-hidden="true">
+    {index}
+  </p>
+  <div class="aside-note__body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .aside-note {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: start;
+    scroll-margin-top: 2rem;
+  }
+
+  .aside-note__index {
+    margin: 0;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: var(--base0D);
+  }
+
+  .aside-note__body {
+    min-width: 0;
+  }
+
+  .aside-note__body :global(:first-child) {
+    margin-top: 0;
+  }
+
+  .aside-note__body :global(:last-child) {
+    margin-bottom: 0;
+  }
+</style>

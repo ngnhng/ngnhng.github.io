@@ -12,6 +12,8 @@ tags:
 import Callout from "../../../../components/Callout.astro";
 import ArticleAside from "../../../../components/ArticleAside.astro";
 import ArticleSplit from "../../../../components/ArticleSplit.astro";
+import AsideLink from "../../../../components/AsideLink.astro";
+import AsideNote from "../../../../components/AsideNote.astro";
 import ScrollableTable from "../../../../components/ScrollableTable.astro";
 
 <Callout title="TL;DR" variant="note">
@@ -40,32 +42,51 @@ In Java, we have two methods for equality comparison of values: `equals()` and t
 
 So what's the difference between using `==` and `equals()` in Java? Turns out there's a lot.
 
-## Example: Paragraph With Aside Content
+## Example: java.net.URL equality comparison
 
-<ArticleAside asideLabel="Aside content">
+<ArticleAside asideLabel="Caveat">
   <p>
-    This paragraph is the main flow of the note. In MDX, the clean way to attach supplementary
-    text is to keep the paragraph as normal prose and place the aside content beside it as a
-    separate sibling block.
+    <code>java.net.URL</code> is a good reminder that <code>equals()</code> is not automatically
+    "compare every field" in Java. The JDK defines two <code>URL</code> instances as equal when
+    they refer to the same resource, so the comparison is about the class's meaning of equality,
+    not object identity.
   </p>
   <p>
-    That keeps the article readable while still giving you a place to add supporting commentary,
-    caveats, or a smaller side observation without interrupting the main explanation.
+    That already makes it different from <code>==</code>. If we create two separate{" "}
+    <code>URL</code> objects, <code>==</code> still asks whether both variables store the same
+    reference value, while <code>equals()</code> asks whether both URLs should count as the same
+    location according to <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/net/URL.html#equals(java.lang.Object)">the API contract</a>. The surprising part is that host comparison may require name resolution
+    <AsideLink noteId="equality-aside-1" index={1} />.
   </p>
   <Fragment slot="aside">
-    <p>
-      This is the aside content. It is related to the paragraph on the left, but it is not part of
-      the paragraph itself.
-    </p>
-    <p>
-      In practice, that means you should render an <code>&lt;aside&gt;</code> or a component like
-      this one as a sibling block, not nest it inside a <code>&lt;p&gt;</code>.
-    </p>
+    <AsideNote id="equality-aside-1" index={1}>
+      <p>
+        The JDK documentation explicitly says <code>URL.equals()</code> is a blocking operation
+        because comparing hosts can require DNS lookup.
+      </p>
+      <p>
+        It also notes that this behavior is known to be inconsistent with HTTP virtual hosting, so
+        <code>URL</code> is often a poor fit for stable application-level equality or map keys. If
+        you want comparison based on character content rather than host lookup,{" "}
+        <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/net/URI.html">
+          <code>URI</code>
+        </a>{" "}
+        is usually the safer abstraction.
+      </p>
+    </AsideNote>
   </Fragment>
 </ArticleAside>
 
-After the split section, the article can continue with another normal paragraph. That structure is
-valid HTML, and it keeps the main argument separate from supporting commentary.
+```java
+URL a = new URL("http://example.com/docs");
+URL b = new URL("http://EXAMPLE.COM/docs");
+
+a == b;       // false: distinct objects
+a.equals(b);  // can be true: equality follows URL semantics
+```
+
+This is a compact example of the whole topic: <code>==</code> compares the stored value itself,
+while <code>equals()</code> compares whatever the class defines as meaningful equality.
 
 ## The Mechanics
 

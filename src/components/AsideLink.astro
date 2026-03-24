@@ -1,0 +1,35 @@
+---
+interface Props {
+  noteId: string
+  index: string | number
+}
+
+const { noteId, index } = Astro.props
+---
+
+<a class="aside-link" href={`#${noteId}`} aria-label={`Jump to aside note ${index}`}>
+  <sup>{index}</sup>
+</a>
+
+<style>
+  .aside-link {
+    display: inline-block;
+    margin-left: 0.12em;
+    color: var(--base0D);
+    text-decoration: none;
+    vertical-align: super;
+    line-height: 0;
+  }
+
+  .aside-link sup {
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.72em;
+    font-weight: 500;
+  }
+
+  .aside-link:hover,
+  .aside-link:focus-visible {
+    color: var(--base0C);
+    text-decoration: underline;
+  }
+</style>
