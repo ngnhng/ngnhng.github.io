@@ -45,34 +45,38 @@ So what's the difference between using `==` and `equals()` in Java? Turns out th
 ## Example: java.net.URL equality comparison
 
 <ArticleAside asideLabel="Caveat">
-  <p>
-    <code>java.net.URL</code> is a good reminder that <code>equals()</code> is not automatically
-    "compare every field" in Java. The JDK defines two <code>URL</code> instances as equal when
-    they refer to the same resource, so the comparison is about the class's meaning of equality,
-    not object identity.
-  </p>
-  <p>
-    That already makes it different from <code>==</code>. If we create two separate{" "}
-    <code>URL</code> objects, <code>==</code> still asks whether both variables store the same
-    reference value, while <code>equals()</code> asks whether both URLs should count as the same
-    location according to <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/net/URL.html#equals(java.lang.Object)">the API contract</a>. The surprising part is that host comparison may require name resolution
-    <AsideLink noteId="equality-aside-1" index={1} />.
-  </p>
+  <Fragment>
+    <p>
+      <code>java.net.URL</code> is a good reminder that <code>equals()</code> is not automatically
+      "compare every field" in Java. The JDK defines two <code>URL</code> instances as equal when
+      they refer to the same resource, so the comparison is about the class's meaning of equality,
+      not object identity.
+    </p>
+    <p>
+      That already makes it different from <code>==</code>. If we create two separate{" "}
+      <code>URL</code> objects, <code>==</code> still asks whether both variables store the same
+      reference value, while <code>equals()</code> asks whether both URLs should count as the same
+      location according to{" "}
+      <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/net/URL.html#equals(java.lang.Object)">the API contract</a>.
+      The surprising part is that host comparison may require name resolution
+      <AsideLink noteId="equality-aside-1" index={1} />.
+    </p>
+  </Fragment>
   <Fragment slot="aside">
     <AsideNote id="equality-aside-1" index={1}>
-      <p>
-        The JDK documentation explicitly says <code>URL.equals()</code> is a blocking operation
-        because comparing hosts can require DNS lookup.
-      </p>
-      <p>
-        It also notes that this behavior is known to be inconsistent with HTTP virtual hosting, so
-        <code>URL</code> is often a poor fit for stable application-level equality or map keys. If
-        you want comparison based on character content rather than host lookup,{" "}
-        <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/net/URI.html">
-          <code>URI</code>
-        </a>{" "}
-        is usually the safer abstraction.
-      </p>
+      <Fragment>
+        <p>
+          The JDK documentation explicitly says <code>URL.equals()</code> is a blocking operation
+          because comparing hosts can require DNS lookup.
+        </p>
+        <p>
+          It also notes that this behavior is known to be inconsistent with HTTP virtual hosting,
+          so <code>URL</code> is often a poor fit for stable application-level equality or map
+          keys. If you want comparison based on character content rather than host lookup,{" "}
+          <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/net/URI.html"><code>URI</code></a>{" "}
+          is usually the safer abstraction.
+        </p>
+      </Fragment>
     </AsideNote>
   </Fragment>
 </ArticleAside>
