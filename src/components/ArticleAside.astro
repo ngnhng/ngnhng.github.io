@@ -1,0 +1,99 @@
+---
+interface Props {
+  asideLabel?: string
+  asideWidth?: string
+  bodyWidth?: string
+}
+
+const {
+  asideLabel = 'Aside',
+  asideWidth = 'minmax(15rem, 19rem)',
+  bodyWidth = '46rem',
+} = Astro.props
+---
+
+<section
+  class="article-aside"
+  style={`--article-aside-width: ${asideWidth}; --article-aside-body-width: ${bodyWidth};`}
+>
+  <div class="article-aside__body">
+    <slot />
+  </div>
+  <aside class="article-aside__rail" aria-label={asideLabel}>
+    <p class="article-aside__label">{asideLabel}</p>
+    <div class="article-aside__content">
+      <slot name="aside" />
+    </div>
+  </aside>
+</section>
+
+<style>
+  .article-aside {
+    margin: 1.75rem 0;
+    display: grid;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .article-aside__body,
+  .article-aside__rail,
+  .article-aside__content {
+    min-width: 0;
+  }
+
+  .article-aside__body :global(:first-child),
+  .article-aside__content :global(:first-child) {
+    margin-top: 0;
+  }
+
+  .article-aside__body :global(:last-child),
+  .article-aside__content :global(:last-child) {
+    margin-bottom: 0;
+  }
+
+  .article-aside__rail {
+    color: var(--base04);
+  }
+
+  .article-aside__label {
+    margin: 0 0 0.65rem;
+    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--base03);
+  }
+
+  .article-aside__content {
+    padding-left: 1.1rem;
+    border-left: 1px solid color-mix(in srgb, var(--base02) 70%, transparent);
+    font-size: 0.96rem;
+    line-height: 1.75;
+  }
+
+  @media (min-width: 64rem) {
+    .article-aside {
+      grid-template-columns: minmax(0, 1fr) var(--article-aside-width);
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 90rem) {
+    .article-aside {
+      grid-template-columns:
+        minmax(0, var(--article-aside-body-width))
+        minmax(15rem, 18rem);
+      justify-content: space-between;
+      gap: clamp(2rem, 4vw, 4.5rem);
+    }
+  }
+
+  @media (max-width: 63.99rem) {
+    .article-aside__content {
+      padding-left: 0;
+      padding-top: 0.9rem;
+      border-left: 0;
+      border-top: 1px solid color-mix(in srgb, var(--base02) 70%, transparent);
+    }
+  }
+</style>

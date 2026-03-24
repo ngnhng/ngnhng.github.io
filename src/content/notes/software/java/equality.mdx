@@ -10,6 +10,7 @@ tags:
 ---
 
 import Callout from "../../../../components/Callout.astro";
+import ArticleAside from "../../../../components/ArticleAside.astro";
 import ArticleSplit from "../../../../components/ArticleSplit.astro";
 import ScrollableTable from "../../../../components/ScrollableTable.astro";
 
@@ -38,6 +39,33 @@ In Java, we have two methods for equality comparison of values: `equals()` and t
   [equality and relational operators](https://dev.java/learn/language-basics/all-operators/).
 
 So what's the difference between using `==` and `equals()` in Java? Turns out there's a lot.
+
+## Example: Paragraph With Aside Content
+
+<ArticleAside asideLabel="Aside content">
+  <p>
+    This paragraph is the main flow of the note. In MDX, the clean way to attach supplementary
+    text is to keep the paragraph as normal prose and place the aside content beside it as a
+    separate sibling block.
+  </p>
+  <p>
+    That keeps the article readable while still giving you a place to add supporting commentary,
+    caveats, or a smaller side observation without interrupting the main explanation.
+  </p>
+  <Fragment slot="aside">
+    <p>
+      This is the aside content. It is related to the paragraph on the left, but it is not part of
+      the paragraph itself.
+    </p>
+    <p>
+      In practice, that means you should render an <code>&lt;aside&gt;</code> or a component like
+      this one as a sibling block, not nest it inside a <code>&lt;p&gt;</code>.
+    </p>
+  </Fragment>
+</ArticleAside>
+
+After the split section, the article can continue with another normal paragraph. That structure is
+valid HTML, and it keeps the main argument separate from supporting commentary.
 
 ## The Mechanics
 
